@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/pages/Header";
 import Home from "./components/pages/home";
+import LoginForm from "./components/forms/register/LoginForm";
 
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
       <Header/>
         <Routes>
           <Route path="/home" element={<Home />} />
-
+          <Route path="/login" element={<LoginForm/>}></Route>
         </Routes>
       </BrowserRouter>
 

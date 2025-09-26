@@ -6,8 +6,8 @@ const Header = () => {
     return (
         <nav>
             <div className="button-section">
-                <button>Log In</button>
-                <button>Sign Up</button>
+                <Link to="/login"><button id="logInBtn">Log In</button></Link>
+                <button id="SignUpBtn">Sign Up</button>
             </div>
         </nav>
     )
