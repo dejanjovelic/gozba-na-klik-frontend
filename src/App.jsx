@@ -1,8 +1,22 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/pages/Header";
+import Home from "./components/pages/home";
 
-export default () => (
-  <>
-    <h1>Welcome to React Vite Micro App!</h1>
-    <p>Hard to get more minimal than this React app.</p>
-  </>
-);
+
+const App = () => {
+  return (
+    <div>
+      <BrowserRouter>
+      <Header/>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+
+        </Routes>
+      </BrowserRouter>
+
+    </div>
+  )
+
+}
+export default App;

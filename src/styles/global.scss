@@ -1,0 +1,13 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.button-section{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    background-color: orange;
+    padding: 10px;
+}
