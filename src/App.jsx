@@ -1,23 +1,23 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/pages/Header";
-import Home from "./components/pages/home";
-import LoginForm from "./components/forms/register/LoginForm";
-
+import Home from "./components/pages/Home";
+import LoginForm from "./components/forms/login/LoginForm";
+import { AuthProvider } from "./config/AuthContext";
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
-      <Header/>
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<LoginForm/>}></Route>
-        </Routes>
+        <AuthProvider>
+          <Header />
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<LoginForm />}></Route>
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
-
     </div>
-  )
-
-}
+  );
+};
 export default App;
