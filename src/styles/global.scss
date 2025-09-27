@@ -1,13 +1,197 @@
-body{
+$orangeColorBtn: #EA9332;
+$brownColorBtn: #5D402B;
+$navBarcolor: #F5E4CB;
+
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.button-section{
+nav {
+    background-color: $navBarcolor;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .button-section {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+
+    #logInBtn {
+        background-color: $orangeColorBtn;
+        color: white;
+        padding: 5px;
+        border-radius: 8px;
+        font-weight: bold;
+        border: 1px solid $orangeColorBtn;
+        height: 2rem;
+        width: 4.5rem;
+    }
+
+    #SignUpBtn {
+        background-color: $brownColorBtn;
+        color: white;
+        padding: 5px;
+        border-radius: 8px;
+        font-weight: bold;
+        border: 1px solid $brownColorBtn;
+        height: 2rem;
+        width: 4.5rem;
+    }
+}
+
+.nav-bar-container {
     display: flex;
     justify-content: flex-end;
-    gap: 20px;
-    background-color: orange;
-    padding: 10px;
+
+    .user-container {
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        background-color: #5D402B;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+    }
+
+
+}
+
+.registerForm-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+
+    .form-div {
+        display: inline-block;
+        background-color: $navBarcolor;
+        border: 1px solid $navBarcolor;
+        width: 500px;
+        min-width: 400px;
+        text-align: center;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: wrap;
+
+            input {
+                width: 80%;
+                margin-bottom: 5px;
+                padding: 7px;
+                border-color: 1px solid $navBarcolor;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+
+            }
+
+            .name-surname-container {
+                display: flex;
+                justify-content: space-between;
+                width: 82%;
+                gap: 10px;
+
+                .surname-container {
+                    width: 100%;
+                    display: inline-block;
+
+                }
+
+                .name-container {
+                    width: 100%;
+                    display: inline-block;
+                }
+
+                input {
+                    width: 94%;
+                }
+
+            }
+
+
+            #signUpBtn-container {
+                display: inline-block;
+                margin-top: 20px;
+                margin-right: 10px;
+
+                #signUpBtn {
+                    background-color: $brownColorBtn;
+                    color: white;
+                    padding: 5px;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    border: 1px solid $brownColorBtn;
+                    height: 2rem;
+                    width: 6rem;
+
+                    &:disabled {
+                        background-color: lightgray;
+                        border: 1px solid lightgray;
+                    }
+                }
+            }
+
+        }
+
+    }
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+
+    input {
+        width: 100%;
+        padding-right: 40px;
+        padding: 5px;
+        border-radius: 2px;
+    }
+
+    .toggle-password {
+        position: absolute;
+        top: 25%;
+        right: 50px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 1.2rem;
+        user-select: none;
+    }
+}
+
+.input-error-message {
+    color: red;
+    font-size: 0.8rem;
+    min-height: 1rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.errorMsg{
+    margin-top: 100px;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.successMsg{
+    margin-top: 100px;
+    text-align: center;
+    color: greenyellow;
+    font-weight: bold;
+    font-size: 20px;
 }
