@@ -1,15 +1,53 @@
+import { useAuth } from "../../config/AuthContext"
 import React from "react";
+import { useState } from "react"
 import { Link } from "react-router-dom";
-import "../../styles/global.scss"
-
+import  "../../styles/global.scss";
 const Header = () => {
-    return (
-        <nav>
-            <div className="button-section">
-                <Link to="/login"><button id="logInBtn">Log In</button></Link>
-                <button id="SignUpBtn">Sign Up</button>
-            </div>
-        </nav>
-    )
-}
+  const { isLoggedIn, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <nav>
+      <div className="button-section">
+        {!isLoggedIn ? (
+          <>
+            <Link to="/login">
+              <button id="logInBtn">Log In</button>
+            </Link>
+            <Link to="/signup">
+              <button id="SignUpBtn">Sign Up</button>
+            </Link>
+          </>
+        ) : (
+          <>
+            <button
+              id="profileDropDownList"
+              onClick={() => setOpen(!open)}
+              type="button"
+            >
+              <img src="..." />
+            </button>
+            {open && (
+              <ul>
+                <li>
+                  <Link to="/profile">
+                    <img />
+                    PROFILE
+                  </Link>
+                </li>
+                <li>
+                  <button onClick={logout}>
+                    <img />
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            )}
+          </>
+        )}
+      </div>
+    </nav>
+  );
+};
 export default Header;
