@@ -15,8 +15,8 @@ const Header = () => {
         <nav>
             {showLogInAndSignUpBtn ? (
                 <div className="button-section">
-                    <button id="logInBtn">Log In</button>
-                    <button onClick={() => { navigate("/register") }} id="SignUpBtn">Sign Up</button>
+                    <Link to="/login"><button id="logInBtn" id="logInBtn">Log In</button></Link>
+                    <button onClick={() => { navigate("/register") }} id="SignUpBtn" id="SignUpBtn">Sign Up</button>
                 </div>
             ) : (
                 <div className="nav-bar-container">
