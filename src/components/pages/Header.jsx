@@ -1,36 +1,66 @@
+import { useAuth } from "../../config/AuthContext";
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "../../styles/global.scss"
-
+import "../../styles/global.scss";
+import { CircleUser } from "lucide-react";
+import { LogOut } from "lucide-react";
 const Header = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const showLogInAndSignUpBtn = location.pathname === "/register" || location.pathname === "/" || location.pathname === "/login";
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    async function GetUserAsync() {
-        
-    }
+  async function GetUserAsync() {
 
-    return (
-        <nav>
-            {showLogInAndSignUpBtn ? (
-                <div className="button-section">
-                    <Link to="/login"><button id="logInBtn">Log In</button></Link>
-                    <button onClick={() => { navigate("/register") }} id="SignUpBtn">Sign Up</button>
-                </div>
-            ) : (
-                <div className="nav-bar-container">
-                    <div className="user-container"> 
-                    <div>
-                        <Link>User</Link>
-                    </div>
-                    </div>
-                </div>
+  }
 
+  const { isLoggedIn, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setOpen(false);
+  }, [isLoggedIn]); //Kada se promenmi isLoggedIn se zatvara dropdown, ovo radimo ako se izlogujemo i ulogujemo opet
+  return (
+    <nav>
 
-            )}
+      <div className="button-section">
+        {!isLoggedIn ? (
+          <div>
+            <button onClick={() => { navigate("/login") }} id="logInBtn">Log In</button>
+            <button onClick={() => { navigate("/register") }} id="SignUpBtn">Sign Up</button>
+          </div>
+        ) : (
+        <>
+          <span
+            id="profileDropDownList"
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <CircleUser size={40} />
+          </span>
 
-        </nav>
-    )
-}
+          <div
+            id="DropDownMenuContent"
+            className={open ? "open" : ""}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <div className="DropDownMenuItem">
+              <Link to="/profile">
+                <CircleUser />
+                PROFILE
+              </Link>
+            </div>
+            <div className="DropDownMenuItem">
+              <button id="logoutButton" onClick={logout}>
+                <LogOut></LogOut>
+                Logout
+              </button>
+            </div>
+          </div>
+        </>
+        )}
+      </div>
+
+    </nav>
+  );
+};
 export default Header;
