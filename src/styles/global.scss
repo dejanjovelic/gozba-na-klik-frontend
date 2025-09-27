@@ -1,73 +1,109 @@
 $color-brown: #5d402b;
 $color-cream: #f5e4cb;
 $color-orange: #ea9332;
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 nav {
-  box-shadow: 0px 1px 5px $color-brown;
-  height: 64px;
   background-color: $color-cream;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
   .button-section {
     display: flex;
     justify-content: flex-end;
     gap: 20px;
-    background-color: $color-cream;
-    padding: 10px;
+  }
 
-    #profileDropDownList {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
+  #logInBtn {
+    background-color: $color-orange;
+    color: white;
+    padding: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 1px solid $color-orange;
+    height: 2rem;
+    width: 4.5rem;
+  }
+
+  #SignUpBtn {
+    background-color: $color-brown;
+    color: white;
+    padding: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 1px solid $color-brown;
+    height: 2rem;
+    width: 4.5rem;
+  }
+}
+
+.nav-bar-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  background-color: $color-cream;
+  
+  #profileDropDownList {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+  }
+
+
+
+  #DropDownMenuContent {
+    position: absolute;
+
+    top: 50px;
+    right: 0;
+    background-color: $color-cream;
+    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+
+    &.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
-    #DropDownMenuContent {
-      position: absolute;
+    .DropDownMenuItem {
+      padding: 10px 20px;
 
-      top: 0;
-      right: 0;
-      background-color: $color-cream;
-      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      pointer-events: none;
-
-      &.open {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
+      a,
+      button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: #000;
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        font-size: 20px;
       }
 
-      .DropDownMenuItem {
-        padding: 10px 20px;
-
-        a,
-        button {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          text-decoration: none;
-          color: #000;
-          background: none;
-          border: none;
-          cursor: pointer;
-          width: 100%;
-          text-align: left;
-          font-size: 20px;
-        }
-
-        a:hover,
-        button:hover {
-          color: $color-brown;
-        }
+      a:hover,
+      button:hover {
+        color: $color-brown;
       }
     }
   }
+
+
 }
+
 
 #LoginFormContainer {
   width: 100%;
@@ -85,9 +121,12 @@ nav {
     width: 350px;
     border-radius: 10px;
     padding: 20px;
+
     .spinner {
-      border: 3px solid #f3f3f3; /* Light grey */
-      border-top: 3px solid #555; /* Darker */
+      border: 3px solid #f3f3f3;
+      /* Light grey */
+      border-top: 3px solid #555;
+      /* Darker */
       border-radius: 50%;
       width: 20px;
       height: 20px;
@@ -101,10 +140,12 @@ nav {
       0% {
         transform: rotate(0deg);
       }
+
       100% {
         transform: rotate(360deg);
       }
     }
+
     input {
       width: 250px;
       height: 30px;
@@ -113,15 +154,18 @@ nav {
       margin: 5px;
       padding: 10px;
       font-size: 15px;
+
       &::placeholder {
         color: #000000;
         opacity: 28%;
       }
     }
+
     #password-container {
       display: flex;
       align-items: center;
       flex-direction: row-reverse;
+
       input {
         width: 250px;
         height: 30px;
@@ -131,6 +175,7 @@ nav {
         padding: 10px;
         font-size: 15px;
       }
+
       button {
         margin-right: 10px;
         position: absolute;
@@ -141,14 +186,17 @@ nav {
         margin-top: 5px;
       }
     }
+
     #FormLoginInputsContainer {
       display: block;
     }
+
     #LogInTitle {
       text-align: center;
       margin-top: 20px;
       margin-bottom: 40px;
     }
+
     .LoginSubmitButton {
       margin-top: 30px;
       margin-bottom: 20px;
@@ -162,6 +210,7 @@ nav {
       cursor: pointer;
       font-size: 15px;
     }
+
     .errorMessage {
       color: $color-brown;
       margin: 0;
@@ -170,4 +219,154 @@ nav {
       font-size: 15px;
     }
   }
+}
+
+
+.user-container {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  background-color: #5D402B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+
+}
+
+
+.registerForm-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+
+  .form-div {
+    display: inline-block;
+    background-color: $color-cream;
+    border: 1px solid $color-cream;
+    width: 500px;
+    min-width: 400px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+
+      input {
+        width: 80%;
+        margin-bottom: 5px;
+        padding: 7px;
+        border-color: 1px solid $color-cream;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+
+      }
+
+      .name-surname-container {
+        display: flex;
+        justify-content: space-between;
+        width: 82%;
+        gap: 10px;
+
+        .surname-container {
+          width: 100%;
+          display: inline-block;
+
+        }
+
+        .name-container {
+          width: 100%;
+          display: inline-block;
+        }
+
+        input {
+          width: 94%;
+        }
+
+      }
+
+
+      #signUpBtn-container {
+        display: inline-block;
+        margin-top: 20px;
+        margin-right: 10px;
+
+        #signUpBtn {
+          background-color: $color-brown;
+          color: white;
+          padding: 5px;
+          border-radius: 8px;
+          font-weight: bold;
+          border: 1px solid $color-brown;
+          height: 2rem;
+          width: 6rem;
+
+          &:disabled {
+            background-color: lightgray;
+            border: 1px solid lightgray;
+          }
+        }
+      }
+
+    }
+
+  }
+}
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+
+  input {
+    width: 100%;
+    padding-right: 40px;
+    padding: 5px;
+    border-radius: 2px;
+  }
+
+  .toggle-password {
+    position: absolute;
+    top: 25%;
+    right: 50px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    user-select: none;
+  }
+}
+
+.input-error-message {
+  color: red;
+  font-size: 0.8rem;
+  min-height: 1rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.errorMsg {
+  margin-top: 100px;
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.successMsg {
+  margin-top: 100px;
+  text-align: center;
+  color: greenyellow;
+  font-weight: bold;
+  font-size: 20px;
 }
