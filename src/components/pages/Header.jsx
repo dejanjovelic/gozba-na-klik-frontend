@@ -5,7 +5,7 @@ import "../../styles/global.scss"
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const showLogInAndSignUpBtn = location.pathname === "/register" || location.pathname === "/";
+    const showLogInAndSignUpBtn = location.pathname === "/register" || location.pathname === "/" || location.pathname === "/login";
 
     async function GetUserAsync() {
         
@@ -15,8 +15,8 @@ const Header = () => {
         <nav>
             {showLogInAndSignUpBtn ? (
                 <div className="button-section">
-                    <Link to="/login"><button id="logInBtn" id="logInBtn">Log In</button></Link>
-                    <button onClick={() => { navigate("/register") }} id="SignUpBtn" id="SignUpBtn">Sign Up</button>
+                    <Link to="/login"><button id="logInBtn">Log In</button></Link>
+                    <button onClick={() => { navigate("/register") }} id="SignUpBtn">Sign Up</button>
                 </div>
             ) : (
                 <div className="nav-bar-container">

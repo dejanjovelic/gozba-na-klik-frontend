@@ -29,16 +29,20 @@ const CustomerRegisterForm = () => {
         }, 2000);
     }
 
+    function showSuccessMsg(message) {
+       setSuccessMsg(message)
+        setTimeout(() => {
+           setSuccessMsg("")
+        }, 2000);
+    }
+
     async function onSubmit(data) {
         const { username, name, surname, email, contactNumber, password } = data
         try {
             const user = await createCustomer(data);
-            setSuccessMsg("You have successfuly sign up.")
-            setTimeout(() => {
+            showSuccessMsg("You have successfuly sign up.")
                 navigate(`/customer/${user.id}`)
                 reset()
-            }, 2000)
-
         } catch (error) {
             if (error.status) {
                 if (error.status === 500) {
