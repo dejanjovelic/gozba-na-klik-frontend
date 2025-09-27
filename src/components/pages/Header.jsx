@@ -1,8 +1,8 @@
-import { useAuth } from "../../config/AuthContext"
+import { useAuth } from "../../config/AuthContext";
 import React from "react";
-import { useState } from "react"
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import  "../../styles/global.scss";
+import "../../styles/global.scss";
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
   const [open, setOpen] = useState(false);
@@ -30,14 +30,14 @@ const Header = () => {
             </button>
             {open && (
               <ul>
-                <li>
+                <li id="profilePictureContainer">
                   <Link to="/profile">
                     <img />
                     PROFILE
                   </Link>
                 </li>
-                <li>
-                  <button onClick={logout}>
+                <li id="logoutButtonContainer">
+                  <button id="logoutButton" onClick={logout}>
                     <img />
                     Logout
                   </button>
