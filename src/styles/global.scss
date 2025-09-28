@@ -2,10 +2,23 @@ $color-brown: #5d402b;
 $color-cream: #f5e4cb;
 $color-orange: #ea9332;
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 nav {
@@ -44,64 +57,96 @@ nav {
 
 .nav-bar-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 20px;
   background-color: $color-cream;
-  
-  #profileDropDownList {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    position: relative;
+
+  .logo-div {
+    flex: 1;
+  }
+
+  .links-div {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+
+    .nav-link {
+      margin: auto;
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+    }
+  }
+
+  .user-profile-div {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+
+    #profileDropDownList {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+    }
+
+
+
+    #DropDownMenuContent {
+      position: absolute;
+
+      top: 50px;
+      right: 0;
+      background-color: $color-cream;
+      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+
+      &.open {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .DropDownMenuItem {
+        padding: 10px 20px;
+
+        a,
+        button {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          text-decoration: none;
+          color: #000;
+          background: none;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+          text-align: left;
+          font-size: 20px;
+        }
+
+        a:hover,
+        button:hover {
+          color: $color-brown;
+        }
+      }
+
+
+
+    }
   }
 
 
 
-  #DropDownMenuContent {
-    position: absolute;
+}
 
-    top: 50px;
-    right: 0;
-    background-color: $color-cream;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-
-    &.open {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    .DropDownMenuItem {
-      padding: 10px 20px;
-
-      a,
-      button {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: #000;
-        background: none;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-        text-align: left;
-        font-size: 20px;
-      }
-
-      a:hover,
-      button:hover {
-        color: $color-brown;
-      }
-    }
-  }
-
-
+footer {
+  background-color: $color-cream;
+  padding: 40px 20px 20px;
 }
 
 

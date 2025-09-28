@@ -1,8 +1,10 @@
 import AxiosConfig from "../config/axiosConfig";
 
+const RESOURCE = "/api/user";
+
 export const login = async (username, password) => {
   try {
-    const response = await AxiosConfig.post("/api/User/login", {
+    const response = await AxiosConfig.post(`${RESOURCE}/login`, {
       username,
       password,
     });
@@ -12,3 +14,8 @@ export const login = async (username, password) => {
     throw error.response?.data || error;
   }
 };
+
+export async function GetAllUsers() {
+    const response = await AxiosConfig.get(RESOURCE)
+    return response.data;
+}

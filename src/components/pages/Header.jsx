@@ -5,6 +5,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/global.scss";
 import { CircleUser } from "lucide-react";
 import { LogOut } from "lucide-react";
+import { FaUsers as UsersIcon } from "react-icons/fa6";
+
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -12,9 +14,17 @@ const Header = () => {
   const { isLoggedIn, logout } = useAuth();
   const [open, setOpen] = useState(false);
 
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  const isAdmin = user.role === "Administrator";
+
   async function GetUserAsync() {
 
   }
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,22 +52,29 @@ const Header = () => {
         </div>
       ) : (
         <div className="nav-bar-container" ref={dropdownRef}>
-          <span id="profileDropDownList" onClick={() => setOpen(prev => !prev)}>
-            <CircleUser size={35} />
-          </span>
+          <div className="logo-div"></div>
+          <div className="links-div">
+            {isAdmin && (<Link to="/admin/users" className="nav-link"><UsersIcon /> Users</Link>)}
+          </div>
 
-          <div id="DropDownMenuContent" className={open ? "open" : ""}>
-            <div className="DropDownMenuItem">
-              <Link to="/profile">
-                <CircleUser />
-                PROFILE
-              </Link>
-            </div>
-            <div className="DropDownMenuItem">
-              <button id="logoutButton" onClick={logout}>
-                <LogOut />
-                Logout
-              </button>
+          <div className="user-profile-div">
+            <span id="profileDropDownList" onClick={() => setOpen(prev => !prev)}>
+              <CircleUser size={35} />
+            </span>
+
+            <div id="DropDownMenuContent" className={open ? "open" : ""}>
+              <div className="DropDownMenuItem">
+                <Link to="/profile">
+                  <CircleUser />
+                  PROFILE
+                </Link>
+              </div>
+              <div className="DropDownMenuItem">
+                <button id="logoutButton" onClick={handleLogout}>
+                  <LogOut />
+                  Logout
+                </button>
+              </div>
             </div>
           </div>
         </div>
