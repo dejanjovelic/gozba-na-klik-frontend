@@ -41,8 +41,10 @@ const AdminUserList = () => {
     }
 
     return (
+        <>
+        <h1>Users List</h1>
         <div className="users-table">
-            <h1>Users list</h1>
+
             <table>
                 <thead>
                     <tr>
@@ -66,6 +68,8 @@ const AdminUserList = () => {
                 </tbody>
             </table>
         </div>
+        </>
+
     )
 }
 

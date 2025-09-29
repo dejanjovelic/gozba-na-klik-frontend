@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $color-brown: #5d402b;
 $color-cream: #f5e4cb;
 $color-orange: #ea9332;
@@ -12,6 +14,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .content {
@@ -145,7 +148,9 @@ nav {
 }
 
 footer {
-  background-color: $color-cream;
+  background-color: color.adjust($color-brown, $lightness: -20%);
+  color: white;
+  font-size: 18px;
   padding: 40px 20px 20px;
 }
 
