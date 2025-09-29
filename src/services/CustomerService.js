@@ -1,5 +1,5 @@
 import React from "react";
-import AxiosConfig from "../config/AxiosConfig";
+import AxiosConfig from "../config/axiosConfig";
 const RESOURCE = "/api/customers";
 
 export async function createCustomer(data) {

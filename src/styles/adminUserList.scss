@@ -1,0 +1,138 @@
+@use 'sass:color';
+
+$color-brown: #5d402b;
+$color-cream: #f5e4cb;
+$color-orange: #ea9332;
+
+
+h1 {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 25px;
+    color: black;
+}
+
+
+.users-table {
+    margin: 20px auto;
+    width: 90%;
+    max-height: auto;
+    overflow: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: $color-cream;
+    padding-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: $color-cream;
+        color: black;
+        font-family: sans-serif;
+        font-size: 14px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+        thead {
+            background-color: $color-brown;
+            color: white;
+
+            th {
+                padding: 12px;
+                text-align: left;
+                position: sticky;
+                top: 0;
+                z-index: 2;
+                background-color: $color-brown;
+            }
+        }
+
+        tbody {
+            tr {
+                &:nth-child(even) {
+                    background-color: color.adjust($color-cream, $lightness: 5%);
+                }
+
+                &:hover {
+                    background-color: color.adjust($color-orange, $lightness: 35%);
+                    cursor: pointer;
+                }
+            }
+
+            td {
+                padding: 10px 12px;
+                border-top: 1px solid color.adjust($color-cream, $lightness: -10%);
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .users-table {
+        table {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tbody {
+            display: table-row-group;
+        }
+
+        td,
+        th {
+            font-size: 13px;
+            padding: 8px 10px;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .users-table {
+        padding: 0 10px;
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        thead {
+            display: none;
+        }
+
+        tr {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: white !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        td {
+            text-align: left;
+            padding: 10px 15px;
+            position: relative;
+
+            &::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 6px;
+                color: $color-brown;
+            }
+        }
+    }
+}
