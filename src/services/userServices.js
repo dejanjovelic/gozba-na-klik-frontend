@@ -16,6 +16,6 @@ export const login = async (username, password) => {
 };
 
 export async function GetAllUsers() {
-    const response = await AxiosConfig.get(RESOURCE)
-    return response.data;
+  const response = await AxiosConfig.get(RESOURCE);
+  return response.data;
 }

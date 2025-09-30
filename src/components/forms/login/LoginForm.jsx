@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../config/AuthContext";
 import "../../../styles/global.scss";
 import { Eye, EyeOff } from "lucide-react";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 const LoginForm = () => {
   const {
     register,
@@ -77,20 +79,26 @@ const LoginForm = () => {
           )}
         </div>
         <br />
-        <button
-          className="LoginSubmitButton"
-          type="submit"
-          disabled={!isDirty || !isValid || isSubmitting || isLoggedIn}
+        <div
+          id="signUpBtn-container"
+          data-tooltip-id="username-tooltip"
+          data-tooltip-content="All field are required."
         >
-          {isSubmitting ? (
-            <>
-              Logging in...
-              <span className="spinner"></span>
-            </>
-          ) : (
-            "Log in"
-          )}
-        </button>
+          <button
+            className="LoginSubmitButton"
+            type="submit"
+            disabled={!isDirty || !isValid || isSubmitting || isLoggedIn}
+          >
+            {isSubmitting ? (
+              <>
+                <span className="spinner"></span>
+              </>
+            ) : (
+              "Log in"
+            )}
+          </button>
+          {!isValid && <Tooltip id="username-tooltip" place="right" />}
+        </div>
       </form>
     </div>
   );
