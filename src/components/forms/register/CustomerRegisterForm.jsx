@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { Eye, EyeOff } from "lucide-react";
-
+import ErrorPopup from "../../pages/Popups/ErrorPopup";
 const CustomerRegisterForm = () => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     reset,
   } = useForm({ mode: "onChange" });
 
@@ -20,14 +20,13 @@ const CustomerRegisterForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [showError, setShowError] = useState(false);
+  const handleCloseError = () => setShowError(false);
   const navigate = useNavigate();
 
   const password = watch("password");
   function showErrorMsg(message) {
     setErrorMsg(message);
-    setTimeout(() => {
-      setErrorMsg("");
-    }, 2000);
   }
 
   function showSuccessMsg(message) {
@@ -59,15 +58,16 @@ const CustomerRegisterForm = () => {
         showErrorMsg("Something went wrong. Please try again.");
       }
       console.log(`An error occured while creating Customer:`, error);
+      setShowError(true);
     }
   }
 
   if (successMsg) {
     return <div className="successMsg">{successMsg}</div>;
   }
-  if (errorMsg) {
+  /*if (errorMsg) {
     return <div className="errorMsg">{errorMsg}</div>;
-  }
+  }*/
 
   return (
     <div className="registerForm-container">
@@ -217,11 +217,20 @@ const CustomerRegisterForm = () => {
             data-tooltip-content="All field are required."
           >
             <button disabled={!isValid} id="signUpBtn" type="submit">
-              Sign Up
+              {isSubmitting ? (
+                <>
+                  <span className="spinner"></span>
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </button>
             {!isValid && <Tooltip id="username-tooltip" place="right" />}
           </div>
         </form>
+        {showError && (
+          <ErrorPopup message={errorMsg} onClose={handleCloseError} />
+        )}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import "../../../styles/global.scss";
 import { Eye, EyeOff } from "lucide-react";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import ErrorPopup from "../../pages/Popups/ErrorPopup";
 const LoginForm = () => {
   const {
     register,
@@ -17,16 +18,19 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login, isLoggedIn } = useAuth();
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleCloseError = () => setShowError(false);
 
   const onSubmit = async (data) => {
     try {
       const result = await loginService(data.username, data.password);
-      console.log("Login successful:", result);
       login(result);
-      alert(`Welcome, ${result.username}!`);
       navigate("/home");
     } catch (error) {
-      alert(error.message || "Login failed");
+      console.log(error.message);
+      setErrorMessage(error.message);
+      setShowError(true);
     }
   };
 
@@ -100,6 +104,9 @@ const LoginForm = () => {
           {!isValid && <Tooltip id="username-tooltip" place="right" />}
         </div>
       </form>
+      {showError && (
+        <ErrorPopup message={errorMessage} onClose={handleCloseError} />
+      )}
     </div>
   );
 };
