@@ -22,6 +22,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 0;
 }
 
 nav {
@@ -64,6 +65,11 @@ nav {
   gap: 20px;
   background-color: $color-cream;
 
+  .menu-icon{
+    position: relative; 
+    z-index: 1400;
+  }
+
   .logo-div {
     flex: 1;
   }
@@ -83,12 +89,13 @@ nav {
 
   .user-profile-div {
     display: flex;
-    flex: 1;
     justify-content: flex-end;
+    flex: 1;
 
     #profileDropDownList {
       position: relative;
       display: inline-block;
+      text-align: center;
       cursor: pointer;
       position: relative;
     }
@@ -98,7 +105,7 @@ nav {
     #DropDownMenuContent {
       position: absolute;
 
-      top: 50px;
+      top: 67px;
       right: 0;
       background-color: $color-cream;
       box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.2);
@@ -137,21 +144,19 @@ nav {
           color: $color-brown;
         }
       }
-
-
-
     }
   }
-
-
-
 }
+
+
 
 footer {
   background-color: color.adjust($color-brown, $lightness: -20%);
   color: white;
-  font-size: 18px;
-  padding: 40px 20px 20px;
+  font-size: 14px;
+  padding: 18px 20px 20px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 
@@ -419,4 +424,40 @@ footer {
   color: greenyellow;
   font-weight: bold;
   font-size: 20px;
+}
+
+//SPINNER
+
+.spinner-wrapper {
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.spinner {
+    border: 6px solid lightgray;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+.spinner-text {
+    font-size: 18px;
+    color: gray;
+    font-weight: bold;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

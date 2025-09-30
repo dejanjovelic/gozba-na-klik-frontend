@@ -1,0 +1,97 @@
+@use "./global.scss" as*;
+
+$text-color: white;
+$hover-color: #FEC573;
+
+.homePageLayout {
+    display: flex;
+    flex: 1;
+
+    .MuiPaper-root {
+        height: 100vh;
+    }
+
+    .sidebar-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        transition: transform 0.3s ease-in-out;
+        width: 250px;
+        background-color: #EA9332;
+        max-height: 100%;
+        height: 100vh;
+        padding: 5rem 1rem 0 1rem;
+        justify-content: space-between;
+
+        .logout-container {
+            margin-bottom: 0;
+            height: 2rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            a {
+                display: inline-block;
+                text-decoration: none;
+                color: $text-color;
+                font-weight: bold;
+                font-size: 1rem;
+                transition: transform 0.3s ease-in-out;
+
+                &:hover {
+                    transform: scale(1.15);
+                }
+
+            }
+
+        }
+    }
+}
+
+ul {
+
+    padding: 0;
+    list-style: none;
+    flex: 1;
+
+    li {
+        padding: 0.5rem;
+        height: 2rem;
+
+        &:hover {
+
+            background-color: $hover-color;
+
+        }
+
+        a {
+            text-decoration: none;
+            color: $text-color;
+        }
+
+    }
+}
+
+.profile-container {
+    padding: 0.5rem;
+    height: 2rem;
+
+
+    a {
+        text-decoration: none;
+        color: $text-color;
+        vertical-align: middle;
+    }
+
+
+    &:hover {
+        background-color: $hover-color;
+    }
+}
+
+
+main {
+    padding: 1rem;
+    width: 100%;
+}

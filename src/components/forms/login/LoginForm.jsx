@@ -16,13 +16,19 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const { login, isLoggedIn } = useAuth();
 
+  function lowercaseFirstLetter(word){
+    return `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
+  }
+
   const onSubmit = async (data) => {
     try {
       const result = await loginService(data.username, data.password);
+      console.log(`/${lowercaseFirstLetter(result.role)}`)
       console.log("Login successful:", result);
       login(result);
       alert(`Welcome, ${result.username}!`);
-      navigate("/home");
+      navigate(`/${lowercaseFirstLetter(result.role)}`);
+      
     } catch (error) {
       alert(error.message || "Login failed");
     }
@@ -58,8 +64,8 @@ const LoginForm = () => {
               {...register("password", {
                 required: "Password is required",
                 minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
+                  value: 5,
+                  message: "Password must be at least 58 characters",
                 },
               })}
             />

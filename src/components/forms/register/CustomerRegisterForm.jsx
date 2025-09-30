@@ -5,6 +5,7 @@ import { createCustomer } from "../../../services/CustomerService";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import 'react-tooltip/dist/react-tooltip.css';
+import { Eye, EyeOff } from "lucide-react";
 
 
 const CustomerRegisterForm = () => {
@@ -136,7 +137,7 @@ const CustomerRegisterForm = () => {
                         <div className="input-error-message">{errors.password?.message}</div>
 
                         <span className="toggle-password" onClick={() => { setShowPassword(prev => !prev) }}>
-                            {showPassword ? "👁️" : "🙈"}
+                            {showPassword ? <Eye /> : <EyeOff />}
                         </span>
                     </div>
 
@@ -149,7 +150,7 @@ const CustomerRegisterForm = () => {
                             })} />
                         <div className="input-error-message">{errors.confirmPassword?.message}</div>
                         <span className="toggle-password" onClick={() => { setShowConfirmPassword(prev => !prev) }}>
-                            {showConfirmPassword ? "👁️" : "🙈"}
+                            {showConfirmPassword ? <Eye /> : <EyeOff />}
                         </span>
                     </div>
 

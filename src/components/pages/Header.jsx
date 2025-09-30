@@ -5,7 +5,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/global.scss";
 import { CircleUser } from "lucide-react";
 import { LogOut } from "lucide-react";
-import { FaUsers as UsersIcon } from "react-icons/fa6";
+import { Menu } from 'lucide-react';
+import SideBar from "../sharedComponents/SideBar";
+import { Drawer } from "@mui/material";
+import Slide from '@mui/material/Slide';
+import { ImGift } from "react-icons/im";
+
 
 const Header = () => {
   const location = useLocation();
@@ -13,9 +18,9 @@ const Header = () => {
   const dropdownRef = useRef(null);
   const { isLoggedIn, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [openSideMenu, setOpenSideMenu] = useState(false);
 
   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-  const isAdmin = user.role === "Administrator";
 
   async function GetUserAsync() {
 
@@ -25,6 +30,8 @@ const Header = () => {
     logout();
     navigate('/login');
   };
+
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -39,11 +46,16 @@ const Header = () => {
     };
   }, []);
 
+  const toggleDrawer = (newOpen) => {
+    setOpenSideMenu(newOpen)
+  }
 
   useEffect(() => {
     setOpen(false);
   }, [isLoggedIn]); //Kada se promenmi isLoggedIn se zatvara dropdown, ovo radimo ako se izlogujemo i ulogujemo opet
+
   return (
+    
     <nav>
       {!isLoggedIn ? (
         <div className="button-section">
@@ -51,22 +63,35 @@ const Header = () => {
           <button onClick={() => { navigate("/register") }} id="SignUpBtn">Sign Up</button>
         </div>
       ) : (
+
         <div className="nav-bar-container" ref={dropdownRef}>
+          <div className="menu-div" onClick={() => toggleDrawer(!openSideMenu)}><Menu className="menu-icon" /></div>
+          <Drawer className="homePageLayout" open={openSideMenu}
+            onClose={() => toggleDrawer(false)}
+            ModalProps={{
+              disableEnforceFocus: true
+            }}
+          >
+            <SideBar />
+          </Drawer>
+
           <div className="logo-div"></div>
-          <div className="links-div">
-            {isAdmin && (<Link to="/admin/users" className="nav-link"><UsersIcon /> Users</Link>)}
-          </div>
 
           <div className="user-profile-div">
             <span id="profileDropDownList" onClick={() => setOpen(prev => !prev)}>
-              <CircleUser size={35} />
+            {user.profileImageUrl? 
+            (<img src={user.profileImageUrl} alt="Profile picture" />)
+            :
+            (<CircleUser className="user-icon" size={25} />)
+            }
+            <div className="user-fullname"> {user.name} {user.surname}</div>
             </span>
 
             <div id="DropDownMenuContent" className={open ? "open" : ""}>
               <div className="DropDownMenuItem">
                 <Link to="/profile">
                   <CircleUser />
-                  PROFILE
+                  My profile
                 </Link>
               </div>
               <div className="DropDownMenuItem">
