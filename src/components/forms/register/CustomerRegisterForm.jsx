@@ -4,9 +4,12 @@ import { Value } from "sass";
 import { createCustomer } from "../../../services/CustomerService";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
-import { Eye, EyeOff } from "lucide-react";
 import ErrorPopup from "../../pages/Popups/ErrorPopup";
+import 'react-tooltip/dist/react-tooltip.css';
+import { Eye, EyeOff } from "lucide-react";
+import Spinner from "../../sharedComponents/Spiner";
+
+
 const CustomerRegisterForm = () => {
   const {
     register,
@@ -21,6 +24,7 @@ const CustomerRegisterForm = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [showError, setShowError] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
   const handleCloseError = () => setShowError(false);
   const navigate = useNavigate();
 
@@ -29,38 +33,43 @@ const CustomerRegisterForm = () => {
     setErrorMsg(message);
   }
 
-  function showSuccessMsg(message) {
-    setSuccessMsg(message);
-    setTimeout(() => {
-      setSuccessMsg("");
-    }, 2000);
-  }
-
-  async function onSubmit(data) {
-    const { username, name, surname, email, contactNumber, password } = data;
-    try {
-      const user = await createCustomer(data);
-      showSuccessMsg("You have successfuly sign up.");
-      navigate(`/customer/${user.id}`);
-      reset();
-    } catch (error) {
-      if (error.status) {
-        if (error.status === 500) {
-          showErrorMsg(
-            "Server is temporarily unavailable. Please refresh or try again later."
-          );
-        } else {
-          showErrorMsg(`Error: ${error.status}`);
-        }
-      } else if (error.request) {
-        showErrorMsg("The server is not responding. Please try again later.");
-      } else {
-        showErrorMsg("Something went wrong. Please try again.");
-      }
-      console.log(`An error occured while creating Customer:`, error);
-      setShowError(true);
+    function showSuccessMsg(message) {
+        setSuccessMsg(message);
+        setTimeout(() => {
+            setSuccessMsg("");
+        }, 2000);
     }
-  }
+
+    async function onSubmit(data) {
+        const { username, name, surname, email, contactNumber, password } = data
+        try {
+            setIsloading(true);
+            const user = await createCustomer(data);
+            setIsloading(false);
+            showSuccessMsg("You have successfuly sign up.")
+            navigate(`/customer/${user.id}`);
+            reset();
+        } catch (error) {
+            if (error.status) {
+                if (error.status === 500) {
+                    showErrorMsg("Server is temporarily unavailable. Please refresh or try again later.")
+                } else {
+                    showErrorMsg(`Error: ${error.status}`);
+                }
+            } else if (error.request) {
+                showErrorMsg("The server is not responding. Please try again later.");
+
+            } else {
+                showErrorMsg("Something went wrong. Please try again.");
+            }
+            console.log(`An error occured while creating Customer:`, error);
+        }
+    }
+
+    if (isLoading) {
+        return <Spinner text="Sending..." />
+    }
+
 
   if (successMsg) {
     return <div className="successMsg">{successMsg}</div>;
@@ -167,8 +176,8 @@ const CustomerRegisterForm = () => {
               {...register("password", {
                 required: "Password field is required.",
                 minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters.",
+                  value: 5,
+                  message: "Password must have at least 5 characters.",
                 },
               })}
             />
@@ -176,40 +185,23 @@ const CustomerRegisterForm = () => {
               {errors.password?.message}
             </div>
 
-            <span
-              className="toggle-password"
-              onClick={() => {
-                setShowPassword((prev) => !prev);
-              }}
-            >
-              {showPassword ? <EyeOff /> : <Eye />}
-            </span>
-          </div>
+                        <span className="toggle-password" onClick={() => { setShowPassword(prev => !prev) }}>
+                            {showPassword ? <Eye /> : <EyeOff />}
+                        </span>
+                    </div>
 
-          <div className="password-wrapper">
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              id="confirmPassword"
-              placeholder="Confirm password"
-              autoComplete="new-password"
-              {...register("confirmPassword", {
-                required: "Confirm Password field is required.",
-                validate: (value) =>
-                  value === password || "Passwords do not match.",
-              })}
-            />
-            <div className="input-error-message">
-              {errors.confirmPassword?.message}
-            </div>
-            <span
-              className="toggle-password"
-              onClick={() => {
-                setShowConfirmPassword((prev) => !prev);
-              }}
-            >
-              {showConfirmPassword ? <EyeOff /> : <Eye />}
-            </span>
-          </div>
+                    <div className="password-wrapper">
+                        <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword" placeholder="Confirm password" autoComplete="new-password"
+                            {...register("confirmPassword", {
+                                required: "Confirm Password field is required.",
+                                validate: (value) =>
+                                    value === password || "Passwords do not match."
+                            })} />
+                        <div className="input-error-message">{errors.confirmPassword?.message}</div>
+                        <span className="toggle-password" onClick={() => { setShowConfirmPassword(prev => !prev) }}>
+                            {showConfirmPassword ? <Eye /> : <EyeOff />}
+                        </span>
+                    </div>
 
           <div
             id="signUpBtn-container"

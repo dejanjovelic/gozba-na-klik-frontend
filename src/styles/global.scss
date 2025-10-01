@@ -3,6 +3,8 @@
 $color-brown: #5d402b;
 $color-cream: #f5e4cb;
 $color-orange: #ea9332;
+$color-hamburgerIcon:white;
+$color-text: white;
 
 html,
 body,
@@ -22,6 +24,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 0;
 }
 
 nav {
@@ -37,7 +40,7 @@ nav {
 
   #logInBtn {
     background-color: $color-orange;
-    color: white;
+    color: $color-text;
     padding: 5px;
     border-radius: 8px;
     font-weight: bold;
@@ -49,7 +52,7 @@ nav {
 
   #SignUpBtn {
     background-color: $color-brown;
-    color: white;
+    color: $color-text;
     padding: 5px;
     border-radius: 8px;
     font-weight: bold;
@@ -65,6 +68,19 @@ nav {
   justify-content: space-between;
   gap: 20px;
   background-color: $color-cream;
+
+  .menu-icon{
+    position: relative;
+  z-index: 1400;
+  color: black;
+  transition: color 0.3s ease-in-out;
+
+  &.active {
+    color: $color-hamburgerIcon; // ili neka kontrastna boja
+  }
+
+  
+  }
 
   .logo-div {
     flex: 1;
@@ -85,12 +101,13 @@ nav {
 
   .user-profile-div {
     display: flex;
-    flex: 1;
     justify-content: flex-end;
+    flex: 1;
 
     #profileDropDownList {
       position: relative;
       display: inline-block;
+      text-align: center;
       cursor: pointer;
       position: relative;
     }
@@ -98,7 +115,7 @@ nav {
     #DropDownMenuContent {
       position: absolute;
 
-      top: 50px;
+      top: 67px;
       right: 0;
       background-color: $color-cream;
       box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.2);
@@ -143,9 +160,11 @@ nav {
 
 footer {
   background-color: color.adjust($color-brown, $lightness: -20%);
-  color: white;
-  font-size: 18px;
-  padding: 40px 20px 20px;
+  color: $color-text;
+  font-size: 14px;
+  padding: 18px 20px 20px;
+  display: flex;
+  justify-content: flex-end;
 }
 .spinner {
   border: 3px solid #f3f3f3;
@@ -238,7 +257,7 @@ footer {
       margin-top: 30px;
       margin-bottom: 20px;
       background-color: $color-brown;
-      color: white;
+      color: $color-text;
       border: none;
       padding: 15px;
       padding-left: 20px;
@@ -271,7 +290,7 @@ footer {
 
   a {
     text-decoration: none;
-    color: white;
+    color: $color-text;
     font-weight: bold;
   }
 }
@@ -337,7 +356,7 @@ footer {
 
         #signUpBtn {
           background-color: $color-brown;
-          color: white;
+          color: $color-text;
           padding: 5px;
           border-radius: 8px;
           font-weight: bold;
@@ -399,4 +418,40 @@ footer {
   color: greenyellow;
   font-weight: bold;
   font-size: 20px;
+}
+
+//SPINNER
+
+.spinner-wrapper {
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.spinner {
+    border: 6px solid lightgray;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+.spinner-text {
+    font-size: 18px;
+    color: gray;
+    font-weight: bold;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
