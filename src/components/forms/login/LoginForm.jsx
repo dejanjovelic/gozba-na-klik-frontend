@@ -44,11 +44,7 @@ const LoginForm = () => {
             id="username"
             placeholder="Your username"
             {...register("username", {
-              required: "Username is required",
-              minLength: {
-                value: 3,
-                message: "Username must be at least 3 characters",
-              },
+              required: "Username is required"
             })}
           />
           {errors.username && (
@@ -62,11 +58,7 @@ const LoginForm = () => {
               placeholder="Your password"
               type={showPassword ? "text" : "password"}
               {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 5,
-                  message: "Password must be at least 58 characters",
-                },
+                required: "Password is required"
               })}
             />
 

@@ -5,6 +5,7 @@ import Header from "../Header";
 import "../../../styles/adminHomePage.scss"
 
 const AdminHomePage = () => {
+    
     return (
         <div className="adminLayout">
             

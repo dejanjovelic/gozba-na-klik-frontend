@@ -1,35 +1,41 @@
 import React, { use } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import{User, Users, CookingPot, CalendarClock, icons} from "lucide-react";
+import { Link, useNavigate, NavLink } from "react-router-dom";
+import { User, Users, CookingPot, CalendarClock, Home } from "lucide-react";
 import "../../styles/usersHomePage.scss"
 import { AuthProvider, useAuth } from "../../config/AuthContext";
+import { ListItemButton } from '@mui/material';
+
 
 const SideBar = () => {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    const {logout} = useAuth();
-    const navigate = useNavigate
+    const { logout } = useAuth();
+    const navigate = useNavigate;
 
-    const handleLogout=()=>{
+
+    const handleLogout = () => {
         logout()
-       navigate("/login")
+        navigate("/login")
     }
-    
+
     const roleBasedLinks = {
         Administrator: [
-            { icon:<Users/>, path: '/administrator/users', label: 'Users' },
-            { icon:<CookingPot/>, path: '/administrator/restaurants', label: 'Restaurants' }
+            { icon: <Home />, path: '/administrator', label: 'Home', exact: true },
+            { icon: <Users />, path: '/administrator/users', label: 'Users' },
+            { icon: <CookingPot />, path: '/administrator/restaurants', label: 'Restaurants' }
         ],
-        Customer:[
-            {path:'/customer/orders', label:'Orders'}
+        Customer: [
+            { icon: <Home />, path: '/customer', label: 'Home', exact: true  }
         ],
         RestaurantOwner: [
-            { icon:<CookingPot/>, path: '/restaurantOwner/restaurants', label: 'Restaurants' }
+            { icon: <Home />, path: '/restaurantOwner', label: 'Home', exact: true  },
+            { icon: <CookingPot />, path: '/restaurantOwner/restaurants', label: 'Restaurants' }
         ],
-        Employee:[
-            {icon: <CalendarClock/>, path:'/employee/workingHours', label:'Working hours'}
+        Employee: [
+            { icon: <Home />, path: '/employee', label: 'Home', exact: true  },
         ],
-        Courier:[
-            {icon: <CalendarClock/>, path:'/employee/workingHours', label:'Working hours'}
+        Courier: [
+            { icon: <Home />, path: '/courier', label: 'HomeS', exact: true  },
+            { icon: <CalendarClock />, path: '/employee/workingHours', label: 'Working hours' }
         ]
 
     }
@@ -39,12 +45,24 @@ const SideBar = () => {
     return (
         <aside className="sidebar-container">
             <div className="profile-container">
-                <Link to={"/profile"}><User/> {user.name} {user.surname}</Link>
+                <NavLink to={"/profile"}>
+                    {({ isActive }) => (
+                        <ListItemButton selected={isActive}>
+                            <User /> {user.name} {user.surname}
+                        </ListItemButton>
+                    )}
+                </NavLink>
             </div>
-            <ul>
+            <ul className="sidebar-list">
                 {links.map(roleLinks => (
                     <li key={roleLinks.path}>
-                        <Link to={roleLinks.path}>{roleLinks.icon} {roleLinks.label}</Link>
+                        <NavLink to={roleLinks.path} end={roleLinks.exact}>
+                            {({isActive})=>(
+                                <ListItemButton selected={isActive}>
+                                    {roleLinks.icon} {roleLinks.label}
+                                </ListItemButton>
+                            )}
+                        </NavLink>
                     </li>
                 ))}
             </ul>

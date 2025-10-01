@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import 'react-tooltip/dist/react-tooltip.css';
 import { Eye, EyeOff } from "lucide-react";
+import Spinner from "../../sharedComponents/Spiner";
 
 
 const CustomerRegisterForm = () => {
@@ -18,8 +19,9 @@ const CustomerRegisterForm = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [successMsg, setSuccessMsg] = useState('')
-    const [errorMsg, setErrorMsg] = useState("")
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState("");
+    const [isLoading, setIsloading] = useState(false);
     const navigate = useNavigate();
 
     const password = watch('password')
@@ -31,19 +33,21 @@ const CustomerRegisterForm = () => {
     }
 
     function showSuccessMsg(message) {
-       setSuccessMsg(message)
+        setSuccessMsg(message)
         setTimeout(() => {
-           setSuccessMsg("")
+            setSuccessMsg("")
         }, 2000);
     }
 
     async function onSubmit(data) {
         const { username, name, surname, email, contactNumber, password } = data
         try {
+            setIsloading(true);
             const user = await createCustomer(data);
+            setIsloading(false);
             showSuccessMsg("You have successfuly sign up.")
-                navigate(`/customer/${user.id}`)
-                reset()
+            navigate(`/customer/${user.id}`)
+            reset()
         } catch (error) {
             if (error.status) {
                 if (error.status === 500) {
@@ -59,6 +63,10 @@ const CustomerRegisterForm = () => {
             }
             console.log(`An error occured while creating Customer:`, error);
         }
+    }
+
+    if (isLoading) {
+        return <Spinner text="Sending..." />
     }
 
 
@@ -132,7 +140,7 @@ const CustomerRegisterForm = () => {
                         <input type={showPassword ? "text" : "password"} id="password" placeholder="Your password" autoComplete="new-password"
                             {...register("password", {
                                 required: "Password field is required.",
-                                minLength: { value: 8, message: "Password must have at least 8 characters." }
+                                minLength: { value: 5, message: "Password must have at least 5 characters." }
                             })} />
                         <div className="input-error-message">{errors.password?.message}</div>
 

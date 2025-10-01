@@ -27,10 +27,6 @@ $hover-color: #FEC573;
             margin-bottom: 0;
             height: 2rem;
 
-            &:hover {
-                cursor: pointer;
-            }
-
             a {
                 display: inline-block;
                 text-decoration: none;
@@ -41,6 +37,7 @@ $hover-color: #FEC573;
 
                 &:hover {
                     transform: scale(1.15);
+                    cursor: pointer;
                 }
 
             }
@@ -49,7 +46,7 @@ $hover-color: #FEC573;
     }
 }
 
-ul {
+.sidebar-list {
 
     padding: 0;
     list-style: none;
@@ -59,15 +56,14 @@ ul {
         padding: 0.5rem;
         height: 2rem;
 
-        &:hover {
-
-            background-color: $hover-color;
-
-        }
-
         a {
             text-decoration: none;
             color: $text-color;
+
+            div.Mui-selected {
+
+                background-color: $hover-color !important;
+            }
         }
 
     }
@@ -77,19 +73,17 @@ ul {
     padding: 0.5rem;
     height: 2rem;
 
-
     a {
         text-decoration: none;
         color: $text-color;
         vertical-align: middle;
     }
 
+    div.Mui-selected {
 
-    &:hover {
-        background-color: $hover-color;
+        background-color: $hover-color !important;
     }
 }
-
 
 main {
     padding: 1rem;
