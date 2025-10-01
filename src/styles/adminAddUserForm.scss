@@ -14,7 +14,9 @@ $color-orange: #ea9332;
     background-color: $color-cream;
     padding: 32px;
     border-radius: 8px;
-    width: 420px;
+    width: 20%;
+    height: 65%;
+    overflow: auto;
 
     position: absolute;
     top: 50%;
@@ -31,7 +33,7 @@ $color-orange: #ea9332;
     form {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 11px;
     }
 
     .submit-btn {
@@ -46,6 +48,10 @@ $color-orange: #ea9332;
     .input-error-message {
         color: red;
         font-size: 0.8rem;
+        margin-top: -12px;
+        min-height: 10px;
+        max-height: 10px;
+        margin-left: 5px;
     }
 
     .MuiInputBase-root {
@@ -78,4 +84,14 @@ $color-orange: #ea9332;
     .MuiRadio-colorPrimary.Mui-checked {
         color: $color-orange !important;
     }
+
+    .role-div {
+        margin-left: 5px;
+    }
 }
+
+@media (max-height: 695px) {
+        .MuiInputBase-root {
+        height: 50px;
+    }
+    }

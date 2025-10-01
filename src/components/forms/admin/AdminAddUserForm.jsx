@@ -75,9 +75,7 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               minLength: { value: 3, message: "Minimum 3 characters." },
             })}
           />
-          {errors.name && (
-            <div className="input-error-message">{errors.name.message}</div>
-          )}
+          {<div className="input-error-message">{errors.name?.message}</div>}
 
 
           <TextField
@@ -89,9 +87,7 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               minLength: { value: 3, message: "Minimum 3 characters." },
             })}
           />
-          {errors.surname && (
-            <div className="input-error-message">{errors.surname.message}</div>
-          )}
+          {<div className="input-error-message">{errors.surname?.message}</div>}
 
           <TextField
             label="Username"
@@ -102,11 +98,7 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               minLength: { value: 3, message: "Minimum 3 characters." },
             })}
           />
-          {errors.username && (
-            <div className="input-error-message">
-              {errors.username.message}
-            </div>
-          )}
+          {<div className="input-error-message">{errors.username?.message}</div>}
 
           <TextField
             label="Email"
@@ -120,9 +112,7 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               },
             })}
           />
-          {errors.email && (
-            <div className="input-error-message">{errors.email.message}</div>
-          )}
+          {<div className="input-error-message">{errors.email?.message}</div>}
 
           <TextField
             label="Contact Number"
@@ -137,9 +127,7 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               },
             })}
           />
-          {errors.contactNumber && (
-            <div className="input-error-message">{errors.contactNumber.message}</div>
-          )}
+          {<div className="input-error-message">{errors.contactNumber?.message}</div>}
 
           <TextField
             label="Password"
@@ -163,27 +151,25 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               ),
             }}
           />
-          {errors.password && (
-            <div className="input-error-message">
-              {errors.password.message}
-            </div>
-          )}
+          {<div className="input-error-message">{errors.password?.message}</div>}
+          <div className="role-div">
+            <label className="role-label">Role</label>
+            <RadioGroup row defaultValue="Courier">
+              <FormControlLabel
+                value="Courier"
+                control={<Radio />}
+                label="Courier"
+                {...register("role", { required: true })}
+              />
+              <FormControlLabel
+                value="RestaurantOwner"
+                control={<Radio />}
+                label="Restaurant Owner"
+                {...register("role", { required: true })}
+              />
+            </RadioGroup>
+          </div>
 
-          <label className="role-label">Role</label>
-          <RadioGroup row defaultValue="Courier">
-            <FormControlLabel
-              value="Courier"
-              control={<Radio />}
-              label="Courier"
-              {...register("role", { required: true })}
-            />
-            <FormControlLabel
-              value="RestaurantOwner"
-              control={<Radio />}
-              label="Restaurant Owner"
-              {...register("role", { required: true })}
-            />
-          </RadioGroup>
 
           <Button
             type="submit"
