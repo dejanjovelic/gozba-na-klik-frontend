@@ -55,7 +55,7 @@ const Header = () => {
   }, [isLoggedIn]); //Kada se promenmi isLoggedIn se zatvara dropdown, ovo radimo ako se izlogujemo i ulogujemo opet
 
   return (
-    
+
     <nav>
       {!isLoggedIn ? (
         <div className="button-section">
@@ -65,7 +65,9 @@ const Header = () => {
       ) : (
 
         <div className="nav-bar-container" ref={dropdownRef}>
-          <div className="menu-div" onClick={() => toggleDrawer(!openSideMenu)}><Menu className="menu-icon" /></div>
+          <div className="menu-div" onClick={() => toggleDrawer(!openSideMenu)}>
+            <Menu className={`menu-icon ${openSideMenu ? 'active' : ''}`} />
+          </div>
           <Drawer className="homePageLayout" open={openSideMenu}
             onClose={() => toggleDrawer(false)}
             ModalProps={{
@@ -79,12 +81,12 @@ const Header = () => {
 
           <div className="user-profile-div">
             <span id="profileDropDownList" onClick={() => setOpen(prev => !prev)}>
-            {user.profileImageUrl? 
-            (<img src={user.profileImageUrl} alt="Profile picture" />)
-            :
-            (<CircleUser className="user-icon" size={25} />)
-            }
-            <div className="user-fullname"> {user.name} {user.surname}</div>
+              {user.profileImageUrl ?
+                (<img src={user.profileImageUrl} alt="Profile picture" />)
+                :
+                (<CircleUser className="user-icon" size={25} />)
+              }
+              <div className="user-fullname"> {user.name} {user.surname}</div>
             </span>
 
             <div id="DropDownMenuContent" className={open ? "open" : ""}>

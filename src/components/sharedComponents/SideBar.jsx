@@ -9,7 +9,7 @@ import { ListItemButton } from '@mui/material';
 const SideBar = () => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const { logout } = useAuth();
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
 
     const handleLogout = () => {
@@ -24,17 +24,17 @@ const SideBar = () => {
             { icon: <CookingPot />, path: '/administrator/restaurants', label: 'Restaurants' }
         ],
         Customer: [
-            { icon: <Home />, path: '/customer', label: 'Home', exact: true  }
+            { icon: <Home />, path: '/customer', label: 'Home', exact: true }
         ],
         RestaurantOwner: [
-            { icon: <Home />, path: '/restaurantOwner', label: 'Home', exact: true  },
+            { icon: <Home />, path: '/restaurantOwner', label: 'Home', exact: true },
             { icon: <CookingPot />, path: '/restaurantOwner/restaurants', label: 'Restaurants' }
         ],
         Employee: [
-            { icon: <Home />, path: '/employee', label: 'Home', exact: true  },
+            { icon: <Home />, path: '/employee', label: 'Home', exact: true },
         ],
         Courier: [
-            { icon: <Home />, path: '/courier', label: 'HomeS', exact: true  },
+            { icon: <Home />, path: '/courier', label: 'HomeS', exact: true },
             { icon: <CalendarClock />, path: '/employee/workingHours', label: 'Working hours' }
         ]
 
@@ -44,6 +44,7 @@ const SideBar = () => {
 
     return (
         <aside className="sidebar-container">
+            
             <div className="profile-container">
                 <NavLink to={"/profile"}>
                     {({ isActive }) => (
@@ -53,13 +54,14 @@ const SideBar = () => {
                     )}
                 </NavLink>
             </div>
+            <span className="kratka-linija"></span>
             <ul className="sidebar-list">
                 {links.map(roleLinks => (
                     <li key={roleLinks.path}>
                         <NavLink to={roleLinks.path} end={roleLinks.exact}>
-                            {({isActive})=>(
+                            {({ isActive }) => (
                                 <ListItemButton selected={isActive}>
-                                    {roleLinks.icon} {roleLinks.label}
+                                    {roleLinks.icon}&nbsp;{roleLinks.label}
                                 </ListItemButton>
                             )}
                         </NavLink>
