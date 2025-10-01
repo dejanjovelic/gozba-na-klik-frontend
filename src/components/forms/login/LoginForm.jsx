@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../config/AuthContext";
 import "../../../styles/global.scss";
 import { Eye, EyeOff } from "lucide-react";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import ErrorPopup from "../../pages/Popups/ErrorPopup";
 const LoginForm = () => {
   const {
     register,
@@ -15,6 +18,9 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login, isLoggedIn } = useAuth();
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleCloseError = () => setShowError(false);
 
   function lowercaseFirstLetter(word){
     return `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
@@ -23,14 +29,14 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     try {
       const result = await loginService(data.username, data.password);
-      console.log(`/${lowercaseFirstLetter(result.role)}`)
-      console.log("Login successful:", result);
       login(result);
       alert(`Welcome, ${result.username}!`);
       navigate(`/${lowercaseFirstLetter(result.role)}`);
       
     } catch (error) {
-      alert(error.message || "Login failed");
+      console.log(error.message);
+      setErrorMessage(error.message);
+      setShowError(true);
     }
   };
 
@@ -75,21 +81,30 @@ const LoginForm = () => {
           )}
         </div>
         <br />
-        <button
-          className="LoginSubmitButton"
-          type="submit"
-          disabled={!isDirty || !isValid || isSubmitting || isLoggedIn}
+        <div
+          id="signUpBtn-container"
+          data-tooltip-id="username-tooltip"
+          data-tooltip-content="All field are required."
         >
-          {isSubmitting ? (
-            <>
-              Logging in...
-              <span className="spinner"></span>
-            </>
-          ) : (
-            "Log in"
-          )}
-        </button>
+          <button
+            className="LoginSubmitButton"
+            type="submit"
+            disabled={!isDirty || !isValid || isSubmitting || isLoggedIn}
+          >
+            {isSubmitting ? (
+              <>
+                <span className="spinner"></span>
+              </>
+            ) : (
+              "Log in"
+            )}
+          </button>
+          {!isValid && <Tooltip id="username-tooltip" place="right" />}
+        </div>
       </form>
+      {showError && (
+        <ErrorPopup message={errorMessage} onClose={handleCloseError} />
+      )}
     </div>
   );
 };

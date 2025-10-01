@@ -1,4 +1,4 @@
-@use 'sass:color';
+@use "sass:color";
 
 $color-brown: #5d402b;
 $color-cream: #f5e4cb;
@@ -30,12 +30,12 @@ body {
 nav {
   background-color: $color-cream;
   padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 
   .button-section {
     display: flex;
     justify-content: flex-end;
-    gap: 20px;
+    gap: 7px;
   }
 
   #logInBtn {
@@ -45,8 +45,9 @@ nav {
     border-radius: 8px;
     font-weight: bold;
     border: 1px solid $color-orange;
-    height: 2rem;
+    height: 2.2rem;
     width: 4.5rem;
+    cursor: pointer;
   }
 
   #SignUpBtn {
@@ -56,8 +57,9 @@ nav {
     border-radius: 8px;
     font-weight: bold;
     border: 1px solid $color-brown;
-    height: 2rem;
+    height: 2.2rem;
     width: 4.5rem;
+    cursor: pointer;
   }
 }
 
@@ -110,8 +112,6 @@ nav {
       position: relative;
     }
 
-
-
     #DropDownMenuContent {
       position: absolute;
 
@@ -158,8 +158,6 @@ nav {
   }
 }
 
-
-
 footer {
   background-color: color.adjust($color-brown, $lightness: -20%);
   color: $color-text;
@@ -168,8 +166,15 @@ footer {
   display: flex;
   justify-content: flex-end;
 }
-
-
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #555;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
 #LoginFormContainer {
   width: 100%;
   display: flex;
@@ -186,20 +191,6 @@ footer {
     width: 350px;
     border-radius: 10px;
     padding: 20px;
-
-    .spinner {
-      border: 3px solid #f3f3f3;
-      /* Light grey */
-      border-top: 3px solid #555;
-      /* Darker */
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: spin 0.8s linear infinite;
-      display: inline-block;
-      vertical-align: middle;
-      margin-left: 10px;
-    }
 
     @keyframes spin {
       0% {
@@ -271,9 +262,11 @@ footer {
       padding: 15px;
       padding-left: 20px;
       padding-right: 20px;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 15px;
+      height: 50px;
+      width: 90px;
     }
 
     .errorMessage {
@@ -286,12 +279,11 @@ footer {
   }
 }
 
-
 .user-container {
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  background-color: #5D402B;
+  background-color: #5d402b;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -301,9 +293,7 @@ footer {
     color: $color-text;
     font-weight: bold;
   }
-
 }
-
 
 .registerForm-container {
   display: flex;
@@ -336,7 +326,6 @@ footer {
         border-color: 1px solid $color-cream;
         border: 1px solid #ccc;
         border-radius: 6px;
-
       }
 
       .name-surname-container {
@@ -348,7 +337,6 @@ footer {
         .surname-container {
           width: 100%;
           display: inline-block;
-
         }
 
         .name-container {
@@ -359,9 +347,7 @@ footer {
         input {
           width: 94%;
         }
-
       }
-
 
       #signUpBtn-container {
         display: inline-block;
@@ -375,18 +361,16 @@ footer {
           border-radius: 8px;
           font-weight: bold;
           border: 1px solid $color-brown;
-          height: 2rem;
+          height: 2.5rem;
           width: 6rem;
-
+          cursor: pointer;
           &:disabled {
             background-color: lightgray;
             border: 1px solid lightgray;
           }
         }
       }
-
     }
-
   }
 }
 
@@ -403,7 +387,7 @@ footer {
 
   .toggle-password {
     position: absolute;
-    top: 25%;
+    top: 30%;
     right: 50px;
     transform: translateY(-50%);
     cursor: pointer;
