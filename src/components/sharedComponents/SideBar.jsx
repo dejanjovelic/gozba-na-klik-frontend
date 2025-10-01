@@ -1,21 +1,12 @@
-import React, { use } from "react";
+import React from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import { User, Users, CookingPot, CalendarClock, Home } from "lucide-react";
 import "../../styles/usersHomePage.scss"
-import { AuthProvider, useAuth } from "../../config/AuthContext";
 import { ListItemButton } from '@mui/material';
 
 
-const SideBar = () => {
+const SideBar = ({ onLogout }) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    const { logout } = useAuth();
-    const navigate = useNavigate();
-
-
-    const handleLogout = () => {
-        logout()
-        navigate("/login")
-    }
 
     const roleBasedLinks = {
         Administrator: [
@@ -44,7 +35,6 @@ const SideBar = () => {
 
     return (
         <aside className="sidebar-container">
-            
             <div className="profile-container">
                 <NavLink to={"/profile"}>
                     {({ isActive }) => (
@@ -69,7 +59,9 @@ const SideBar = () => {
                 ))}
             </ul>
             <div className="logout-container">
-                <Link onClick={handleLogout}>Sign out</Link>
+                <button onClick={onLogout} className="sidebar-logout-button">
+                    Sign out
+                </button>
             </div>
         </aside>
     );

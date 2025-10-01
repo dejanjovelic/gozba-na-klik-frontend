@@ -116,7 +116,9 @@ main {
     margin-bottom: 15px;
     height: 2rem;
 
-    a {
+    .sidebar-logout-button {
+        background: none;
+        border: none;
         display: inline-block;
         text-decoration: none;
         color: $text-color;

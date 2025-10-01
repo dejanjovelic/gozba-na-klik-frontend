@@ -74,7 +74,7 @@ const Header = () => {
               disableEnforceFocus: true
             }}
           >
-            <SideBar />
+            <SideBar onLogout={handleLogout} />
           </Drawer>
 
           <div className="logo-div"></div>
