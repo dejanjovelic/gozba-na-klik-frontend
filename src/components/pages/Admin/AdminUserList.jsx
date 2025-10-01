@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { GetAllUsers } from "../../../services/userServices";
 import "../../../styles/adminUserList.scss";
+import AdminAddUserForm from "../../forms/admin/AdminAddUserForm";
+import { Button } from "@mui/material";
 
 const AdminUserList = () => {
     const [users, setUsers] = useState([]);
     const [errorMsg, setErrorMsg] = useState("")
+    const [successMsg, setSuccessMsg] = useState("")
+    const [openAddModal, setOpenAddModal] = useState(false);
+
+    const handleOpenModal = () => setOpenAddModal(true);
+    const handleCloseModal = () => {
+        loadUsers();
+        setOpenAddModal(false);
+    }
 
     function showErrorMsg(message) {
         setErrorMsg(message)
@@ -12,6 +22,14 @@ const AdminUserList = () => {
             setErrorMsg("")
         }, 2000);
     }
+
+    function showSuccessMsg(message) {
+        setSuccessMsg(message)
+        setTimeout(() => {
+            setSuccessMsg("")
+        }, 2000);
+    }
+
 
     async function loadUsers() {
         try {
@@ -42,32 +60,41 @@ const AdminUserList = () => {
 
     return (
         <>
-        <h1>Users List</h1>
-        <div className="users-table">
+            <div className="successMsg">{successMsg}</div>
+            <div className="users-list-header">
+                <h1>Users List</h1>
+                <Button variant="contained" onClick={handleOpenModal}>
+                    Add User
+                </Button>
+            </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Full Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
-                            <td data-label="ID">{user.id}</td>
-                            <td data-label="Full Name">{`${user.name} ${user.surname}`}</td>
-                            <td data-label="Username">{user.username}</td>
-                            <td data-label="Email">{user.email}</td>
-                            <td data-label="Role">{user.role}</td>
+            <div className="users-table">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {users.map(user => (
+                            <tr key={user.id}>
+                                <td data-label="ID">{user.id}</td>
+                                <td data-label="Full Name">{`${user.name} ${user.surname}`}</td>
+                                <td data-label="Username">{user.username}</td>
+                                <td data-label="Email">{user.email}</td>
+                                <td data-label="Role">{user.role}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                <AdminAddUserForm open={openAddModal} handleClose={handleCloseModal} errorMsg={showErrorMsg} successMsg={showSuccessMsg} />
+            </div>
         </>
 
     )
