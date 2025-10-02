@@ -7,13 +7,13 @@ body {
   width: 400px;
   height: 150px;
   border-radius: 10px;
-  box-shadow: 1px 1px 30px 11px rgb(228, 228, 228);
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
   z-index: 1000;
-
+  animation: popupFadeIn 0.3s ease forwards;
   #messageContainer {
     display: inline;
     margin-left: 20px;
@@ -44,10 +44,22 @@ body {
     padding: 5px;
   }
 }
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
 #Overlay {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 999;
 }
 #ConfirmationPopupContainer {
   background-color: rgb(255, 255, 255);
