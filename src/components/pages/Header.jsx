@@ -8,8 +8,6 @@ import { LogOut } from "lucide-react";
 import { Menu } from 'lucide-react';
 import SideBar from "../sharedComponents/SideBar";
 import { Drawer } from "@mui/material";
-import Slide from '@mui/material/Slide';
-import { ImGift } from "react-icons/im";
 
 
 const Header = () => {
@@ -70,11 +68,8 @@ const Header = () => {
           </div>
           <Drawer className="homePageLayout" open={openSideMenu}
             onClose={() => toggleDrawer(false)}
-            ModalProps={{
-              disableEnforceFocus: true
-            }}
           >
-            <SideBar onLogout={handleLogout} />
+            <SideBar onLogout={handleLogout} onCloseSideMenu={() => toggleDrawer(false)} />
           </Drawer>
 
           <div className="logo-div"></div>
