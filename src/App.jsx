@@ -18,6 +18,7 @@ import CourierHomePage from "./components/pages/Courier/CourierHomePage";
 import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
 import "./styles/usersHomePage.scss"
+import Allergens from "./components/pages/Customer/Allergens";
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
 
             <Route path="/customer/*" element={<ProtectedRoute allowedRoles={["Customer"]}><UsersHomePage /></ProtectedRoute>} >
               <Route index element={<CustomerHomePage />} />
+              <Route path="allergens" element={<Allergens/>}/>
             </Route>
 
             <Route path="/courier/*" element={<ProtectedRoute allowedRoles={["Courier"]}><UsersHomePage /></ProtectedRoute>}>
