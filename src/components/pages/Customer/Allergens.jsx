@@ -206,8 +206,8 @@ const Allergens = () => {
             </Card>
           </DialogContent>
           <DialogActions>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={handleSave} variant="contained" color="primary">
+            <Button className="cancelBtn" onClick={onClose}>Cancel</Button>
+            <Button className="saveBtn" onClick={handleSave} variant="contained" color="primary">
               Save
             </Button>
           </DialogActions>
