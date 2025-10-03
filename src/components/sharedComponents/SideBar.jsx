@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
-import { User, Users, CookingPot, CalendarClock, Home } from "lucide-react";
+import { User, Users, CookingPot, CalendarClock, Home, MapPin  } from "lucide-react";
 import "../../styles/usersHomePage.scss"
 import { ListItemButton } from '@mui/material';
 
@@ -15,7 +15,8 @@ const SideBar = ({ onLogout }) => {
             { icon: <CookingPot />, path: '/administrator/restaurants', label: 'Restaurants' }
         ],
         Customer: [
-            { icon: <Home />, path: '/customer', label: 'Home', exact: true }
+            { icon: <Home />, path: '/customer', label: 'Home', exact: true },
+            { icon: <MapPin />, path: '/customer/addresses', label: 'Addresses', exact: true }
         ],
         RestaurantOwner: [
             { icon: <Home />, path: '/restaurantOwner', label: 'Home', exact: true },
