@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Value } from "sass";
 import { createCustomer } from "../../../services/CustomerService";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import ErrorPopup from "../../pages/Popups/ErrorPopup";
-import 'react-tooltip/dist/react-tooltip.css';
+import "react-tooltip/dist/react-tooltip.css";
 import { Eye, EyeOff } from "lucide-react";
 import Spinner from "../../sharedComponents/Spiner";
-
 
 const CustomerRegisterForm = () => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid },
     reset,
   } = useForm({ mode: "onChange" });
 
@@ -24,64 +22,66 @@ const CustomerRegisterForm = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [showError, setShowError] = useState(false);
-  const [isLoading, setIsloading] = useState(false);
-  const handleCloseError = () => setShowError(false);
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
   const password = watch("password");
+
+  const handleCloseError = () => setShowError(false);
+
   function showErrorMsg(message) {
     setErrorMsg(message);
+    setShowError(true);
   }
 
-    function showSuccessMsg(message) {
-        setSuccessMsg(message);
-        setTimeout(() => {
-            setSuccessMsg("");
-        }, 2000);
-    }
+  function showSuccessMsg(message) {
+    setSuccessMsg(message);
+    setTimeout(() => {
+      setSuccessMsg("");
+    }, 2000);
+  }
 
-    async function onSubmit(data) {
-        const { username, name, surname, email, contactNumber, password } = data
-        try {
-            setIsloading(true);
-            const user = await createCustomer(data);
-            setIsloading(false);
-            showSuccessMsg("You have successfuly sign up.")
-            navigate(`/customer/${user.id}`);
-            reset();
-        } catch (error) {
-            if (error.status) {
-                if (error.status === 500) {
-                    showErrorMsg("Server is temporarily unavailable. Please refresh or try again later.")
-                } else {
-                    showErrorMsg(`Error: ${error.status}`);
-                }
-            } else if (error.request) {
-                showErrorMsg("The server is not responding. Please try again later.");
+  async function onSubmit(data) {
+    try {
+      setIsLoading(true);
+      const user = await createCustomer(data);
+      setIsLoading(false);
 
-            } else {
-                showErrorMsg("Something went wrong. Please try again.");
-            }
-            console.log(`An error occured while creating Customer:`, error);
+      showSuccessMsg("You have successfully signed up.");
+      navigate(`/customer/${user.id}`);
+      reset();
+    } catch (error) {
+      setIsLoading(false);
+
+      if (error.status) {
+        if (error.status === 500) {
+          showErrorMsg(
+            "Server is temporarily unavailable. Please refresh or try again later."
+          );
+        } else {
+          showErrorMsg(`Error: ${error.status}`);
         }
+      } else if (error.request) {
+        showErrorMsg("The server is not responding. Please try again later.");
+      } else {
+        showErrorMsg("Something went wrong. Please try again.");
+      }
+
+      console.log("An error occurred while creating Customer:", error);
     }
-
-    if (isLoading) {
-        return <Spinner text="Sending..." />
-    }
-
-
-  if (successMsg) {
-    return <div className="successMsg">{successMsg}</div>;
   }
-  /*if (errorMsg) {
-    return <div className="errorMsg">{errorMsg}</div>;
-  }*/
+
+  // 🔄 Replace entire page with spinner while loading
+  if (isLoading) {
+    return <Spinner text="Sending..." />;
+  }
 
   return (
     <div className="registerForm-container">
       <div className="form-div">
         <h2>Sign Up</h2>
+
+        {successMsg && <div className="successMsg">{successMsg}</div>}
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <input
@@ -93,7 +93,7 @@ const CustomerRegisterForm = () => {
               required: "Username field is required.",
               minLength: {
                 value: 3,
-                message: "Username must be at least 3 caharchters long.",
+                message: "Username must be at least 3 characters long.",
               },
             })}
           />
@@ -140,10 +140,10 @@ const CustomerRegisterForm = () => {
             id="email"
             placeholder="someone@example.com"
             {...register("email", {
-              required: "email field is required",
+              required: "Email field is required.",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Enter the valid address.",
+                message: "Enter a valid email address.",
               },
             })}
           />
@@ -184,42 +184,49 @@ const CustomerRegisterForm = () => {
             <div className="input-error-message">
               {errors.password?.message}
             </div>
+            <span
+              className="toggle-password"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <Eye /> : <EyeOff />}
+            </span>
+          </div>
 
-                        <span className="toggle-password" onClick={() => { setShowPassword(prev => !prev) }}>
-                            {showPassword ? <Eye /> : <EyeOff />}
-                        </span>
-                    </div>
-
-                    <div className="password-wrapper">
-                        <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword" placeholder="Confirm password" autoComplete="new-password"
-                            {...register("confirmPassword", {
-                                required: "Confirm Password field is required.",
-                                validate: (value) =>
-                                    value === password || "Passwords do not match."
-                            })} />
-                        <div className="input-error-message">{errors.confirmPassword?.message}</div>
-                        <span className="toggle-password" onClick={() => { setShowConfirmPassword(prev => !prev) }}>
-                            {showConfirmPassword ? <Eye /> : <EyeOff />}
-                        </span>
-                    </div>
+          <div className="password-wrapper">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              placeholder="Confirm password"
+              autoComplete="new-password"
+              {...register("confirmPassword", {
+                required: "Confirm Password field is required.",
+                validate: (value) =>
+                  value === password || "Passwords do not match.",
+              })}
+            />
+            <div className="input-error-message">
+              {errors.confirmPassword?.message}
+            </div>
+            <span
+              className="toggle-password"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+            >
+              {showConfirmPassword ? <Eye /> : <EyeOff />}
+            </span>
+          </div>
 
           <div
             id="signUpBtn-container"
             data-tooltip-id="username-tooltip"
-            data-tooltip-content="All field are required."
+            data-tooltip-content="All fields are required."
           >
             <button disabled={!isValid} id="signUpBtn" type="submit">
-              {isSubmitting ? (
-                <>
-                  <span className="spinner"></span>
-                </>
-              ) : (
-                "Sign Up"
-              )}
+              Sign Up
             </button>
             {!isValid && <Tooltip id="username-tooltip" place="right" />}
           </div>
         </form>
+
         {showError && (
           <ErrorPopup message={errorMsg} onClose={handleCloseError} />
         )}

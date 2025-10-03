@@ -22,7 +22,7 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const handleCloseError = () => setShowError(false);
 
-  function lowercaseFirstLetter(word){
+  function lowercaseFirstLetter(word) {
     return `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
   }
 
@@ -30,9 +30,7 @@ const LoginForm = () => {
     try {
       const result = await loginService(data.username, data.password);
       login(result);
-      alert(`Welcome, ${result.username}!`);
       navigate(`/${lowercaseFirstLetter(result.role)}`);
-      
     } catch (error) {
       console.log(error.message);
       setErrorMessage(error.message);
@@ -50,7 +48,7 @@ const LoginForm = () => {
             id="username"
             placeholder="Your username"
             {...register("username", {
-              required: "Username is required"
+              required: "Username is required",
             })}
           />
           {errors.username && (
@@ -64,7 +62,7 @@ const LoginForm = () => {
               placeholder="Your password"
               type={showPassword ? "text" : "password"}
               {...register("password", {
-                required: "Password is required"
+                required: "Password is required",
               })}
             />
 
