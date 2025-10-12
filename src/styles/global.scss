@@ -3,7 +3,7 @@
 $color-brown: #5d402b;
 $color-cream: #f5e4cb;
 $color-orange: #ea9332;
-$color-hamburgerIcon:white;
+$color-hamburgerIcon: white;
 $color-text: white;
 
 html,
@@ -11,7 +11,41 @@ body,
 #root {
   height: 100%;
 }
+//SPINNER
 
+.spinner-wrapper {
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.spinner {
+  border: 6px solid lightgray;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+.spinner-text {
+  font-size: 18px;
+  color: gray;
+  font-weight: bold;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
 body {
   margin: 0;
   padding: 0;
@@ -69,17 +103,15 @@ nav {
   gap: 20px;
   background-color: $color-cream;
 
-  .menu-icon{
+  .menu-icon {
     position: relative;
-  z-index: 1400;
-  color: black;
-  transition: color 0.3s ease-in-out;
+    z-index: 1400;
+    color: black;
+    transition: color 0.3s ease-in-out;
 
-  &.active {
-    color: $color-hamburgerIcon; // ili neka kontrastna boja
-  }
-
-  
+    &.active {
+      color: $color-hamburgerIcon; // ili neka kontrastna boja
+    }
   }
 
   .logo-div {
@@ -418,40 +450,4 @@ footer {
   color: greenyellow;
   font-weight: bold;
   font-size: 20px;
-}
-
-//SPINNER
-
-.spinner-wrapper {
-    margin-top: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.spinner {
-    border: 6px solid lightgray;
-    border-top: 6px solid #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 15px;
-}
-
-.spinner-text {
-    font-size: 18px;
-    color: gray;
-    font-weight: bold;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
 }

@@ -1,0 +1,162 @@
+$color-brown: #5d402b;
+$color-cream: #f5e4cb;
+$color-orange: #ea9332;
+$color-gray: #9c9d9c;
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+#container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 820px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px 2px #ccc9c4;
+  padding-left: 45px;
+  padding-right: 45px;
+  padding-bottom: 70px;
+  padding-top: 40px;
+  .MuiButton-root {
+    margin-top: 16px;
+    color: white;
+    background-color: $color-orange;
+    border: 0;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  /* Variants */
+  .MuiButton-contained {
+  }
+
+  .MuiButton-outlined {
+  }
+
+  .MuiButton-text {
+  }
+
+  /* States */
+  .MuiButton-root:hover {
+    box-shadow: 2px 2px 10px 1px #c5c5c5;
+  }
+
+  .MuiButton-root:disabled {
+  }
+  #switchInput {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .inputWrapper {
+      display: inline-block;
+      opacity: 0;
+      animation: popupFadeIn 0.3s ease forwards;
+
+      input {
+        width: 200px;
+        height: 30px;
+        margin-right: 30px;
+        margin-left: 20px;
+        text-align: right;
+        font-size: 16px;
+        border-radius: 10px;
+        padding-right: 5px;
+      }
+      .fromSpan {
+        margin-right: -10px;
+      }
+      .toSpan {
+        margin-right: -10px;
+      }
+    }
+    .closedInput {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      width: 510px;
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid black;
+      border-radius: 10px;
+      text-align: left;
+      vertical-align: middle;
+      margin: 0;
+      padding: 0 5px;
+      background-color: #e9ece9;
+      opacity: 0;
+      animation: popupFadeIn 0.3s ease forwards;
+
+      .icon {
+        flex-shrink: 0;
+      }
+    }
+  }
+  .switchCourier {
+    height: 50px;
+    width: 100px;
+
+    .MuiSwitch-root {
+    }
+
+    .MuiSwitch-switchBase {
+      padding: 8px;
+      &.Mui-checked {
+        transform: translateX(31px);
+
+        & + .MuiSwitch-track {
+          background-color: $color-orange;
+          opacity: 1;
+        }
+
+        .MuiSwitch-thumb {
+          background-color: #ffffff;
+          width: 32px;
+          height: 32px;
+          border: 2px solid $color-orange;
+        }
+      }
+    }
+
+    .MuiSwitch-thumb {
+      width: 32px;
+      height: 32px;
+      background-color: white;
+      border: 2px solid $color-gray;
+    }
+
+    .MuiSwitch-track {
+      height: 30px;
+      width: 60px;
+      border-radius: 50px;
+      background-color: $color-gray;
+      opacity: 1;
+    }
+  }
+}
+.MuiFormControlLabel-label {
+  color: black;
+  font-weight: 700;
+  margin-top: 5px;
+  margin-left: -10px;
+  width: 150px;
+}
+#buttonSucessMsgContainer {
+  width: 95.3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 45px;
+  height: 60px;
+}
+p {
+  font-weight: bold;
+  font-size: 15px;
+}
