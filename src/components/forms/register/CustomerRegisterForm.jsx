@@ -8,6 +8,7 @@ import ErrorPopup from "../../pages/Popups/ErrorPopup";
 import 'react-tooltip/dist/react-tooltip.css';
 import { Eye, EyeOff } from "lucide-react";
 import Spinner from "../../sharedComponents/Spiner";
+import { useAuth } from "../../../config/AuthContext";
 
 
 const CustomerRegisterForm = () => {
@@ -27,56 +28,62 @@ const CustomerRegisterForm = () => {
   const [isLoading, setIsloading] = useState(false);
   const handleCloseError = () => setShowError(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const password = watch("password");
   function showErrorMsg(message) {
     setErrorMsg(message);
   }
 
-    function showSuccessMsg(message) {
-        setSuccessMsg(message);
-        setTimeout(() => {
-            setSuccessMsg("");
-        }, 2000);
-    }
+  function showSuccessMsg(message) {
+    setSuccessMsg(message);
+    setTimeout(() => {
+      setSuccessMsg("");
+    }, 2000);
+  }
 
-    async function onSubmit(data) {
-        const { username, name, surname, email, contactNumber, password } = data
-        try {
-            setIsloading(true);
-            const user = await createCustomer(data);
-            setIsloading(false);
-            showSuccessMsg("You have successfuly sign up.")
-            navigate(`/customer/${user.id}`);
-            reset();
-        } catch (error) {
-            if (error.status) {
-                if (error.status === 500) {
-                    showErrorMsg("Server is temporarily unavailable. Please refresh or try again later.")
-                } else {
-                    showErrorMsg(`Error: ${error.status}`);
-                }
-            } else if (error.request) {
-                showErrorMsg("The server is not responding. Please try again later.");
-
-            } else {
-                showErrorMsg("Something went wrong. Please try again.");
-            }
-            console.log(`An error occured while creating Customer:`, error);
+  async function onSubmit(data) {
+    const { username, name, surname, email, contactNumber, password } = data
+    try {
+      setIsloading(true);
+      const user = await createCustomer(data);
+      setIsloading(false);
+      if (user) {
+        login(user)
+      }
+      showSuccessMsg("You have successfuly sign up.")
+      navigate(`/customer`);
+      reset();
+    } catch (error) {
+      if (error.status) {
+        if (error.status === 500) {
+          showErrorMsg("Server is temporarily unavailable. Please refresh or try again later.")
+        } else {
+          showErrorMsg(`Error: ${error.status}`);
         }
-    }
+      } else if (error.request) {
+        showErrorMsg("The server is not responding. Please try again later.");
 
-    if (isLoading) {
-        return <Spinner text="Sending..." />
+      } else {
+        showErrorMsg("Something went wrong. Please try again.");
+      }
+      console.log(`An error occured while creating Customer:`, error);
     }
+  }
+
+  if (isLoading) {
+    return <Spinner text="Sending..." />
+  }
 
 
   if (successMsg) {
     return <div className="successMsg">{successMsg}</div>;
   }
-  /*if (errorMsg) {
+
+
+  if (errorMsg) {
     return <div className="errorMsg">{errorMsg}</div>;
-  }*/
+  }
 
   return (
     <div className="registerForm-container">
@@ -185,23 +192,23 @@ const CustomerRegisterForm = () => {
               {errors.password?.message}
             </div>
 
-                        <span className="toggle-password" onClick={() => { setShowPassword(prev => !prev) }}>
-                            {showPassword ? <Eye /> : <EyeOff />}
-                        </span>
-                    </div>
+            <span className="toggle-password" onClick={() => { setShowPassword(prev => !prev) }}>
+              {showPassword ? <Eye /> : <EyeOff />}
+            </span>
+          </div>
 
-                    <div className="password-wrapper">
-                        <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword" placeholder="Confirm password" autoComplete="new-password"
-                            {...register("confirmPassword", {
-                                required: "Confirm Password field is required.",
-                                validate: (value) =>
-                                    value === password || "Passwords do not match."
-                            })} />
-                        <div className="input-error-message">{errors.confirmPassword?.message}</div>
-                        <span className="toggle-password" onClick={() => { setShowConfirmPassword(prev => !prev) }}>
-                            {showConfirmPassword ? <Eye /> : <EyeOff />}
-                        </span>
-                    </div>
+          <div className="password-wrapper">
+            <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword" placeholder="Confirm password" autoComplete="new-password"
+              {...register("confirmPassword", {
+                required: "Confirm Password field is required.",
+                validate: (value) =>
+                  value === password || "Passwords do not match."
+              })} />
+            <div className="input-error-message">{errors.confirmPassword?.message}</div>
+            <span className="toggle-password" onClick={() => { setShowConfirmPassword(prev => !prev) }}>
+              {showConfirmPassword ? <Eye /> : <EyeOff />}
+            </span>
+          </div>
 
           <div
             id="signUpBtn-container"

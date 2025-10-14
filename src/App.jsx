@@ -28,7 +28,6 @@ const App = () => {
           <Header />
           <Routes>
             <Route path="/register" element={<CustomerRegisterForm />} />
-            <Route path="/customer/:id" element={<CustomerHomePage />} />
             <Route path="/login" element={<LoginForm />}></Route>
 
             <Route path="/administrator/*" element={<ProtectedRoute allowedRoles={["Administrator"]}><UsersHomePage /></ProtectedRoute>}>
