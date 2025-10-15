@@ -17,7 +17,8 @@ import RestaurantOwnerHomePage from "./components/pages/RestaurantOwner/Restaura
 import CourierHomePage from "./components/pages/Courier/CourierHomePage";
 import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
-import "./styles/usersHomePage.scss";
+import "./styles/usersHomePage.scss"
+import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
 
 const App = () => {
   return (
@@ -67,6 +68,7 @@ const App = () => {
               }
             >
               <Route index element={<CustomerHomePage />} />
+              <Route path="addresses" element={<CustomerAddresses />} />
             </Route>
 
             <Route

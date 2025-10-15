@@ -1,4 +1,4 @@
-import AxiosConfig from "../config/axiosConfig";
+import AxiosConfig from "../config/AxiosConfig";
 
 const RESOURCE = "/api/user";
 
