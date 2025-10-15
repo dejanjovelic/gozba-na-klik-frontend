@@ -18,6 +18,7 @@ import CourierHomePage from "./components/pages/Courier/CourierHomePage";
 import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
 import "./styles/usersHomePage.scss"
+import Allergens from "./components/pages/Customer/Allergens";
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
 
 const App = () => {
@@ -28,7 +29,6 @@ const App = () => {
           <Header />
           <Routes>
             <Route path="/register" element={<CustomerRegisterForm />} />
-            <Route path="/customer/:id" element={<CustomerHomePage />} />
             <Route path="/login" element={<LoginForm />}></Route>
 
             <Route
@@ -68,6 +68,7 @@ const App = () => {
               }
             >
               <Route index element={<CustomerHomePage />} />
+              <Route path="allergens" element={<Allergens />} />
               <Route path="addresses" element={<CustomerAddresses />} />
             </Route>
 
