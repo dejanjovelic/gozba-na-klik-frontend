@@ -7,13 +7,13 @@ body {
   width: 400px;
   height: 150px;
   border-radius: 10px;
-  box-shadow: 1px 1px 30px 11px rgb(228, 228, 228);
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 40%;
+  left: 40%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
   z-index: 1000;
-
+  animation: popupFadeIn 0.3s ease forwards;
   #messageContainer {
     display: inline;
     margin-left: 20px;
@@ -44,10 +44,13 @@ body {
     padding: 5px;
   }
 }
+
 #Overlay {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 999;
 }
 #ConfirmationPopupContainer {
   background-color: rgb(255, 255, 255);
@@ -55,12 +58,13 @@ body {
   width: 400px;
   height: 150px;
   border-radius: 10px;
-  box-shadow: 1px 1px 30px 11px rgb(228, 228, 228);
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 30%;
+  left: 40%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 1;
   z-index: 1000;
+  animation: popupFadeIn 0.3s ease forwards;
   #messageContainer {
     display: inline;
     margin-left: 20px;
@@ -115,9 +119,14 @@ body {
   width: 400px;
   height: 50px;
   border-radius: 10px;
-  box-shadow: 1px 1px 30px 11px rgb(228, 228, 228);
-  position: relative;
 
+  &.fade-in {
+    animation: popupFadeIn 0.3s ease forwards;
+  }
+
+  &.fade-out {
+    animation: popupFadeOut 0.3s ease forwards;
+  }
   #messageContainer {
     display: flex;
     flex-direction: row;
@@ -146,5 +155,26 @@ body {
     position: absolute;
     top: 5px;
     right: 5px;
+  }
+}
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes popupFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
   }
 }
