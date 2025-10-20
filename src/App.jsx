@@ -18,8 +18,9 @@ import CourierHomePage from "./components/pages/Courier/CourierHomePage";
 import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
 import "./styles/usersHomePage.scss"
-import Allergens from "./components/pages/Customer/Allergens";
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
+import RestaurantPaginationFilterSort from "./components/pages/RestaurantPaginationFilterSort";
+import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 
 const App = () => {
   return (
@@ -28,6 +29,10 @@ const App = () => {
         <AuthProvider>
           <Header />
           <Routes>
+            <Route path="/"
+              element={
+                <RestaurantPaginationFilterSort />} />
+            <Route path="/restaurant-menu/:id" />
             <Route path="/register" element={<CustomerRegisterForm />} />
             <Route path="/login" element={<LoginForm />}></Route>
 
@@ -68,7 +73,7 @@ const App = () => {
               }
             >
               <Route index element={<CustomerHomePage />} />
-              <Route path="allergens" element={<Allergens />} />
+              <Route path="allergens" element={<CustomerAllergens />} />
               <Route path="addresses" element={<CustomerAddresses />} />
             </Route>
 
