@@ -12,7 +12,7 @@ const CourierStatusUpdater = () => {
       }
     };
     updateStatus();
-    const interval = setInterval(updateStatus, 2 * 1000);
+    const interval = setInterval(updateStatus, 30 * 1000);
     return () => clearInterval(interval);
   }, []);
   return null;
