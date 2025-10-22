@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import RatingComponent from "../sharedComponents/RatingComponent";
 import { PeopleAlt, } from "@mui/icons-material";
 import Spinner from "../sharedComponents/Spiner";
+import ErrorPopup from "./Popups/ErrorPopup";
 
 
 const RestaurantPaginationFilterSort = () => {
@@ -28,6 +29,11 @@ const RestaurantPaginationFilterSort = () => {
         averageRatingTo: null
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [showError, setShowError] = useState(false);
+
+    const handleCloseError = () => setShowError(false);
+
     const navigate = useNavigate();
 
     const getRestaurantsPage = async () => {
@@ -40,13 +46,28 @@ const RestaurantPaginationFilterSort = () => {
             setHasNextPage(data.hasNextPage);
 
             setIsLoading(false);
-
-
         } catch (error) {
+            if (error.status) {
+                if (error.status === 500) {
+                    setErrorMessage("Server is temporarily unavailable. Please refresh or try again later.")
+                    setShowError(true);
+                } else {
+                    setErrorMessage(`Error: ${error.status}`);
+                    setShowError(true);
+                }
+            } else if (error.request) {
+                setErrorMessage("The server is not responding. Please try again later.");
+                setShowError(true);
+
+            } else {
+                setErrorMessage("Something went wrong. Please try again.");
+                setShowError(true);
+            }
+            console.log(`An error occured while creating Customer:`, error);
             setIsLoading(false);
-            console.error(error.message);
         }
     }
+
 
     const getRestaurantSortType = async () => {
         try {
@@ -79,17 +100,16 @@ const RestaurantPaginationFilterSort = () => {
 
     useEffect(() => {
         getRestaurantSortType();
-    }, [])
+    }, []);
 
     useEffect(() => {
         getRestaurantsPage();
-    }, [chosenFilters, chosenSortType, page, pageSize])
+    }, [chosenFilters, chosenSortType, page, pageSize]);
 
-    if (isLoading) {
+    if (showError) {
         return (
-            <Spinner />
+            <ErrorPopup message={errorMessage} onClose={handleCloseError} />
         )
-
     }
 
     return (
@@ -102,7 +122,7 @@ const RestaurantPaginationFilterSort = () => {
                 </div>
 
                 <div className="restaurants-container">
-                    {restaurants && restaurants.length > 0 ? (restaurants.map(restaurant =>
+                    {restaurants ? restaurants.length > 0 ? (restaurants.map(restaurant =>
                         <div key={restaurant.id} className="restaurant-card" onClick={() => handleCardClick(restaurant.id)}>
                             <div className="img-section">
                                 <img id="restaurant-img" src={restaurant.restaurantImageUrl} alt="Restaurant picture" />
@@ -126,7 +146,7 @@ const RestaurantPaginationFilterSort = () => {
                                 Sorry, no restaurants match your search criteria.
                             </h3>
                         </div>
-                    )}
+                    ) : (<div> <Spinner /></div>)}
                 </div>
 
             </div>
