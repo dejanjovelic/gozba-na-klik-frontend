@@ -39,31 +39,95 @@ const FilterSection = (props) => {
         <Box >
             <Grid container spacing={2} >
                 <Grid item size={3}>
-                    <TextField fullWidth id="resturant-name" label="Name" variant="filled"
-                        value={name} onChange={(e) => setName(e.target.value)} />
+                    <TextField fullWidth
+                        id="resturant-name"
+                        label="Name" variant="filled"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
                 </Grid>
                 <Grid item size={3}>
-                    <TextField fullWidth id="resturant-city" label="City" variant="filled"
-                        value={city} onChange={(e) => setCity(e.target.value)} />
+                    <TextField fullWidth
+                        id="resturant-city"
+                        label="City" variant="filled"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                    />
                 </Grid>
                 <Grid item size={3}>
-                    <TextField fullWidth id="resturant-capaityFrom" type="number" label="Capaciti From"
-                        variant="filled" name="capacityFrom" value={capacityFrom} onChange={(e) => handleNumberChange(e)} />
+                    <TextField fullWidth
+                        id="resturant-capaityFrom"
+                        type="number"
+                        label="Capaciti From"
+                        variant="filled"
+                        name="capacityFrom"
+                        value={capacityFrom}
+                        onChange={(e) => handleNumberChange(e)}
+                        slotProps={{
+                            input: {
+                                inputProps: {
+                                    min: 0,
+                                },
+                            },
+                        }}
+                    />
                 </Grid>
                 <Grid item size={3}>
-                    <TextField fullWidth id="resturant-capaityTo" type="number" label="Capacity To"
-                        variant="filled" name="capacityTo" value={capacityTo} onChange={(e) => handleNumberChange(e)} />
+                    <TextField fullWidth
+                        id="resturant-capaityTo"
+                        type="number" label="Capacity To"
+                        variant="filled"
+                        name="capacityTo"
+                        value={capacityTo}
+                        onChange={(e) => handleNumberChange(e)}
+                        slotProps={{
+                            input: {
+                                inputProps: {
+                                    min: 0,
+                                },
+                            },
+                        }}
+                    />
                 </Grid>
                 <Grid item size={6}>
-                    <TextField fullWidth id="resturant-averageRatingFrom" type="number" label="Average Rating From"
-                        variant="filled" name="averageRatingFrom" value={averageRatingFrom} onChange={(e) => handleNumberChange(e)} />
+                    <TextField
+                        fullWidth id="resturant-averageRatingFrom"
+                        type="number"
+                        label="Average Rating From"
+                        variant="filled"
+                        name="averageRatingFrom"
+                        value={averageRatingFrom}
+                        onChange={(e) => handleNumberChange(e)}
+                        slotProps={{
+                            input: {
+                                inputProps: {
+                                    min: 0,
+                                },
+                            },
+                        }}
+
+                    />
                 </Grid>
                 <Grid item size={6}>
-                    <TextField fullWidth id="resturant-averageRatingTo" type="number" label="Average Rating To"
-                        variant="filled" name="averageRatingTo" value={averageRatingTo} onChange={(e) => handleNumberChange(e)} />
+                    <TextField
+                        fullWidth id="resturant-averageRatingTo"
+                        type="number"
+                        label="Average Rating To"
+                        variant="filled"
+                        name="averageRatingTo"
+                        value={averageRatingTo}
+                        onChange={(e) => handleNumberChange(e)}
+                        slotProps={{
+                            input: {
+                                inputProps: {
+                                    min: 0,
+                                },
+                            },
+                        }}
+                    />
                 </Grid>
                 <Grid item size={4}>
-                    <Button  id="restaurant-filter-button" variant="outlined" onClick={filter}>Filter</Button>
+                    <Button id="restaurant-filter-button" variant="outlined" onClick={filter}>Filter</Button>
                 </Grid>
             </Grid>
         </Box>
