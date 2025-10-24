@@ -15,3 +15,8 @@ export async function fetchRestaurantSortType() {
     const response = await AxiosConfig.get(`${RESOURCE}/sortTypes`)
     return response.data;
 }
+
+export async function getRestaurantWithMeals(id) {
+    const response = await AxiosConfig.get(`${RESOURCE}/${id}/meals`);
+    return response.data;
+}
