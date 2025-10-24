@@ -19,8 +19,9 @@ import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
 import "./styles/usersHomePage.scss"
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
-import RestaurantPaginationFilterSort from "./components/pages/RestaurantPaginationFilterSort";
+import RestaurantPaginationFilterSort from "./components/pages/Resataurant/RestaurantPaginationFilterSort";
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
+import CustomerMeals from "./components/pages/Customer/CustomerMeals";
 
 const App = () => {
   return (
@@ -75,6 +76,7 @@ const App = () => {
               <Route index element={<CustomerHomePage />} />
               <Route path="allergens" element={<CustomerAllergens />} />
               <Route path="addresses" element={<CustomerAddresses />} />
+              <Route path="meals" element={<CustomerMeals />} />
             </Route>
 
             <Route

@@ -66,8 +66,14 @@ const Header = () => {
           <div className="menu-div" onClick={() => toggleDrawer(!openSideMenu)}>
             <Menu className={`menu-icon ${openSideMenu ? 'active' : ''}`} />
           </div>
-          <Drawer className="homePageLayout" open={openSideMenu}
+          <Drawer
+            className="homePageLayout"
+            open={openSideMenu}
             onClose={() => toggleDrawer(false)}
+            ModalProps={{
+              keepMounted: false
+            }}
+
           >
             <SideBar onLogout={handleLogout} onCloseSideMenu={() => toggleDrawer(false)} />
           </Drawer>
