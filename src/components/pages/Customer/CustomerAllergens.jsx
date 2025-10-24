@@ -27,7 +27,8 @@ import { useNavigate } from "react-router-dom";
 import "../../../styles/allergensPage.scss";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-const Allergens = () => {
+const CustomerAllergens = () => {
+
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -252,4 +253,4 @@ const Allergens = () => {
   );
 };
 
-export default Allergens;
+export default CustomerAllergens;

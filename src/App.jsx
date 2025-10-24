@@ -17,95 +17,96 @@ import RestaurantOwnerHomePage from "./components/pages/RestaurantOwner/Restaura
 import CourierHomePage from "./components/pages/Courier/CourierHomePage";
 import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
-import "./styles/usersHomePage.scss";
-import Allergens from "./components/pages/Customer/Allergens";
+import "./styles/usersHomePage.scss"
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
-import CourierStatusUpdater from "./components/pages/Courier/CourierStatusUpdater";
+import RestaurantPaginationFilterSort from "./components/pages/RestaurantPaginationFilterSort";
+import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 
 const App = () => {
   return (
-    <>
-      <div className="content">
-        <BrowserRouter>
-          <AuthProvider>
-            <Header />
-            <CourierStatusUpdater />
-            <Routes>
-              <Route path="/register" element={<CustomerRegisterForm />} />
-              <Route path="/login" element={<LoginForm />}></Route>
+    <div className="content">
+      <BrowserRouter>
+        <AuthProvider>
+          <Header />
+          <Routes>
+            <Route path="/"
+              element={
+                <RestaurantPaginationFilterSort />} />
+            <Route path="/restaurant-menu/:id" />
+            <Route path="/register" element={<CustomerRegisterForm />} />
+            <Route path="/login" element={<LoginForm />}></Route>
 
+            <Route
+              path="/administrator/*"
+              element={
+                <ProtectedRoute allowedRoles={["Administrator"]}>
+                  <UsersHomePage />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<AdminHomePage />} />
+              <Route path="users" element={<AdminUserList />} />
+              <Route path="restaurants" element={<AdminRestaurants />} />
+            </Route>
+
+            <Route
+              path="/restaurantOwner/*"
+              element={
+                <ProtectedRoute allowedRoles={["RestaurantOwner"]}>
+                  <UsersHomePage />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<RestaurantOwnerHomePage />} />
               <Route
-                path="/administrator/*"
-                element={
-                  <ProtectedRoute allowedRoles={["Administrator"]}>
-                    <UsersHomePage />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<AdminHomePage />} />
-                <Route path="users" element={<AdminUserList />} />
-                <Route path="restaurants" element={<AdminRestaurants />} />
-              </Route>
+                path="restaurants"
+                element={<RestaurantOwnerRestaurants />}
+              />
+            </Route>
 
-              <Route
-                path="/restaurantOwner/*"
-                element={
-                  <ProtectedRoute allowedRoles={["RestaurantOwner"]}>
-                    <UsersHomePage />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<RestaurantOwnerHomePage />} />
-                <Route
-                  path="restaurants"
-                  element={<RestaurantOwnerRestaurants />}
-                />
-              </Route>
+            <Route
+              path="/customer/*"
+              element={
+                <ProtectedRoute allowedRoles={["Customer"]}>
+                  <UsersHomePage />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<CustomerHomePage />} />
+              <Route path="allergens" element={<CustomerAllergens />} />
+              <Route path="addresses" element={<CustomerAddresses />} />
+            </Route>
 
-              <Route
-                path="/customer/*"
-                element={
-                  <ProtectedRoute allowedRoles={["Customer"]}>
-                    <UsersHomePage />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<CustomerHomePage />} />
-                <Route path="allergens" element={<Allergens />} />
-                <Route path="addresses" element={<CustomerAddresses />} />
-              </Route>
+            <Route
+              path="/courier/*"
+              element={
+                <ProtectedRoute allowedRoles={["Courier"]}>
+                  <UsersHomePage />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<CourierHomePage />} />
+              <Route path="workingHours" element={<CourierWorkingHours />} />
+            </Route>
 
-              <Route
-                path="/courier/*"
-                element={
-                  <ProtectedRoute allowedRoles={["Courier"]}>
-                    <UsersHomePage />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<CourierHomePage />} />
-                <Route path="workingHours" element={<CourierWorkingHours />} />
-              </Route>
+            <Route
+              path="/employee/*"
+              element={
+                <ProtectedRoute allowedRoles={["Employee"]}>
+                  <UsersHomePage />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<EmployeeHomePage />} />
+              <Route path="workingHours" element={<EmployeeHomePage />} />
+            </Route>
 
-              <Route
-                path="/employee/*"
-                element={
-                  <ProtectedRoute allowedRoles={["Employee"]}>
-                    <UsersHomePage />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<EmployeeHomePage />} />
-                <Route path="workingHours" element={<EmployeeHomePage />} />
-              </Route>
-
-              <Route path="/profile" element={<UserProfile />} />
-            </Routes>
-            <Footer />
-          </AuthProvider>
-        </BrowserRouter>
-      </div>
-    </>
+            <Route path="/profile" element={<UserProfile />} />
+          </Routes>
+          <Footer />
+        </AuthProvider>
+      </BrowserRouter>
+    </div>
   );
 };
 export default App;
