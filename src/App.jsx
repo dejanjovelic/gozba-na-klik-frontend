@@ -21,6 +21,7 @@ import "./styles/usersHomePage.scss"
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
 import RestaurantPaginationFilterSort from "./components/pages/RestaurantPaginationFilterSort";
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
+import RestaurantMenu from "./components/pages/RestaurantMenu";
 
 const App = () => {
   return (
@@ -32,7 +33,7 @@ const App = () => {
             <Route path="/"
               element={
                 <RestaurantPaginationFilterSort />} />
-            <Route path="/restaurant-menu/:id" />
+            <Route path="/restaurant-menu/:id" element={<RestaurantMenu />} />
             <Route path="/register" element={<CustomerRegisterForm />} />
             <Route path="/login" element={<LoginForm />}></Route>
 
