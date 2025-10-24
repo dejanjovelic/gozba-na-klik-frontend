@@ -21,6 +21,7 @@ import "./styles/usersHomePage.scss";
 import Allergens from "./components/pages/Customer/Allergens";
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
 import CourierStatusUpdater from "./components/pages/Courier/CourierStatusUpdater";
+import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 
 const App = () => {
   return (
@@ -59,6 +60,11 @@ const App = () => {
                 <Route
                   path="restaurants"
                   element={<RestaurantOwnerRestaurants />}
+                />
+                <Route index element={<RestaurantOwnerHomePage />} />
+                <Route
+                  path="orderView"
+                  element={<RestaurantOwnerOrderView />}
                 />
               </Route>
 
