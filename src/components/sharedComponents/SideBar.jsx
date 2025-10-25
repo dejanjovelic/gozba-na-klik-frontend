@@ -1,19 +1,31 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Users, CookingPot, CalendarClock, Home, User, Egg, MapPin} from "lucide-react";
+import { 
+  Users, 
+  CookingPot, 
+  CalendarClock, 
+  Home, 
+  User, 
+  Egg, 
+  MapPin
+} from "lucide-react";
 import "../../styles/usersHomePage.scss"
 import { ListItemButton } from '@mui/material';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 
 
 const SideBar = ({ onLogout, onCloseSideMenu }) => {
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   const roleBasedLinks = {
     Administrator: [
-      { icon: <Home />, path: '/administrator', label: 'Home', exact: true },
-      { icon: <Users />, path: '/administrator/users', label: 'Users' },
-      { icon: <CookingPot />, path: '/administrator/restaurants', label: 'Restaurants' }
+      { icon: <Home />, path: "/administrator", label: "Home", exact: true },
+      { icon: <Users />, path: "/administrator/users", label: "Users" },
+      {
+        icon: <CookingPot />,
+        path: "/administrator/restaurants",
+        label: "Restaurants",
+      },
     ],
     Customer: [
       { icon: <Home />, path: '/customer', label: 'Home', exact: true },
@@ -22,19 +34,27 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
       { icon: <RestaurantMenuIcon />, path: '/customer/meals', label: 'Meals', exact: true }
     ],
     RestaurantOwner: [
-      { icon: <Home />, path: '/restaurantOwner', label: 'Home', exact: true },
-      { icon: <CookingPot />, path: '/restaurantOwner/restaurants', label: 'Restaurants' }
+      { icon: <Home />, path: "/restaurantOwner", label: "Home", exact: true },
+      {
+        icon: <CookingPot />,
+        path: "/restaurantOwner/restaurants",
+        label: "Restaurants",
+      },
     ],
     Employee: [
-      { icon: <Home />, path: '/employee', label: 'Home', exact: true },
+      { icon: <Home />, path: "/employee", label: "Home", exact: true },
     ],
     Courier: [
-      { icon: <Home />, path: '/courier', label: 'HomeS', exact: true },
-      { icon: <CalendarClock />, path: '/employee/workingHours', label: 'Working hours' }
-    ]
-  }
+      { icon: <Home />, path: "/courier", label: "HomeS", exact: true },
+      {
+        icon: <CalendarClock />,
+        path: "/courier/workingHours",
+        label: "Working hours",
+      },
+    ],
+  };
 
-  const links = [...roleBasedLinks[user.role] || []];
+  const links = [...(roleBasedLinks[user.role] || [])];
 
   return (
     <aside className="sidebar-container">
@@ -51,7 +71,6 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
       <ul className="sidebar-list">
         {links.map((roleLinks, index) => (
           <li key={roleLinks.path || index} onClick={onCloseSideMenu}>
-
             <NavLink to={roleLinks.path} end={roleLinks.exact}>
               {({ isActive }) => (
                 <ListItemButton selected={isActive}>
