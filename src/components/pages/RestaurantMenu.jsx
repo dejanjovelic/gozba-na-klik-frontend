@@ -18,7 +18,7 @@ const RestaurantMenu = () => {
   const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const selectedMeal = location.state.selectedMealId;
+  const selectedMeal = location.state?.selectedMealId || null;
 
   const handleCloseError = () => setShowError(false);
 
