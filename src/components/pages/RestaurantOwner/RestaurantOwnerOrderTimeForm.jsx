@@ -26,8 +26,9 @@ const RestaurauntOwnerOrderTimeForm = ({ order, onClose, onSubmitTime }) => {
           onSubmit={handleSubmit(onSubmit)}
           className="RestaurauntOwnerOrderTimeForm"
         >
-          <h3>Postavi vreme spremnosti</h3>
-          <label htmlFor="time">Vreme spremnosti porudžbine:</label>
+          <label htmlFor="time">Vreme kada je porudžbina spremna: </label>
+          <br />
+          <br />
           <input
             type="time"
             id="time"

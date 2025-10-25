@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../styles/RestaurantOwnerOrderView.scss";
 import {
   Table,
@@ -12,35 +12,78 @@ import {
   Chip,
   Typography,
 } from "@mui/material";
-import RestaurauntOwnerOrderTimeForm from "./RestaurantOwnerOrderTimeForm";
+import RestaurantOwnerOrderTimeForm from "./RestaurantOwnerOrderTimeForm";
+import {
+  getOrdersByOwnerId,
+  editOrdersStatus,
+} from "../../../services/OrderService";
 
 const RestaurantOwnerOrderView = () => {
-  const [orders, setOrders] = useState([
-    {
-      id: "#124",
-      customer: "Marko Jovanović",
-      time: "12:30",
-      items: "3 artikla",
-      status: "Na čekanju",
-    },
-    {
-      id: "#125",
-      customer: "Ana Petrović",
-      time: "12:35",
-      items: "2 artikla",
-      status: "Prihvaćena",
-    },
-    {
-      id: "#126",
-      customer: "Luka Ilić",
-      time: "12:40",
-      items: "1 artikal",
-      status: "Otkazana",
-    },
-  ]);
-
-  const [selectedOrder, setSelectedOrder] = useState(null); // store order being edited
+  const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [showForm, setShowForm] = useState(false);
+
+  const userString = sessionStorage.getItem("user");
+  let ownerId = null;
+  if (userString) {
+    const user = JSON.parse(userString);
+    ownerId = user.id;
+  }
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await getOrdersByOwnerId(ownerId);
+        setOrders(data);
+      } catch (error) {
+        console.error("Greška pri učitavanju porudžbina:", error);
+      }
+    };
+    fetchOrders();
+  }, [ownerId]);
+
+  const translateStatus = (status) => {
+    switch (status) {
+      case "NaCekanju":
+        return "Na čekanju";
+      case "Prihvacena":
+        return "Prihvaćena";
+      case "Otkazana":
+        return "Otkazana";
+      default:
+        return status;
+    }
+  };
+
+  const changeStatus = (orderId, newStatus, newTime = null) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.orderId === orderId
+          ? {
+              ...order,
+              status: newStatus,
+              orderTime: newTime || order.orderTime,
+            }
+          : order
+      )
+    );
+  };
+  const getCurrentTimeString = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    return `${hours}:${minutes}:${seconds}`;
+  };
+  const handleCancel = async (order) => {
+    try {
+      const currentTime = getCurrentTimeString();
+      await editOrdersStatus(order.orderId, "Otkazana", currentTime);
+      changeStatus(order.orderId, "Otkazana", currentTime);
+    } catch (err) {
+      console.error("Greška prilikom otkazivanja porudžbine", err);
+    }
+  };
 
   const handleOpenForm = (order) => {
     setSelectedOrder(order);
@@ -52,27 +95,17 @@ const RestaurantOwnerOrderView = () => {
     setSelectedOrder(null);
   };
 
-  // function to update order status and/or time
-  const changeStatus = (id, newStatus, newTime = null) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === id
-          ? { ...order, status: newStatus, time: newTime || order.time }
-          : order
-      )
-    );
-  };
-
   const getStatusChip = (status) => {
-    switch (status) {
+    const readableStatus = translateStatus(status);
+    switch (readableStatus) {
       case "Na čekanju":
-        return <Chip label={status} color="warning" />;
+        return <Chip label={readableStatus} color="warning" />;
       case "Prihvaćena":
-        return <Chip label={status} color="success" />;
+        return <Chip label={readableStatus} color="success" />;
       case "Otkazana":
-        return <Chip label={status} color="error" />;
+        return <Chip label={readableStatus} color="error" />;
       default:
-        return <Chip label={status} />;
+        return <Chip label={readableStatus} />;
     }
   };
 
@@ -112,52 +145,60 @@ const RestaurantOwnerOrderView = () => {
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {orders.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.customer}</TableCell>
-                <TableCell>Ime Restorana</TableCell>
-                <TableCell>Adresa kupca</TableCell>
-                <TableCell>{row.time}</TableCell>
-                <TableCell>{row.items}</TableCell>
-                <TableCell>200</TableCell>
-                <TableCell>{getStatusChip(row.status)}</TableCell>
-                <TableCell>
-                  {row.status === "Na čekanju" && (
-                    <>
-                      <Button
-                        onClick={() => handleOpenForm(row)}
-                        variant="contained"
-                        color="success"
-                        size="small"
-                        sx={{ mr: 1 }}
-                      >
-                        Prihvati
-                      </Button>
-                      <Button
-                        onClick={() => changeStatus(row.id, "Otkazana")}
-                        variant="contained"
-                        color="error"
-                        size="small"
-                      >
-                        Otkaži
-                      </Button>
-                    </>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
+            {orders.map((row) => {
+              const readableStatus = translateStatus(row.status);
+
+              return (
+                <TableRow key={row.orderId}>
+                  <TableCell>{row.orderId}</TableCell>
+                  <TableCell>{row.customerName}</TableCell>
+                  <TableCell>{row.restaurantName}</TableCell>
+                  <TableCell>{row.customerAddress}</TableCell>
+                  <TableCell>
+                    {row.orderTime ? row.orderTime.slice(0, 5) : "-"}
+                  </TableCell>
+                  <TableCell>{row.totalQuantity} artikla</TableCell>
+                  <TableCell>{row.totalPrice} RSD</TableCell>
+                  <TableCell>{getStatusChip(row.status)}</TableCell>
+                  <TableCell>
+                    {readableStatus === "Na čekanju" && (
+                      <>
+                        <Button
+                          onClick={() => handleOpenForm(row)}
+                          variant="contained"
+                          color="success"
+                          size="small"
+                          sx={{ mr: 1 }}
+                        >
+                          Prihvati
+                        </Button>
+                        <Button
+                          onClick={() => handleCancel(row)}
+                          variant="contained"
+                          color="error"
+                          size="small"
+                        >
+                          Otkaži
+                        </Button>
+                      </>
+                    )}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
 
       {showForm && selectedOrder && (
-        <RestaurauntOwnerOrderTimeForm
+        <RestaurantOwnerOrderTimeForm
           order={selectedOrder}
           onClose={handleCloseForm}
-          onSubmitTime={(time) => {
-            changeStatus(selectedOrder.id, "Prihvaćena", time);
+          onSubmitTime={async (time) => {
+            await editOrdersStatus(selectedOrder.orderId, "Prihvacena", time);
+            changeStatus(selectedOrder.orderId, "Prihvacena", time);
             handleCloseForm();
           }}
         />
