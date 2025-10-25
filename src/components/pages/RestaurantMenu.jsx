@@ -4,7 +4,7 @@ import "../../styles/restaurantMenu.scss";
 import RatingComponent from "../sharedComponents/RatingComponent";
 import { PeopleAlt } from "@mui/icons-material";
 import { getCustomerAllergens } from "../../services/CustomerService";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import Spiner from "../sharedComponents/Spiner";
 import ErrorPopup from "./Popups/ErrorPopup";
 
@@ -17,6 +17,8 @@ const RestaurantMenu = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const selectedMeal = location.state.selectedMealId;
 
   const handleCloseError = () => setShowError(false);
 
@@ -89,7 +91,7 @@ const RestaurantMenu = () => {
             <div id="restaurant-middle-section">
               <img
                 id="restaurant-image"
-                src={restaurant.RestaurantImageUrl}
+                src={restaurant.restaurantImageUrl}
                 alt="Restaurant image"
               />
             </div>
@@ -100,7 +102,7 @@ const RestaurantMenu = () => {
           <h2>Menu</h2>
           <div className="meals-div">
             {restaurant.mealsOnMenu.map((meal) => (
-              <div key={meal.id} className="meal-card">
+              <div key={meal.id} className={`meal-card ${meal.id === selectedMeal ? 'selected':''}`}>
                 <div className="meal-data">
                   <div>
                     <p>{meal.mealName}</p>

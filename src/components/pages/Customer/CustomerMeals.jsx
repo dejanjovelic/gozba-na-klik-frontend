@@ -54,7 +54,7 @@ const CustomerMeals = () => {
     };
 
     const handleMealCardClick = (restaurantId, mealId) => {
-        navigate(`restaurant-menu/${restaurantId}`, {
+        navigate(`/restaurant-menu/${restaurantId}`, {
             state: { selectedMealId: mealId }
         });
     }
@@ -207,6 +207,7 @@ const CustomerMeals = () => {
                                                 src={meal.mealImageUrl}
                                                 alt="Meal image"
                                             />
+                                            <button id="add-meal-to-cart">+</button>
                                         </div>
 
                                     </div>

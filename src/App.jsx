@@ -19,7 +19,7 @@ import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
 import "./styles/usersHomePage.scss"
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
-import RestaurantPaginationFilterSort from "./components/pages/Resataurant/RestaurantPaginationFilterSort";
+import RestaurantPaginationFilterSort from "./components/pages/Restaurant/RestaurantPaginationFilterSort";
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 import CustomerMeals from "./components/pages/Customer/CustomerMeals";
 import RestaurantMenu from "./components/pages/RestaurantMenu";
