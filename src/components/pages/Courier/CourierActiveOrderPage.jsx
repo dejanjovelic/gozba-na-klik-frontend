@@ -4,11 +4,13 @@ import "../../../styles/courierOrderPage.scss"
 import { fetchCourierActiveOrder, updateCourierActiveOrder } from "../../../services/OrderService";
 import ErrorPopup from "../Popups/ErrorPopup";
 import Spinner from "../../sharedComponents/Spiner";
+import { useNavigate } from "react-router-dom";
 
 const CourierActiveOrderPage = () => {
     const [activeOrder, setActiveOrder] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
     const user = JSON.parse(sessionStorage.getItem("user"));
 
     const getCourierActiveOrder = async () => {
@@ -16,11 +18,12 @@ const CourierActiveOrderPage = () => {
             setIsLoading(true);
             const courierActiveOrder = await fetchCourierActiveOrder(user.id);
             setActiveOrder(courierActiveOrder);
+            console.log(courierActiveOrder)
             setIsLoading(false);
         } catch (error) {
             if (error.status) {
                 if (error.status === 404) {
-                    setErrorMessage(`Courier with Id: ${user.id} currently have no assigned orders.`);
+                    console.log(`Courier with Id: ${user.id} currently have no assigned orders.`);
                 } else if (error.status === 500) {
                     setErrorMessage("Server is temporarily unavailable. Please refresh or try again later.");
                 } else {
@@ -86,7 +89,8 @@ const CourierActiveOrderPage = () => {
     }
 
     const handleClose = () => {
-        updateActiveOrderForCourier({ newStatus: "Delivered" })
+        navigate("/courier");
+        setErrorMessage("")
     }
 
     if (errorMessage) {
