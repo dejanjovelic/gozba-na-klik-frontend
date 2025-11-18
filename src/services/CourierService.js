@@ -1,5 +1,6 @@
 import React from "react";
-import AxiosConfig from "../config/AxiosConfig";
+import AxiosConfig from "../config/axiosConfig";
+
 const RESOURCE = "/api/couriers";
 
 export async function createCourier(data) {
