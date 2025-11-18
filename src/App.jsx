@@ -30,6 +30,7 @@ const App = () => {
     <div className="content">
       <BrowserRouter>
         <AuthProvider>
+          <CourierStatusUpdater />
           <Header />
           <Routes>
             <Route path="/" element={<RestaurantPaginationFilterSort />} />

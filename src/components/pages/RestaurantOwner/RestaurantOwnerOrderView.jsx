@@ -17,12 +17,15 @@ import {
   getOrdersByOwnerId,
   editOrdersStatus,
 } from "../../../services/OrderService";
+import ErrorPopup from "../../pages/Popups/ErrorPopup";
 
 const RestaurantOwnerOrderView = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showForm, setShowForm] = useState(false);
-
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleCloseError = () => setShowError(false);
   const userString = sessionStorage.getItem("user");
   let ownerId = null;
   if (userString) {
@@ -35,7 +38,10 @@ const RestaurantOwnerOrderView = () => {
       try {
         const data = await getOrdersByOwnerId(ownerId);
         setOrders(data);
+        console.log(data);
       } catch (error) {
+        setErrorMessage(error.message);
+        setShowError(true);
         console.error("Greška pri učitavanju porudžbina:", error);
       }
     };
@@ -44,12 +50,12 @@ const RestaurantOwnerOrderView = () => {
 
   const translateStatus = (status) => {
     switch (status) {
-      case "NaCekanju":
-        return "Na čekanju";
-      case "Prihvacena":
-        return "Prihvaćena";
-      case "Otkazana":
-        return "Otkazana";
+      case "Pending":
+        return "Pending";
+      case "Accepted":
+        return "Accepted";
+      case "Canceled":
+        return "Canceled";
       default:
         return status;
     }
@@ -68,19 +74,21 @@ const RestaurantOwnerOrderView = () => {
       )
     );
   };
-  const getCurrentTimeString = () => {
+  /* const getCurrentTimeString = () => {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, "0");
     const minutes = String(now.getMinutes()).padStart(2, "0");
     const seconds = String(now.getSeconds()).padStart(2, "0");
     return `${hours}:${minutes}:${seconds}`;
-  };
+  };*/
   const handleCancel = async (order) => {
     try {
-      const currentTime = getCurrentTimeString();
-      await editOrdersStatus(order.orderId, "Otkazana", currentTime);
-      changeStatus(order.orderId, "Otkazana", currentTime);
+      //const currentTime = getCurrentTimeString();
+      await editOrdersStatus(order.orderId, "Canceled", null);
+      changeStatus(order.orderId, "Canceled", null);
     } catch (err) {
+      setErrorMessage(error.message);
+      setShowError(true);
       console.error("Greška prilikom otkazivanja porudžbine", err);
     }
   };
@@ -98,11 +106,11 @@ const RestaurantOwnerOrderView = () => {
   const getStatusChip = (status) => {
     const readableStatus = translateStatus(status);
     switch (readableStatus) {
-      case "Na čekanju":
+      case "Pending":
         return <Chip label={readableStatus} color="warning" />;
-      case "Prihvaćena":
+      case "Accepted":
         return <Chip label={readableStatus} color="success" />;
-      case "Otkazana":
+      case "Canceled":
         return <Chip label={readableStatus} color="error" />;
       default:
         return <Chip label={readableStatus} />;
@@ -113,7 +121,7 @@ const RestaurantOwnerOrderView = () => {
     <div className="orderViewContainer">
       <TableContainer component={Paper} sx={{ mt: 3 }}>
         <Typography variant="h6" sx={{ m: 2 }}>
-          Porudžbine
+          Orders
         </Typography>
         <Table>
           <TableHead>
@@ -122,22 +130,22 @@ const RestaurantOwnerOrderView = () => {
                 <b>ID</b>
               </TableCell>
               <TableCell>
-                <b>Kupac</b>
+                <b>Customer</b>
               </TableCell>
               <TableCell>
-                <b>Restoran</b>
+                <b>Restaurant</b>
               </TableCell>
               <TableCell>
-                <b>Adresa kupca</b>
+                <b>Customer address</b>
               </TableCell>
               <TableCell>
-                <b>Vreme kada je porudžbina spremna</b>
+                <b>Time when order is ready</b>
               </TableCell>
               <TableCell>
-                <b>Artikli</b>
+                <b>Order details</b>
               </TableCell>
               <TableCell>
-                <b>Cena</b>
+                <b>Price</b>
               </TableCell>
               <TableCell>
                 <b>Status</b>
@@ -147,40 +155,46 @@ const RestaurantOwnerOrderView = () => {
           </TableHead>
 
           <TableBody>
-            {orders.map((row) => {
-              const readableStatus = translateStatus(row.status);
+            {orders.map((order) => {
+              const readableStatus = translateStatus(order.status);
 
               return (
-                <TableRow key={row.orderId}>
-                  <TableCell>{row.orderId}</TableCell>
-                  <TableCell>{row.customerName}</TableCell>
-                  <TableCell>{row.restaurantName}</TableCell>
-                  <TableCell>{row.customerAddress}</TableCell>
+                <TableRow key={order.orderId}>
+                  <TableCell>{order.orderId}</TableCell>
+                  <TableCell>{order.customerName}</TableCell>
+                  <TableCell>{order.restaurantName}</TableCell>
+                  <TableCell>{order.customerAddress}</TableCell>
                   <TableCell>
-                    {row.orderTime ? row.orderTime.slice(0, 5) : "-"}
+                    {order.orderTime ? order.orderTime.substring(11, 16) : "-"}
                   </TableCell>
-                  <TableCell>{row.totalQuantity} artikla</TableCell>
-                  <TableCell>{row.totalPrice} RSD</TableCell>
-                  <TableCell>{getStatusChip(row.status)}</TableCell>
                   <TableCell>
-                    {readableStatus === "Na čekanju" && (
+                    {order.orderItems && order.orderItems.length > 0
+                      ? order.orderItems
+                          .map((item) => `${item.quantity} ${item.mealName}`)
+                          .join(", ")
+                      : "-"}
+                  </TableCell>
+                  <TableCell>{order.totalPrice} €</TableCell>
+                  <TableCell>{getStatusChip(order.status)}</TableCell>
+                  <TableCell>
+                    {readableStatus === "Pending" && (
                       <>
                         <Button
-                          onClick={() => handleOpenForm(row)}
+                          onClick={() => handleOpenForm(order)}
                           variant="contained"
                           color="success"
                           size="small"
                           sx={{ mr: 1 }}
                         >
-                          Prihvati
+                          Accept
                         </Button>
                         <Button
-                          onClick={() => handleCancel(row)}
+                          onClick={() => handleCancel(order)}
                           variant="contained"
                           color="error"
                           size="small"
                         >
-                          Otkaži
+                          Cancel
                         </Button>
                       </>
                     )}
@@ -197,11 +211,30 @@ const RestaurantOwnerOrderView = () => {
           order={selectedOrder}
           onClose={handleCloseForm}
           onSubmitTime={async (time) => {
-            await editOrdersStatus(selectedOrder.orderId, "Prihvacena", time);
-            changeStatus(selectedOrder.orderId, "Prihvacena", time);
+            // time is "HH:mm"
+            const [hour, minute] = time.split(":");
+
+            // Create a full Date object
+            const isoDateTime = new Date();
+            isoDateTime.setHours(parseInt(hour, 10));
+            isoDateTime.setMinutes(parseInt(minute, 10));
+            isoDateTime.setSeconds(0);
+            isoDateTime.setMilliseconds(0);
+
+            const fullISO = isoDateTime.toISOString();
+
+            // Send full ISO string to backend
+            await editOrdersStatus(selectedOrder.orderId, "Accepted", fullISO);
+
+            // Update frontend state with full ISO string
+            changeStatus(selectedOrder.orderId, "Accepted", fullISO);
+
             handleCloseForm();
           }}
         />
+      )}
+      {showError && (
+        <ErrorPopup message={errorMessage} onClose={handleCloseError} />
       )}
     </div>
   );
