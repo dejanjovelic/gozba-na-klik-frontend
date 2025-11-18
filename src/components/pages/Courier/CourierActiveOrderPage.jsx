@@ -118,16 +118,27 @@ const CourierActiveOrderPage = () => {
 
                     <div className="card-content">
                         <div className="card-content-text">
-                            Restaurant: {activeOrder?.restaurantName}
+                            <b>Restaurant:</b> {activeOrder?.restaurantName}
                         </div>
                         <div className="card-content-text">
-                            Delivery Address: {activeOrder?.deliveryAddress.street} {activeOrder?.deliveryAddress.streetNumber}, {activeOrder?.deliveryAddress.zipCode} {activeOrder?.deliveryAddress.city}
+                            <b>Delivery Address:</b> {activeOrder?.deliveryAddress.street} {activeOrder?.deliveryAddress.streetNumber}, {activeOrder?.deliveryAddress.zipCode} {activeOrder?.deliveryAddress.city}
                         </div>
                         <div className="card-content-text">
-                            Customer: {activeOrder?.customerName}
+                            <b>Ordered items:</b>
+                            {activeOrder?.orderItems.map((item, index) => (
+                                <div key={index} className="ordered-item">
+                                    <span className="item-name"><b>Item:</b> {item.mealName}</span>
+                                    <span className="item-quantity"><b>Quantity:</b> {item.quantity}</span>
+                                </div>
+                            ))}
+                        </div>
+
+
+                        <div className="card-content-text">
+                            <b>Customer:</b> {activeOrder?.customerName}
                         </div>
                         <div className="card-content-text">
-                            Status: {
+                            <b>Status:</b> {
                                 normalizedStatus === "pickupinprogress"
                                     ? "Pickup in progress"
                                     : normalizedStatus === "deliveryinprogress"
