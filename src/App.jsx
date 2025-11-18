@@ -23,6 +23,7 @@ import RestaurantPaginationFilterSort from "./components/pages/Restaurant/Restau
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 import CustomerMeals from "./components/pages/Customer/CustomerMeals";
 import RestaurantMenu from "./components/pages/RestaurantMenu";
+import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrderPage";
 
 const App = () => {
   return (
@@ -90,6 +91,7 @@ const App = () => {
             >
               <Route index element={<CourierHomePage />} />
               <Route path="workingHours" element={<CourierWorkingHours />} />
+              <Route path="order" element={<CourierActiveOrderPage />} />
             </Route>
 
             <Route
