@@ -17,27 +17,28 @@ import RestaurantOwnerHomePage from "./components/pages/RestaurantOwner/Restaura
 import CourierHomePage from "./components/pages/Courier/CourierHomePage";
 import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
-import "./styles/usersHomePage.scss"
+import "./styles/usersHomePage.scss";
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
+import CourierStatusUpdater from "./components/pages/Courier/CourierStatusUpdater";
 import RestaurantPaginationFilterSort from "./components/pages/Restaurant/RestaurantPaginationFilterSort";
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 import CustomerMeals from "./components/pages/Customer/CustomerMeals";
 import RestaurantMenu from "./components/pages/RestaurantMenu";
+import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 import { OrderProvider } from "./components/OrderContext";
 
 const App = () => {
   return (
     <div className="content">
-        <BrowserRouter>
-          <AuthProvider>
-            <Header />
-            <Routes>
-              <Route path="/"
-                element={
-                  <RestaurantPaginationFilterSort />} />
-              <Route path="/restaurant-menu/:id" element={<OrderProvider><RestaurantMenu /></OrderProvider>} />
-              <Route path="/register" element={<CustomerRegisterForm />} />
-              <Route path="/login" element={<LoginForm />}></Route>
+      <BrowserRouter>
+        <AuthProvider>
+          <CourierStatusUpdater />
+          <Header />
+          <Routes>
+            <Route path="/" element={<RestaurantPaginationFilterSort />} />
+            <Route path="/restaurant-menu/:id" element={<OrderProvider><RestaurantMenu /></OrderProvider>} />
+            <Route path="/register" element={<CustomerRegisterForm />} />
+            <Route path="/login" element={<LoginForm />}></Route>
 
               <Route
                 path="/administrator/*"
@@ -52,20 +53,22 @@ const App = () => {
                 <Route path="restaurants" element={<AdminRestaurants />} />
               </Route>
 
+            <Route
+              path="/restaurantOwner/*"
+              element={
+                <ProtectedRoute allowedRoles={["RestaurantOwner"]}>
+                  <UsersHomePage />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<RestaurantOwnerHomePage />} />
               <Route
-                path="/restaurantOwner/*"
-                element={
-                  <ProtectedRoute allowedRoles={["RestaurantOwner"]}>
-                    <UsersHomePage />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<RestaurantOwnerHomePage />} />
-                <Route
-                  path="restaurants"
-                  element={<RestaurantOwnerRestaurants />}
-                />
-              </Route>
+                path="restaurants"
+                element={<RestaurantOwnerRestaurants />}
+              />
+              <Route index element={<RestaurantOwnerHomePage />} />
+              <Route path="orderView" element={<RestaurantOwnerOrderView />} />
+            </Route>
 
               <Route
                 path="/customer/*"
