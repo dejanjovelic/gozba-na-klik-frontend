@@ -24,6 +24,16 @@ $hover-color: #FEC573;
         padding: 5rem 0 0 0;
         justify-content: space-between;
 
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100vh;
+        background-color: #EA9332;
+        z-index: 20000;
+        overflow: hidden;
+
         //LINIJA POSLE PROFILA
         .kratka-linija {
             height: 2px;

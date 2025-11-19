@@ -10,8 +10,10 @@ import {
   MapPin,
   Handbag,
 } from "lucide-react";
-import "../../styles/usersHomePage.scss";
-import { ListItemButton } from "@mui/material";
+import "../../styles/usersHomePage.scss"
+import { ListItemButton } from '@mui/material';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+
 
 const SideBar = ({ onLogout, onCloseSideMenu }) => {
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -27,14 +29,10 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
       },
     ],
     Customer: [
-      { icon: <Home />, path: "/customer", label: "Home", exact: true },
-      { icon: <Egg />, path: "/customer/allergens", label: "Allergens" },
-      {
-        icon: <MapPin />,
-        path: "/customer/addresses",
-        label: "Addresses",
-        exact: true,
-      },
+      { icon: <Home />, path: '/customer', label: 'Home', exact: true },
+      { icon: <Egg />, path: '/customer/allergens', label: 'Allergens' },
+      { icon: <MapPin />, path: '/customer/addresses', label: 'Addresses', exact: true },
+      { icon: <RestaurantMenuIcon />, path: '/customer/meals', label: 'Meals', exact: true }
     ],
     RestaurantOwner: [
       { icon: <Home />, path: "/restaurantOwner", label: "Home", exact: true },

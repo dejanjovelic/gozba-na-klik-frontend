@@ -20,8 +20,9 @@ import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours"
 import "./styles/usersHomePage.scss";
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
 import CourierStatusUpdater from "./components/pages/Courier/CourierStatusUpdater";
-import RestaurantPaginationFilterSort from "./components/pages/RestaurantPaginationFilterSort";
+import RestaurantPaginationFilterSort from "./components/pages/Restaurant/RestaurantPaginationFilterSort";
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
+import CustomerMeals from "./components/pages/Customer/CustomerMeals";
 import RestaurantMenu from "./components/pages/RestaurantMenu";
 import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 
@@ -79,6 +80,7 @@ const App = () => {
               <Route index element={<CustomerHomePage />} />
               <Route path="allergens" element={<CustomerAllergens />} />
               <Route path="addresses" element={<CustomerAddresses />} />
+              <Route path="meals" element={<CustomerMeals />} />
             </Route>
 
             <Route

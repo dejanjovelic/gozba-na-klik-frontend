@@ -1,0 +1,56 @@
+.searchBar-container {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+
+    #serchBar-main {
+        display: flex;
+        justify-content: center;
+        width: 50rem;
+        border-radius: 50px;
+
+        .lucide.lucide-search {
+            height: 25px;
+            width: 25px;
+            color: white;
+            font-weight: bold;
+        }
+    }
+
+}
+
+
+#searchBarInput-container {
+    form {
+        display: flex;
+        height: 100%;
+        
+
+        input {
+            width: 41.7rem;
+            border-radius: 50px;
+            font-size: 20px;
+            padding: 10px;
+            color: grey;
+            margin-right: 10px;
+            border: 1px solid lightgray;
+            &:focus{
+                outline: none;
+                border: 1px solid lightgray;
+                box-shadow: none;
+            }
+        }
+    }
+
+    #searchBtn {
+        height: 100%;
+        width: 5rem;
+        border-radius: 50px;
+        background-color: #ea9332;
+        border: 1px solid #ea9332;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
