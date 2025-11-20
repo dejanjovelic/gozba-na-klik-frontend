@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/RestaurantPaginationFilterSort.scss"
-import { fetchPaginatedFilteredAndSortedRestaurants, fetchRestaurantSortType } from "../../services/RestaurantService";
-import SortTypeDropdown from "../sharedComponents/SortTypeDropdown";
-import FilterSection from "../sharedComponents/FilterSection";
-import PagionationSection from "../sharedComponents/PaginationSection";
+import "../../../styles/RestaurantPaginationFilterSort.scss";
+import { fetchPaginatedFilteredAndSortedRestaurants, fetchRestaurantSortType } from "../../../services/RestaurantService";
+import SortTypeDropdown from "../../sharedComponents/SortTypeDropdown"
+import FilterSection from "../../sharedComponents/FilterSection";
+import PagionationSection from "../../sharedComponents/PaginationSection";
 import { useNavigate } from "react-router-dom";
-import RatingComponent from "../sharedComponents/RatingComponent";
+import RatingComponent from "../../sharedComponents/RatingComponent";
 import { PeopleAlt, } from "@mui/icons-material";
-import Spinner from "../sharedComponents/Spiner";
-import ErrorPopup from "./Popups/ErrorPopup";
+import Spinner from "../../sharedComponents/Spiner";
+import ErrorPopup from "../Popups/ErrorPopup";
 
 
 const RestaurantPaginationFilterSort = () => {
@@ -44,7 +44,6 @@ const RestaurantPaginationFilterSort = () => {
             setTotalRowsCount(data.totalRowsCount);
             setHasPreviousPage(data.hasPreviousPage);
             setHasNextPage(data.hasNextPage);
-
             setIsLoading(false);
         } catch (error) {
             if (error.status) {
@@ -105,6 +104,12 @@ const RestaurantPaginationFilterSort = () => {
     useEffect(() => {
         getRestaurantsPage();
     }, [chosenFilters, chosenSortType, page, pageSize]);
+
+    useEffect(() => {
+        if (!showError && restaurants === null) {
+            getRestaurantsPage();
+        }
+    }, [showError]);
 
     if (showError) {
         return (

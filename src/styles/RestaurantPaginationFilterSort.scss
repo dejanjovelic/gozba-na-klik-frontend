@@ -35,6 +35,24 @@
     }
 }
 
+.restaurants-title {
+    margin: 15px;
+}
+
+#restaurant-img {
+    width: 100%;
+    height: 220px;
+}
+
+.restaurantData-capacity {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.restaurant-name {
+    margin: 10px;
+}
+
 .restaurantData-section {
     display: flex;
 
@@ -74,20 +92,3 @@
     margin-top: 10px;
 }
 
-.restaurants-title {
-    margin: 15px;
-}
-
-#restaurant-img {
-    width: 100%;
-    height: 220px;
-}
-
-.restaurantData-capacity {
-    text-align: center;
-    vertical-align: middle;
-}
-
-.restaurant-name {
-    margin: 10px;
-}
