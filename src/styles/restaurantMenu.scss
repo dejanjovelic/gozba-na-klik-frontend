@@ -8,6 +8,7 @@
 
   .restaurant-div {
     width: 70%;
+
     #restaurant-upper-section {
       display: flex;
       justify-content: space-between;
@@ -27,6 +28,7 @@
 
     #restaurant-middle-section {
       width: 100%;
+
       #restaurant-image {
         border-radius: 5px;
         align-content: center;
@@ -49,12 +51,22 @@
       width: 40%;
       display: flex;
       justify-content: space-between;
-      border: 1px solid rgb(165, 165, 165);
       border-radius: 10px;
       padding-left: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 10px #0000001a;
+      &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+      &.selected {
+        background-color: #f5e4cb;
+      }
 
       .meal-image {
         position: relative;
+
         img {
           width: 180px;
           height: 100%;
