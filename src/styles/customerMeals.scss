@@ -1,132 +1,129 @@
-@use "./global.scss" as*;
+@use "./global.scss" as *;
 
 .customerPaginationMeals-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-rizt0-MuiTypography-root {
+  margin-left: 20px;
+}
+
 }
 
 .customerPaginationMeals-main {
-    flex: 1;
-    padding-bottom: 2rem;
+  flex: 1;
+  padding-bottom: 2rem;
 }
 
 .customerMeals-container {
-    flex-grow: 1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-
 .switchSelect-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
 }
 
 .customerMeals-title {
-    margin-left: 50px;
+  margin-left: 50px;
 }
 
-
 .customerMeal-card {
+  display: flex;
+  border-radius: 10px;
+  width: 35%;
+  min-height: 10rem;
+  height: 12rem;
+  margin: 10px;
+  padding: 10px;
+  min-width: 300px;
+  box-shadow: 0 0 10px #0000001a;
+  background-color: white;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .customerMealData-section {
     display: flex;
-    border-radius: 10px;
-    width: 35%;
-    min-height: 10rem;
-    height: 12rem;
-    margin: 10px;
-    padding: 10px;
-    min-width: 300px;
-    box-shadow: 0 0 10px #0000001a;
-    background-color: white;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 10px;
+    width: 60%;
+  }
+
+  .customerMealImage-section {
+    width: 40%;
+    position: relative;
+
+    img {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
+
+  #add-meal-to-cart {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.2s ease;
 
     &:hover {
-        transform: scale(1.03);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      background-color: white;
+      color: #ff6600;
     }
+  }
 
-    .customerMealData-section {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding-right: 10px;
-        width: 60%;
-    }
+  #customerMealImage {
+    width: 100%;
+    height: 12rem;
+  }
 
-    .customerMealImage-section {
-        width: 40%;
-        position: relative;
-
-        img {
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-    }
-
-    #add-meal-to-cart {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        background-color: #ff6600;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s ease;
-
-        &:hover {
-            background-color: white;
-            color: #ff6600;
-        }
-    }
-
-    #customerMealImage {
-        width: 100%;
-        height: 12rem;
-    }
-
-    .customerMeal-name {
-        margin: 15px 0;
-    }
-
+  .customerMeal-name {
+    margin: 15px 0;
+  }
 }
 
 #multipleSelectionSaveBtn-container {
-    margin-top: 0.3rem;
-    display: flex;
-    justify-content: center;
+  margin-top: 0.3rem;
+  display: flex;
+  justify-content: center;
 
-    #multipleSelectionSaveBtn {
-        background-color: $color-orange;
-        border: $color-orange;
-        font-size: 15px;
-        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-        color: white;
-        font-weight: bold;
-        padding: 8px;
-        border-radius: 7px;
-    }
+  #multipleSelectionSaveBtn {
+    background-color: $color-orange;
+    border: $color-orange;
+    font-size: 15px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    color: white;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 7px;
+  }
 }
 
 .MuiList-root.MuiList-padding.MuiMenu-list.css-1toxriw-MuiList-root-MuiMenu-list {
-    background-color: white;
+  background-color: white;
 }
 
 .switch-container {
-    width: 250px;
-
+  width: 250px;
 }
 
-.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-rizt0-MuiTypography-root {
-    margin-left: 20px;
-}

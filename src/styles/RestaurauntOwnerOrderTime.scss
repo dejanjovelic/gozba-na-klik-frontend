@@ -8,7 +8,7 @@
   transform: translate(-50%, -50%) scale(0.8);
   opacity: 0;
   z-index: 1000;
-  animation: popupFadeIn 0.3s ease forwards;
+  animation: popupFadeIn4 0.3s ease forwards;
   background-color: rgb(235, 180, 109);
   padding: 20px;
   overflow: hidden;
@@ -42,7 +42,7 @@
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 999;
 }
-@keyframes popupFadeIn {
+@keyframes popupFadeIn4 {
   from {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
@@ -53,7 +53,7 @@
   }
 }
 
-@keyframes popupFadeOut {
+@keyframes popupFadeOut4 {
   from {
     opacity: 1;
     transform: scale(1);

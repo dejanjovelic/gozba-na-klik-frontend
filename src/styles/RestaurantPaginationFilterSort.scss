@@ -1,94 +1,93 @@
-@use "./global.scss" as*;
+@use "./global.scss" as *;
 
 .restaurants-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    flex: 1;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex: 1;
+  margin-top: 20px;
 }
 
 .restaurant-card {
-    border-radius: 10px;
-    width: 25%;
-    min-height: 10rem;
-    margin: 10px;
-    padding: 10px;
-    min-width: 300px;
-    box-shadow: 0 0 10px #0000001a;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    cursor: pointer;
+  border-radius: 10px;
+  width: 25%;
+  min-height: 10rem;
+  margin: 10px;
+  padding: 10px;
+  min-width: 300px;
+  box-shadow: 0 0 10px #0000001a;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
 
-    &:hover {
-        transform: scale(1.03);
+  &:hover {
+    transform: scale(1.03);
 
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .img-section {
+    height: 70%;
+
+    img {
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
     }
-
-    .img-section {
-        height: 70%;
-
-        img {
-            border-top-right-radius: 10px;
-            border-top-left-radius: 10px;
-        }
-    }
+  }
 }
 
 .restaurants-title {
-    margin: 15px;
+  margin: 15px;
 }
 
 #restaurant-img {
-    width: 100%;
-    height: 220px;
+  width: 100%;
+  height: 220px;
 }
 
 .restaurantData-capacity {
-    text-align: center;
-    vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .restaurant-name {
-    margin: 10px;
+  margin: 10px;
 }
 
 .restaurantData-section {
-    display: flex;
+  display: flex;
 
-    .restaurantData-section-rightSide {
-        flex: 1;
-        min-width: 25%;
-    }
+  .restaurantData-section-rightSide {
+    flex: 1;
+    min-width: 25%;
+  }
 
-    .restaurantData-section-leftSide {
-        flex: 1 1;
-        min-width: 70%;
-    }
+  .restaurantData-section-leftSide {
+    flex: 1 1;
+    min-width: 70%;
+  }
 }
 
 //CONTAINER FILTERA
 .MuiBox-root.css-0 {
-    width: 50%;
+  width: 50%;
 }
 
 .sortAndFilter-container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .RestaurantPaginationFilterSort-pageContainer {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 15px;
 }
 
 .RestaurantPaginationFilterSort-main {
-    flex: 1;
+  flex: 1;
 }
 
 .MuiBox-root.css-inv2e3 {
-    margin-top: 10px;
+  margin-top: 10px;
 }
-
