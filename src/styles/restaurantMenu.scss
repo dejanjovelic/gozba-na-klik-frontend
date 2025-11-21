@@ -1,4 +1,12 @@
+$color-orange: #ea9332;
+$color-text: white;
+
 .restaurant-container {
+  display: flex;
+}
+
+.restaurant-container-left {
+  flex: 1;
   overflow: auto;
   height: 100%;
   display: flex;
@@ -55,10 +63,11 @@
       padding-left: 20px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 0 10px #0000001a;
+
       &:hover {
         transform: scale(1.03);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    }
+      }
 
       &.selected {
         background-color: #f5e4cb;
@@ -113,4 +122,40 @@
       }
     }
   }
+}
+
+.link {
+  cursor: pointer;
+}
+
+.basket-container {
+  width: 20%;
+  height: 80vh;
+  margin: auto 20px;
+  overflow: auto;
+
+  .basket-item {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+#SucessPopupContainer {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%) !important;
+  z-index: 1000;
+}
+
+#checkout-btn {
+  background-color: $color-orange;
+  color: $color-text;
+  padding: 5px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: 1px solid $color-orange;
+  height: 2.2rem;
+  width: 6rem;
+  cursor: pointer;
 }
