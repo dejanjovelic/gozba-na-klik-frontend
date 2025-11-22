@@ -13,7 +13,7 @@ body {
   transform: translate(-50%, -50%) scale(0.8);
   opacity: 0;
   z-index: 1000;
-  animation: popupFadeIn 0.3s ease forwards;
+  animation: popupFadeInMain 0.3s ease forwards;
   #messageContainer {
     display: inline;
     margin-left: 20px;
@@ -59,12 +59,11 @@ body {
   height: 150px;
   border-radius: 10px;
   position: fixed;
-  top: 30%;
-  left: 40%;
-  transform: translate(-50%, -50%) scale(0.8);
+  top: 50%;
+  left: 50%;
   opacity: 1;
   z-index: 1000;
-  animation: popupFadeIn 0.3s ease forwards;
+  animation: popupFadeInMain 0.3s ease forwards;
   #messageContainer {
     display: inline;
     margin-left: 20px;
@@ -121,11 +120,11 @@ body {
   border-radius: 10px;
 
   &.fade-in {
-    animation: popupFadeIn 0.3s ease forwards;
+    animation: popupFadeInSuccess 0.3s ease forwards;
   }
 
   &.fade-out {
-    animation: popupFadeOut 0.3s ease forwards;
+    animation: popupFadeOutSuccess 0.3s ease forwards;
   }
   #messageContainer {
     display: flex;
@@ -157,7 +156,7 @@ body {
     right: 5px;
   }
 }
-@keyframes popupFadeIn {
+@keyframes popupFadeInMain {
   from {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
@@ -168,7 +167,29 @@ body {
   }
 }
 
-@keyframes popupFadeOut {
+@keyframes popupFadeOutMain {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes popupFadeInSuccess {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popupFadeOutSuccess {
   from {
     opacity: 1;
     transform: scale(1);
