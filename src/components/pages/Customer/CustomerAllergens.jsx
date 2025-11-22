@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Autocomplete,
   Button,
@@ -26,6 +26,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import "../../../styles/allergensPage.scss";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import UserContext from "../../../config/UserContext";
 
 const CustomerAllergens = () => {
 
@@ -39,20 +40,20 @@ const CustomerAllergens = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsloading] = useState(true);
 
-  const customer = JSON.parse(sessionStorage.getItem("user"));
+  const {user} = useContext(UserContext);
 
   const getLoadingData = async () => {
     try {
       const allergensFromDb = await getAllAllergens();
       setAllergens(allergensFromDb);
-      const customerAllergensFromDb = await getCustomerAllergens(customer.id);
+      const customerAllergensFromDb = await getCustomerAllergens(user.id);
       setCustomerAllergens(customerAllergensFromDb);
       await new Promise((resolve) => setTimeout(resolve, 500));
     } catch (error) {
       if (error.status) {
         if (error.status === 404) {
           showMessageAndNavigate(
-            `Customer with ${customer.id} ${customer.name} not found`,
+            `Customer with ${user.id} ${user.name} not found`,
             setErrorMsg
           );
         } else if (error.status === 500) {
@@ -91,7 +92,7 @@ const CustomerAllergens = () => {
   const handleSave = async () => {
     try {
       const allergensId = customerAllergens.map((allergen) => allergen.id);
-      await updateCustomersAllergens(customer.id, allergensId);
+      await updateCustomersAllergens(user.id, allergensId);
       showMessageAndNavigate(
         "You successfuly updated your allergen list.",
         setSuccessMsg
@@ -100,7 +101,7 @@ const CustomerAllergens = () => {
       if (error.status) {
         if (error.status === 404) {
           showMessageAndNavigate(
-            `Customer with ${customer.id} ${customer.name} not found`,
+            `Customer with ${user.id} ${user.name} not found`,
             setErrorMsg
           );
         } else if (error.status === 400) {

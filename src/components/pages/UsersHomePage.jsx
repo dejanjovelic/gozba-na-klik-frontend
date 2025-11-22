@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
+import UserContext from "../../config/UserContext";
 
 
 const UsersHomePage = () => {
-  const  user  = JSON.parse(sessionStorage.getItem('user'));
+  const  {user}  = useContext(UserContext);
 
   if (!user) return <Navigate to="/login" />;
 

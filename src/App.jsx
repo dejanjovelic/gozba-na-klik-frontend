@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/pages/Header";
 import Footer from "./components/pages/Footer";
@@ -23,12 +23,18 @@ import RestaurantPaginationFilterSort from "./components/pages/Restaurant/Restau
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 import CustomerMeals from "./components/pages/Customer/CustomerMeals";
 import RestaurantMenu from "./components/pages/RestaurantMenu";
+import UserContext from "./config/UserContext";
 
 const App = () => {
+  const token = localStorage.getItem('token');
+  const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
+  const [user, setUser] = useState(payload);
+
+
   return (
     <div className="content">
-      <BrowserRouter>
-        <AuthProvider>
+      <UserContext.Provider value={{ user, setUser }}>
+        <BrowserRouter>
           <Header />
           <Routes>
             <Route path="/"
@@ -41,7 +47,7 @@ const App = () => {
             <Route
               path="/administrator/*"
               element={
-                <ProtectedRoute allowedRoles={["Administrator"]}>
+                <ProtectedRoute allowedRoles={["administrator"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -54,7 +60,7 @@ const App = () => {
             <Route
               path="/restaurantOwner/*"
               element={
-                <ProtectedRoute allowedRoles={["RestaurantOwner"]}>
+                <ProtectedRoute allowedRoles={["restaurantOwner"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -69,7 +75,7 @@ const App = () => {
             <Route
               path="/customer/*"
               element={
-                <ProtectedRoute allowedRoles={["Customer"]}>
+                <ProtectedRoute allowedRoles={["customer"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -83,7 +89,7 @@ const App = () => {
             <Route
               path="/courier/*"
               element={
-                <ProtectedRoute allowedRoles={["Courier"]}>
+                <ProtectedRoute allowedRoles={["courier"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -95,7 +101,7 @@ const App = () => {
             <Route
               path="/employee/*"
               element={
-                <ProtectedRoute allowedRoles={["Employee"]}>
+                <ProtectedRoute allowedRoles={["employee"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -107,8 +113,8 @@ const App = () => {
             <Route path="/profile" element={<UserProfile />} />
           </Routes>
           <Footer />
-        </AuthProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </UserContext.Provider>
     </div>
   );
 };

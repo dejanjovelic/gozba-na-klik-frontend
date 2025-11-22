@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import '../../../styles/customerMeals.scss';
 import GlobalSearchSection from "../../sharedComponents/GlobalSearchSection";
 import PagionationSection from "../../sharedComponents/PaginationSection";
 import { getCustomerAllergens } from "../../../services/CustomerService";
 import { fetchFilteredMeals } from "../../../services/MealsService";
-import Spinner from "../../sharedComponents/Spiner";
+import Spinner from "../../sharedComponents/Spinner";
 import { FormControlLabel, Switch } from "@mui/material";
 import MultipleSelectCheckmarksComponent from "../../sharedComponents/MultipleSelectCheckmarksComponent";
 import { useNavigate } from "react-router-dom";
 import ErrorPopup from "../Popups/ErrorPopup";
+import UserContext from "../../../config/UserContext";
 
 const CustomerMeals = () => {
     const [meals, setMeals] = useState([]);
@@ -28,7 +29,7 @@ const CustomerMeals = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [showError, setShowError] = useState(false);
 
-    const customer = JSON.parse(sessionStorage.getItem("user"));
+    const {user} = useContext(UserContext);
 
 
     const handleQueryChange = (newQuery) => {
@@ -64,7 +65,7 @@ const CustomerMeals = () => {
     }
 
     const reqBody = {
-        customerId: customer.id,
+        customerId: user.id,
         hideMealsWithAllergens: hideMealsWithAllergens,
         additionalAllergensIds: additionalAllergensIds,
         query: query
@@ -104,13 +105,13 @@ const CustomerMeals = () => {
 
     const fetchCustomerAllegrens = async () => {
         try {
-            const customerAllergensFromDb = await getCustomerAllergens(customer.id);
+            const customerAllergensFromDb = await getCustomerAllergens(user.id);
             setCustomerAllergens(customerAllergensFromDb);
         } catch (error) {
 
             if (error.status) {
                 if (error.status === 404) {
-                    setErrorMessage(`Customer with ${customer.id} ${customer.name} not found`);
+                    setErrorMessage(`Customer with ${user.id} ${user.name} not found`);
                 } else if (error.status === 500) {
                     setErrorMessage("Server is temporarily unavailable. Please refresh or try again later.")
                 } else {

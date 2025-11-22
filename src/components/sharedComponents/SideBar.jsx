@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { 
   Users, 
@@ -12,13 +12,14 @@ import {
 import "../../styles/usersHomePage.scss"
 import { ListItemButton } from '@mui/material';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import UserContext from "../../config/UserContext";
 
 
 const SideBar = ({ onLogout, onCloseSideMenu }) => {
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const {user} = useContext(UserContext);
 
   const roleBasedLinks = {
-    Administrator: [
+    administrator: [
       { icon: <Home />, path: "/administrator", label: "Home", exact: true },
       { icon: <Users />, path: "/administrator/users", label: "Users" },
       {
@@ -27,13 +28,13 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
         label: "Restaurants",
       },
     ],
-    Customer: [
+    customer: [
       { icon: <Home />, path: '/customer', label: 'Home', exact: true },
       { icon: <Egg />, path: '/customer/allergens', label: 'Allergens' },
       { icon: <MapPin />, path: '/customer/addresses', label: 'Addresses', exact: true },
       { icon: <RestaurantMenuIcon />, path: '/customer/meals', label: 'Meals', exact: true }
     ],
-    RestaurantOwner: [
+    restaurantOwner: [
       { icon: <Home />, path: "/restaurantOwner", label: "Home", exact: true },
       {
         icon: <CookingPot />,
@@ -41,10 +42,10 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
         label: "Restaurants",
       },
     ],
-    Employee: [
+    employee: [
       { icon: <Home />, path: "/employee", label: "Home", exact: true },
     ],
-    Courier: [
+    courier: [
       { icon: <Home />, path: "/courier", label: "HomeS", exact: true },
       {
         icon: <CalendarClock />,
@@ -54,7 +55,8 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
     ],
   };
 
-  const links = [...(roleBasedLinks[user.role] || [])];
+  const role = user?.role?.toLowerCase();
+  const links = [...(roleBasedLinks[role] || [])];
 
   return (
     <aside className="sidebar-container">
@@ -62,7 +64,7 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
         <NavLink to={"/profile"}>
           {({ isActive }) => (
             <ListItemButton selected={isActive}>
-              <User /> {user.name} {user.surname}
+              <User /> {user?.name} {user?.surname}
             </ListItemButton>
           )}
         </NavLink>

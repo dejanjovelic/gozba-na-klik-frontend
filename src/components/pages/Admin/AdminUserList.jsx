@@ -35,6 +35,7 @@ const AdminUserList = () => {
         try {
             const data = await GetAllUsers();
             setUsers(data);
+            console.log(data)
         }
         catch (error) {
             if (error.status && error.status === 500) {
@@ -85,7 +86,7 @@ const AdminUserList = () => {
                             <tr key={user.id}>
                                 <td data-label="ID">{user.id}</td>
                                 <td data-label="Full Name">{`${user.name} ${user.surname}`}</td>
-                                <td data-label="Username">{user.username}</td>
+                                <td data-label="Username">{user.userName}</td>
                                 <td data-label="Email">{user.email}</td>
                                 <td data-label="Role">{user.role}</td>
                             </tr>
