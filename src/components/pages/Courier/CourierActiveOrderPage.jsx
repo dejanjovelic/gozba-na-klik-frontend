@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../../styles/courierOrderPage.scss"
 import { fetchCourierActiveOrder, updateCourierActiveOrder } from "../../../services/OrderService";
 import ErrorPopup from "../Popups/ErrorPopup";
 import Spinner from "../../sharedComponents/Spinner";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../../config/UserContext";
+import SucessPopup from "../Popups/SucessPopup";
 
 const CourierActiveOrderPage = () => {
     const [activeOrder, setActiveOrder] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const { user } = useContext(UserContext);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const getCourierActiveOrder = async () => {
         try {
@@ -81,6 +84,7 @@ const CourierActiveOrderPage = () => {
 
     const handleOrderDelivery = () => {
         updateActiveOrderForCourier({ newStatus: "Delivered" })
+        setSuccessMessage("You succesfully delivered order")
     }
 
     const handleOrderPickup = () => {
@@ -165,9 +169,20 @@ const CourierActiveOrderPage = () => {
             ) : (
                 <div className="no-order-message">
                     <h3>You currently have no assigned orders.</h3>
+                    {successMessage &&  
+                    <SucessPopup 
+                    addClassName="active-message" 
+                    message={successMessage} 
+                    timeOut={3} 
+                    onClose={()=>setSuccessMessage("")}
+                    />}
                 </div>
             )}
         </div>
     );
 }
 export default CourierActiveOrderPage;
+
+
+
+{/* <SucessPopup message={successMessage} timeOut={10000} onClose={()=>setSuccessMessage("")}/> */}

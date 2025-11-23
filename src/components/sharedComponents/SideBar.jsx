@@ -30,12 +30,14 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
         label: "Restaurants",
       },
     ],
+
     customer: [
       { icon: <Home />, path: '/customer', label: 'Home', exact: true },
       { icon: <Egg />, path: '/customer/allergens', label: 'Allergens' },
       { icon: <MapPin />, path: '/customer/addresses', label: 'Addresses', exact: true },
       { icon: <RestaurantMenuIcon />, path: '/customer/meals', label: 'Meals', exact: true }
     ],
+
     restaurantOwner: [
       { icon: <Home />, path: "/restaurantOwner", label: "Home", exact: true },
       {
@@ -49,10 +51,12 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
         label: "Orders",
       },
     ],
+
     employee: [
       { icon: <Home />, path: "/employee", label: "Home", exact: true },
     ],
-    Courier: [
+
+    courier: [
       { icon: <Home />, path: "/courier", label: "Home", exact: true },
       {
         icon: <CalendarClock />,
