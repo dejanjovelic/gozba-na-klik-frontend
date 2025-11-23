@@ -26,10 +26,11 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
   } = useForm({ mode: "onChange" });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState('');
 
   const onSubmit = async (data) => {
     try {
-      const user = data.role === "Courier" ? await createCourier(data) : await createRestaurantOwner(data);
+      const user = role === "courier" ? await createCourier(data) : await createRestaurantOwner(data);
       successMsg(`You have successfuly created ${user.role}.`);
     } catch (error) {
       if (error.status) {
@@ -115,19 +116,19 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
           {<div className="input-error-message">{errors.email?.message}</div>}
 
           <TextField
-            label="Contact Number"
+            label="Phone Number"
             placeholder="+381637566778"
             fullWidth
-            className={`custom-input ${errors.contactNumber ? "error-field" : ""}`}
-            {...register("contactNumber", {
-              required: "Contact number is required.",
+            className={`custom-input ${errors.phoneNumber ? "error-field" : ""}`}
+            {...register("phoneNumber", {
+              required: "Phone number is required.",
               pattern: {
                 value: /^\+3816\d{7,8}$/,
                 message: "Use format +3816XXXXXXXX",
               },
             })}
           />
-          {<div className="input-error-message">{errors.contactNumber?.message}</div>}
+          {<div className="input-error-message">{errors.phoneNumber?.message}</div>}
 
           <TextField
             label="Password"
@@ -154,22 +155,23 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
           {<div className="input-error-message">{errors.password?.message}</div>}
           <div className="role-div">
             <label className="role-label">Role</label>
-            <RadioGroup row defaultValue="Courier">
+            <RadioGroup
+              row
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
               <FormControlLabel
-                value="Courier"
+                value="courier"
                 control={<Radio />}
                 label="Courier"
-                {...register("role", { required: true })}
               />
               <FormControlLabel
-                value="RestaurantOwner"
+                value="restaurantOwner"
                 control={<Radio />}
                 label="Restaurant Owner"
-                {...register("role", { required: true })}
               />
             </RadioGroup>
           </div>
-
 
           <Button
             type="submit"

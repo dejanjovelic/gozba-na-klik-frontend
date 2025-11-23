@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../../styles/customerAddresses.scss";
 import { createAddress, deleteAddress, getAddresses, updateAddress } from "../../../services/CustomerService";
 import CustomerAddressForm from "../../forms/customer/CustomerAddressForm";
 import ErrorPopup from "../Popups/ErrorPopup";
+import UserContext from "../../../config/UserContext";
 
 const CustomerAddresses = () => {
     const [addresses, setAddresses] = useState([]);
-    const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+    const {user} = useContext(UserContext);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const handleCloseError = () => setShowError(false);

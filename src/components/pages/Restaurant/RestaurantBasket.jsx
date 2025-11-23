@@ -6,14 +6,15 @@ import { cancelOrder, createOrder } from "../../../services/OrderService";
 import ErrorPopup from "../Popups/ErrorPopup";
 import SucessPopup from "../Popups/SucessPopup";
 import ConfirmationPopup from "../Popups/ConfirmationPopup";
+import UserContext from "../../../config/UserContext";
 
 const RestaurantBasket = () => {
     const { state, dispatch } = useContext(OrderContext);
-    const user = JSON.parse(sessionStorage.getItem("user") || "null");
+    const {user} = useContext(UserContext);
     const [addresses, setAddresses] = useState(null);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccesMessage] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(false);
     const [showAllergenConfirmation, setShowAllergenConfirmation] = useState(false);
     const [allergenConfirmationMessage, setAllergenConfirmationMessage] = useState("");
     const [showOrderConfirmation, setShowOrderConfirmation] = useState(false);
@@ -21,10 +22,10 @@ const RestaurantBasket = () => {
     const [orderId, setOrderId] = useState(-1);
     const [isLoading, setIsLoading] = useState(false);
     const handleCloseError = () => setShowError(false);
-    const handleCloseSuccess = () => setSucsessMessage(false);
+    const handleCloseSuccess = () => setSuccsessMessage(false);
     const navigate = useNavigate();
 
-    const total = state.items.reduce((s, x) => s + x.price, 0) + (state.items.length > 0 ? 200 : 0);
+    const total = state.items.reduce((s, x) => s + x.price, 0) + (state.items.length > 0 ? 2 : 0);
 
     const groupedItems = state.items.reduce((accumulator, item) => {
         const existing = accumulator.find(i => i.id === item.id)
@@ -38,11 +39,11 @@ const RestaurantBasket = () => {
 
     const handleAllergenConfirmYes = async () => {
         setShowAllergenConfirmation(false);
-        setSuccesMessage("Order successfully confirmed")
+        setSuccessMessage("Order successfully confirmed")
         dispatch({ type: "CLEAR_ORDER" });
 
         setInterval(() => {
-            setSuccesMessage("");
+            setSuccessMessage("");
         }, 2000);
     };
 
@@ -50,11 +51,11 @@ const RestaurantBasket = () => {
         setShowAllergenConfirmation(false);
         cancelOrder(id);
 
-        setSuccesMessage("Order successfully cancelled");
+        setSuccessMessage("Order successfully cancelled");
         dispatch({ type: "CLEAR_ORDER" });
 
         setInterval(() => {
-            setSuccesMessage("");
+            setSuccessMessage("");
         }, 2000);
     }
 
@@ -133,7 +134,7 @@ const RestaurantBasket = () => {
             }
 
             dispatch({ type: "CLEAR_ORDER" });
-            setSuccesMessage("Order successfully placed!");
+            setSuccessMessage("Order successfully placed!");
         } catch (error) {
             let message = "Something went wrong. Please try again.";
 
@@ -181,12 +182,12 @@ const RestaurantBasket = () => {
             {groupedItems.length === 0 ? (
                 <p>No items yet</p>
             ) : (
-                groupedItems.map((meal, index) => (
-                    <div key={index}>
+                groupedItems.map((meal) => (
+                    <div key={meal.id}>
                         <hr />
                         <div className="basket-item">
                             <p>{meal.mealName} {meal.quantity}x</p>
-                            <p>{meal.price * meal.quantity}RSD</p>
+                            <p>{meal.price * meal.quantity} €</p>
                         </div>
                     </div>
                 ))
@@ -212,14 +213,14 @@ const RestaurantBasket = () => {
                     </span>
                 </p>}
             <br />
-            <p>Delivery fee: {state.items.length > 0 ? `200` : `0`}RSD</p>
+            <p>Delivery fee: {state.items.length > 0 ? `2` : `0`} €</p>
 
 
 
             <hr />
 
             <p className="basket-total">
-                <strong>Total:</strong> {total}RSD
+                <strong>Total:</strong> {total} €
             </p>
 
             <button id="checkout-btn" onClick={handleCheckout}>{isLoading ? <span className="spinner"></span> : "Checkout"}</button>

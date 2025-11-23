@@ -11,20 +11,10 @@ const CustomerAddressForm = ({ addressId, defaultValues, onSave, isEditing, onEd
     };
 
     useEffect(() => {
-        reset({
-            id: defaultValues.id,
-            street: defaultValues.street || '',
-            streetNumber: defaultValues.streetNumber || '',
-            city: defaultValues.city || '',
-            zipCode: defaultValues.zipCode || ''
-        });
-    }, [
-        defaultValues.street,
-        defaultValues.streetNumber,
-        defaultValues.city,
-        defaultValues.zipCode,
-        reset
-    ]);
+  if (isEditing) {
+    reset(defaultValues);
+  }
+}, [isEditing]);
 
     return (
         <div className="address-card">

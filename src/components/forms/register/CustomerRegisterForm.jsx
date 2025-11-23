@@ -6,7 +6,7 @@ import { Tooltip } from "react-tooltip";
 import ErrorPopup from "../../pages/Popups/ErrorPopup";
 import "react-tooltip/dist/react-tooltip.css";
 import { Eye, EyeOff } from "lucide-react";
-import Spinner from "../../sharedComponents/Spiner";
+import Spinner from "../../sharedComponents/Spinner";
 import { useAuth } from "../../../config/AuthContext";
 
 const CustomerRegisterForm = () => {
