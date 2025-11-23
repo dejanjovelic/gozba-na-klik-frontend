@@ -1,9 +1,8 @@
-import { Alert } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "../../../styles/courierOrderPage.scss"
 import { fetchCourierActiveOrder, updateCourierActiveOrder } from "../../../services/OrderService";
 import ErrorPopup from "../Popups/ErrorPopup";
-import Spinner from "../../sharedComponents/Spiner";
+import Spinner from "../../sharedComponents/Spinner";
 import { useNavigate } from "react-router-dom";
 
 const CourierActiveOrderPage = () => {

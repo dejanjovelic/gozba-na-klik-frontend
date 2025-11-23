@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
+import UserContext from "../../config/UserContext";
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const {user} = useContext(UserContext);
 
-  function lowercaseFirstLetter(word) {
+  function normalizedRole(word) {
     return `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
   }
 
@@ -12,8 +13,8 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (!allowedRoles.includes(user.role)) {
-    return <Navigate to={`/${lowercaseFirstLetter(user.role)}`} replace />;
+  if (!allowedRoles.includes(normalizedRole(user.role))) {
+    return <Navigate to={`/${normalizedRole(user.role)}`} replace />;
   }
 
   return children;

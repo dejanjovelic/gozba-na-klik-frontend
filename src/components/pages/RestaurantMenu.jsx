@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getRestaurantWithMeals } from "../../services/RestaurantService";
 import "../../styles/restaurantMenu.scss";
 import RatingComponent from "../sharedComponents/RatingComponent";
 import { PeopleAlt } from "@mui/icons-material";
 import { getCustomerAllergens } from "../../services/CustomerService";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import Spiner from "../sharedComponents/Spiner";
+import Spiner from "../sharedComponents/Spinner";
 import ErrorPopup from "./Popups/ErrorPopup";
+import UserContext from "../../config/UserContext";
 
 const RestaurantMenu = () => {
   const [restaurant, setRestaurant] = useState(null);
   const [customerAllergens, setCustomerAllergens] = useState(null);
-  const user = JSON.parse(sessionStorage.getItem("user") || null);
+  const {user} = useContext(UserContext);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -127,7 +128,7 @@ const RestaurantMenu = () => {
                       </p>
                     )}
                   </div>
-                  <p id="meal-price">{meal.price}$</p>
+                  <p id="meal-price">{meal.price} eur</p>
                 </div>
                 <div className="meal-image">
                   <img src={meal.mealImageUrl} alt="Meal image" />

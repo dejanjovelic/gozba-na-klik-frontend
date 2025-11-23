@@ -21,14 +21,11 @@ const MenuProps = {
 export default function MultipleSelectCheckmarksComponent({ allAllergens, onChange, customerAllergens }) {
   const [selectedNames, setSelectedNames] = useState([]);
   const initialLockedNamesRef = useRef([]);
-  console.log(customerAllergens)
-
   useEffect(() => {
     const initialLocked = customerAllergens
       .map(a => a.name);
 
     initialLockedNamesRef.current = initialLocked;
-    console.log(initialLockedNamesRef.current)
 
     setSelectedNames(prev => [...new Set([...prev, ... initialLockedNamesRef.current])]);
   }, [allAllergens]);

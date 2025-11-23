@@ -7,7 +7,7 @@ import PagionationSection from "../../sharedComponents/PaginationSection";
 import { useNavigate } from "react-router-dom";
 import RatingComponent from "../../sharedComponents/RatingComponent";
 import { PeopleAlt, } from "@mui/icons-material";
-import Spinner from "../../sharedComponents/Spiner";
+import Spinner from "../../sharedComponents/Spinner";
 import ErrorPopup from "../Popups/ErrorPopup";
 
 
