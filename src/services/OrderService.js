@@ -1,5 +1,17 @@
-import AxiosConfig from "../config/AxiosConfig";
+import AxiosConfig from "../config/axiosConfig";
+
 const RESOURCE = "/api/orders";
+
+export async function fetchCourierActiveOrder(courierId) {
+    const response = await AxiosConfig.get(`${RESOURCE}/active?courierId=${courierId}`)
+    return response.data;
+}
+
+export async function updateCourierActiveOrder(orderId, data) {
+    const response = await AxiosConfig.put(`${RESOURCE}/${orderId}/status`, data)
+    return response.data;
+}
+
 export async function getOrdersByOwnerId(ownerId) {
   const response = await AxiosConfig.get(`${RESOURCE}/orders/${ownerId}`);
   return response.data;

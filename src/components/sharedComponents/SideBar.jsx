@@ -11,6 +11,13 @@ import {
   Handbag,
 } from "lucide-react";
 import "../../styles/usersHomePage.scss"
+
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import { ListItemButton } from '@mui/material';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 
@@ -51,12 +58,13 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
       { icon: <Home />, path: "/employee", label: "Home", exact: true },
     ],
     Courier: [
-      { icon: <Home />, path: "/courier", label: "HomeS", exact: true },
+      { icon: <Home />, path: "/courier", label: "Home", exact: true },
       {
         icon: <CalendarClock />,
         path: "/courier/workingHours",
         label: "Working hours",
       },
+      { icon: <AssignmentIcon />, path: "/courier/order", label: "Order", exact: true },
     ],
   };
 
