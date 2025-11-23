@@ -103,6 +103,14 @@
             transparent 100%);
 }
 
+.active-message.fade-in {
+    margin-top: 300px;
+}
+
+.active-message.fade-out {
+    margin-top: 300px;
+}
+
 .no-order-message {
     width: 100%;
     max-width: 600px;
@@ -124,5 +132,5 @@
 }
 
 .item-quantity {
-  margin-left: 16px;
+    margin-left: 16px;
 }
