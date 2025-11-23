@@ -7,7 +7,8 @@ import {
   Home,
   User,
   Egg,
-  MapPin
+  MapPin,
+  Handbag,
 } from "lucide-react";
 import "../../styles/usersHomePage.scss"
 
@@ -46,6 +47,11 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
         icon: <CookingPot />,
         path: "/restaurantOwner/restaurants",
         label: "Restaurants",
+      },
+      {
+        icon: <Handbag />,
+        path: "/restaurantOwner/orderView",
+        label: "Orders",
       },
     ],
     Employee: [

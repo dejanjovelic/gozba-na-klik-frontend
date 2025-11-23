@@ -42,7 +42,7 @@ const CourierActiveOrderPage = () => {
     const updateActiveOrderForCourier = async (data) => {
         try {
             setIsLoading(true);
-            const updatedOrder = await updateCourierActiveOrder(activeOrder.id, user.id, data);
+            const updatedOrder = await updateCourierActiveOrder(activeOrder.id, data);
             setActiveOrder(updatedOrder);
             setIsLoading(false);
         } catch (error) {

@@ -1,0 +1,65 @@
+.formContainer {
+  width: 300px;
+  height: 150px;
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  z-index: 1000;
+  animation: popupFadeIn4 0.3s ease forwards;
+  background-color: rgb(235, 180, 109);
+  padding: 20px;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  form {
+    text-align: center;
+    .submitButton {
+      background-color: green;
+    }
+    .closeButton {
+      background-color: red;
+    }
+    button {
+      padding: 10px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      width: 100px;
+      border-radius: 10px;
+      border: none;
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 30px;
+      color: white;
+    }
+  }
+}
+#Overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+@keyframes popupFadeIn4 {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes popupFadeOut4 {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
