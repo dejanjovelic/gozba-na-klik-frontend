@@ -74,7 +74,6 @@ const AdminUserList = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Full Name</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -84,7 +83,6 @@ const AdminUserList = () => {
                     <tbody>
                         {users.map(user => (
                             <tr key={user.id}>
-                                <td data-label="ID">{user.id}</td>
                                 <td data-label="Full Name">{`${user.name} ${user.surname}`}</td>
                                 <td data-label="Username">{user.userName}</td>
                                 <td data-label="Email">{user.email}</td>

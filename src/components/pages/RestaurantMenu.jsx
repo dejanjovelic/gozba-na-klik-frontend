@@ -128,7 +128,7 @@ const RestaurantMenu = () => {
                       </p>
                     )}
                   </div>
-                  <p id="meal-price">{meal.price}$</p>
+                  <p id="meal-price">{meal.price} eur</p>
                 </div>
                 <div className="meal-image">
                   <img src={meal.mealImageUrl} alt="Meal image" />
