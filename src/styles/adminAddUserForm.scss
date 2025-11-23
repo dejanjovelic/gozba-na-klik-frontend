@@ -1,102 +1,100 @@
-@use 'sass:color';
+@use "sass:color";
 
 $color-cream: #f5e4cb;
 $color-brown: #5d402b;
 $color-orange: #ea9332;
 
-
 #add-user-title {
-    margin-bottom: 1rem;
-    margin-left: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
 }
 
 .add-user-modal {
-    background-color: $color-cream;
-    padding: 32px;
-    border-radius: 8px;
-    width: 20%;
-    height: 65%;
-    overflow: auto;
+  background-color: $color-cream;
+  padding: 32px;
+  border-radius: 8px;
+  width: 20%;
+  height: 65%;
+  overflow: auto;
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
 
-    h2 {
-        margin-bottom: 16px;
-        color: $color-brown;
+  h2 {
+    margin-bottom: 16px;
+    color: $color-brown;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .submit-btn {
+    background-color: $color-orange;
+    color: white;
+
+    &:hover {
+      background-color: color.adjust($color-orange, $lightness: -10%);
     }
+  }
 
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 11px;
-    }
+  .MuiButton-root.Mui-disabled {
+    color: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.12);
+  }
 
-    .submit-btn {
-        background-color: $color-orange;
-        color: white;
+  .input-error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: -12px;
+    min-height: 10px;
+    max-height: 10px;
+    margin-left: 5px;
+  }
 
-        &:hover {
-            background-color: color.adjust($color-orange, $lightness: -10%);
-        }
-    }
+  .MuiInputBase-root {
+    background-color: white;
+  }
 
-    .MuiButton-root.Mui-disabled {
-        color: rgba(0, 0, 0, 0.26);
-        background-color: rgba(0, 0, 0, 0.12);
-    }
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: black !important;
+  }
 
-    .input-error-message {
-        color: red;
-        font-size: 0.8rem;
-        margin-top: -12px;
-        min-height: 10px;
-        max-height: 10px;
-        margin-left: 5px;
-    }
+  .MuiFormLabel-root.Mui-focused {
+    color: black !important;
+  }
 
-    .MuiInputBase-root {
-        background-color: white;
-    }
-
+  .error-field {
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-        border-color: black !important;
+      border-color: red !important;
     }
 
     .MuiFormLabel-root.Mui-focused {
-        color: black !important;
+      color: red !important;
     }
+  }
 
-    .error-field {
-        .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-            border-color: red !important;
-        }
+  .MuiRadio-colorPrimary {
+    color: black !important;
+  }
 
-        .MuiFormLabel-root.Mui-focused {
-            color: red !important;
-        }
-    }
+  .MuiRadio-colorPrimary.Mui-checked {
+    color: $color-orange !important;
+  }
 
-
-    .MuiRadio-colorPrimary {
-        color: black !important;
-    }
-
-    .MuiRadio-colorPrimary.Mui-checked {
-        color: $color-orange !important;
-    }
-
-    .role-div {
-        margin-left: 5px;
-    }
+  .role-div {
+    margin-left: 5px;
+  }
 }
 
 @media (max-height: 695px) {
-        .MuiInputBase-root {
-        height: 50px;
-    }
-    }
+  .MuiInputBase-root {
+    height: 50px;
+  }
+}

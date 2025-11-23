@@ -1,4 +1,4 @@
-import AxiosConfig from "../config/AxiosConfig";
+import AxiosConfig from "../config/axiosConfig";
 
 const RESOURCE = "/api/users";
 const RESOURCE1 = "api/auth" 

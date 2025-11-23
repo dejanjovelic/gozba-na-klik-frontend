@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { 
-  Users, 
-  CookingPot, 
-  CalendarClock, 
-  Home, 
-  User, 
-  Egg, 
-  MapPin
+import {
+  Users,
+  CookingPot,
+  CalendarClock,
+  Home,
+  User,
+  Egg,
+  MapPin,
+  Handbag,
 } from "lucide-react";
 import "../../styles/usersHomePage.scss"
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import { ListItemButton } from '@mui/material';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import UserContext from "../../config/UserContext";
@@ -41,17 +43,23 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
         path: "/restaurantOwner/restaurants",
         label: "Restaurants",
       },
+      {
+        icon: <Handbag />,
+        path: "/restaurantOwner/orderView",
+        label: "Orders",
+      },
     ],
     employee: [
       { icon: <Home />, path: "/employee", label: "Home", exact: true },
     ],
-    courier: [
-      { icon: <Home />, path: "/courier", label: "HomeS", exact: true },
+    Courier: [
+      { icon: <Home />, path: "/courier", label: "Home", exact: true },
       {
         icon: <CalendarClock />,
         path: "/courier/workingHours",
         label: "Working hours",
       },
+      { icon: <AssignmentIcon />, path: "/courier/order", label: "Order", exact: true },
     ],
   };
 

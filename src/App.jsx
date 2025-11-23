@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/pages/Header";
 import Footer from "./components/pages/Footer";
@@ -6,7 +6,6 @@ import UsersHomePage from "./components/pages/UsersHomePage";
 import CustomerRegisterForm from "./components/forms/register/CustomerRegisterForm";
 import CustomerHomePage from "./components/pages/Customer/CustomerHomePage";
 import LoginForm from "./components/forms/login/LoginForm";
-import { AuthProvider } from "./config/AuthContext";
 import AdminUserList from "./components/pages/Admin/AdminUserList";
 import AdminHomePage from "./components/pages/Admin/AdminHomePage";
 import AdminRestaurants from "./components/pages/Admin/AdminRestaurants";
@@ -17,13 +16,16 @@ import RestaurantOwnerHomePage from "./components/pages/RestaurantOwner/Restaura
 import CourierHomePage from "./components/pages/Courier/CourierHomePage";
 import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
-import "./styles/usersHomePage.scss"
+import "./styles/usersHomePage.scss";
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
+import CourierStatusUpdater from "./components/pages/Courier/CourierStatusUpdater";
 import RestaurantPaginationFilterSort from "./components/pages/Restaurant/RestaurantPaginationFilterSort";
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 import CustomerMeals from "./components/pages/Customer/CustomerMeals";
 import RestaurantMenu from "./components/pages/RestaurantMenu";
 import UserContext from "./config/UserContext";
+import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrderPage";
+import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 
 const App = () => {
   const token = localStorage.getItem('token');
@@ -34,12 +36,11 @@ const App = () => {
   return (
     <div className="content">
       <UserContext.Provider value={{ user, setUser }}>
-        <BrowserRouter>
+      <BrowserRouter>
+          <CourierStatusUpdater />
           <Header />
           <Routes>
-            <Route path="/"
-              element={
-                <RestaurantPaginationFilterSort />} />
+            <Route path="/" element={<RestaurantPaginationFilterSort />} />
             <Route path="/restaurant-menu/:id" element={<RestaurantMenu />} />
             <Route path="/register" element={<CustomerRegisterForm />} />
             <Route path="/login" element={<LoginForm />}></Route>
@@ -70,6 +71,8 @@ const App = () => {
                 path="restaurants"
                 element={<RestaurantOwnerRestaurants />}
               />
+              <Route index element={<RestaurantOwnerHomePage />} />
+              <Route path="orderView" element={<RestaurantOwnerOrderView />} />
             </Route>
 
             <Route
@@ -96,6 +99,7 @@ const App = () => {
             >
               <Route index element={<CourierHomePage />} />
               <Route path="workingHours" element={<CourierWorkingHours />} />
+              <Route path="order" element={<CourierActiveOrderPage />} />
             </Route>
 
             <Route

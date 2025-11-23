@@ -1,5 +1,5 @@
 import React from "react";
-import AxiosConfig from "../config/AxiosConfig";
+import AxiosConfig from "../config/axiosConfig";
 
 const RESOURCE = "api/restaurants"
 
