@@ -26,6 +26,7 @@ import RestaurantMenu from "./components/pages/RestaurantMenu";
 import UserContext from "./config/UserContext";
 import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrderPage";
 import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
+import { OrderProvider } from "./components/OrderContext";
 
 const App = () => {
   const token = localStorage.getItem('token');
@@ -41,7 +42,7 @@ const App = () => {
           <Header />
           <Routes>
             <Route path="/" element={<RestaurantPaginationFilterSort />} />
-            <Route path="/restaurant-menu/:id" element={<RestaurantMenu />} />
+            <Route path="/restaurant-menu/:id" element={<OrderProvider><RestaurantMenu /></OrderProvider>} />
             <Route path="/register" element={<CustomerRegisterForm />} />
             <Route path="/login" element={<LoginForm />}></Route>
 
