@@ -2,7 +2,8 @@ $color-brown: #5d402b;
 $color-cream: #f5e4cb;
 $color-orange: #ea9332;
 $color-gray: #9c9d9c;
-@keyframes popupFadeIn {
+
+@keyframes inputFadeIn {
   from {
     opacity: 0;
     transform: scale(0.9);
@@ -12,6 +13,7 @@ $color-gray: #9c9d9c;
     transform: scale(1);
   }
 }
+
 #container {
   margin: 0 auto;
   display: flex;
@@ -58,7 +60,7 @@ $color-gray: #9c9d9c;
     .inputWrapper {
       display: inline-block;
       opacity: 0;
-      animation: popupFadeIn 0.3s ease forwards;
+      animation: inputFadeIn 0.3s ease forwards;
 
       input {
         width: 200px;
@@ -92,7 +94,7 @@ $color-gray: #9c9d9c;
       padding: 0 5px;
       background-color: #e9ece9;
       opacity: 0;
-      animation: popupFadeIn 0.3s ease forwards;
+      animation: inputFadeIn 0.3s ease forwards;
 
       .icon {
         flex-shrink: 0;
