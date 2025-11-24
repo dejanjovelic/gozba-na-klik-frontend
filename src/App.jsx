@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/pages/Header";
 import Footer from "./components/pages/Footer";
@@ -6,7 +6,6 @@ import UsersHomePage from "./components/pages/UsersHomePage";
 import CustomerRegisterForm from "./components/forms/register/CustomerRegisterForm";
 import CustomerHomePage from "./components/pages/Customer/CustomerHomePage";
 import LoginForm from "./components/forms/login/LoginForm";
-import { AuthProvider } from "./config/AuthContext";
 import AdminUserList from "./components/pages/Admin/AdminUserList";
 import AdminHomePage from "./components/pages/Admin/AdminHomePage";
 import AdminRestaurants from "./components/pages/Admin/AdminRestaurants";
@@ -23,24 +22,34 @@ import RestaurantPaginationFilterSort from "./components/pages/Restaurant/Restau
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 import CustomerMeals from "./components/pages/Customer/CustomerMeals";
 import RestaurantMenu from "./components/pages/RestaurantMenu";
+import UserContext from "./config/UserContext";
+import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrderPage";
 import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
+import { OrderProvider } from "./components/OrderContext";
 
 const App = () => {
+  const token = localStorage.getItem('token');
+  const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
+  const [user, setUser] = useState(payload);
+
+
   return (
     <div className="content">
+      <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <AuthProvider>
+          
           <Header />
           <Routes>
             <Route path="/" element={<RestaurantPaginationFilterSort />} />
-            <Route path="/restaurant-menu/:id" element={<RestaurantMenu />} />
+            <Route path="/restaurant-menu/:id" element={<OrderProvider><RestaurantMenu /></OrderProvider>} />
             <Route path="/register" element={<CustomerRegisterForm />} />
             <Route path="/login" element={<LoginForm />}></Route>
 
             <Route
               path="/administrator/*"
               element={
-                <ProtectedRoute allowedRoles={["Administrator"]}>
+                <ProtectedRoute allowedRoles={["administrator"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -53,7 +62,7 @@ const App = () => {
             <Route
               path="/restaurantOwner/*"
               element={
-                <ProtectedRoute allowedRoles={["RestaurantOwner"]}>
+                <ProtectedRoute allowedRoles={["restaurantOwner"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -70,7 +79,7 @@ const App = () => {
             <Route
               path="/customer/*"
               element={
-                <ProtectedRoute allowedRoles={["Customer"]}>
+                <ProtectedRoute allowedRoles={["customer"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -84,19 +93,20 @@ const App = () => {
             <Route
               path="/courier/*"
               element={
-                <ProtectedRoute allowedRoles={["Courier"]}>
+                <ProtectedRoute allowedRoles={["courier"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
             >
               <Route index element={<CourierHomePage />} />
               <Route path="workingHours" element={<CourierWorkingHours />} />
+              <Route path="order" element={<CourierActiveOrderPage />} />
             </Route>
 
             <Route
               path="/employee/*"
               element={
-                <ProtectedRoute allowedRoles={["Employee"]}>
+                <ProtectedRoute allowedRoles={["employee"]}>
                   <UsersHomePage />
                 </ProtectedRoute>
               }
@@ -108,8 +118,8 @@ const App = () => {
             <Route path="/profile" element={<UserProfile />} />
           </Routes>
           <Footer />
-        </AuthProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </UserContext.Provider>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { login as loginService } from "../../../services/userServices";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import ErrorPopup from "../../pages/Popups/ErrorPopup";
+import UserContext from "../../../config/UserContext";
 const LoginForm = () => {
   const {
     register,
@@ -17,7 +18,7 @@ const LoginForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { login, isLoggedIn } = useAuth();
+  const { user, setUser } = useContext(UserContext);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const handleCloseError = () => setShowError(false);
@@ -26,17 +27,26 @@ const LoginForm = () => {
     return `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
   }
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, e) => {
+    setErrorMessage('');
     try {
       const result = await loginService(data.username, data.password);
-      login(result);
-      navigate(`/${lowercaseFirstLetter(result.role)}`);
+      const token = result;
+      localStorage.setItem('token', token);
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      setUser(payload);
     } catch (error) {
       console.log(error.message);
       setErrorMessage(error.message);
       setShowError(true);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(`/${lowercaseFirstLetter(user.role)}`);
+    }
+  }, [user])
 
   return (
     <div id="LoginFormContainer">
@@ -47,6 +57,7 @@ const LoginForm = () => {
           <input
             id="username"
             placeholder="Your username"
+            autoComplete="username"
             {...register("username", {
               required: "Username is required",
             })}
@@ -60,6 +71,7 @@ const LoginForm = () => {
             <input
               id="password"
               placeholder="Your password"
+              autoComplete="password"
               type={showPassword ? "text" : "password"}
               {...register("password", {
                 required: "Password is required",
@@ -87,7 +99,7 @@ const LoginForm = () => {
           <button
             className="LoginSubmitButton"
             type="submit"
-            disabled={!isDirty || !isValid || isSubmitting || isLoggedIn}
+            disabled={!isDirty || !isValid || isSubmitting || user}
           >
             {isSubmitting ? (
               <>

@@ -3,8 +3,10 @@ import "../../../styles/popups.scss";
 import { CircleCheck } from "lucide-react";
 import { useEffect } from "react";
 import { useState } from "react";
-const SucessPopup = ({ message, timeOut, onClose }) => {
+const SucessPopup = ({ addClassName, message, timeOut, onClose }) => {
   const [fadeOut, setFadeOut] = useState(false);
+  const fadeClass = fadeOut ? "fade-out" : "fade-in";
+
   useEffect(() => {
     // Start fade-out before actually removing the popup
     const timer = setTimeout(() => setFadeOut(true), timeOut * 1000 - 300); // start fade-out 0.3s before
@@ -19,7 +21,7 @@ const SucessPopup = ({ message, timeOut, onClose }) => {
     <>
       <div
         id="SucessPopupContainer"
-        className={fadeOut ? "fade-out" : "fade-in"}
+        className={`${addClassName ?? ""} ${fadeClass}`}
       >
         <div id="messageContainer">
           <CircleCheck size={35} color="#2AB42E" id="icon" />

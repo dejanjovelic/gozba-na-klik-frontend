@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Switch, FormControlLabel, Button, ButtonGroup } from "@mui/material";
 import "../../../styles/CourierWorkingHours.scss";
 import "../../../styles/popups.scss";
@@ -10,6 +10,7 @@ import {
 import ErrorPopup from "../../pages/Popups/ErrorPopup";
 import SucessPopup from "../../pages/Popups/SucessPopup";
 import ConfirmationPopup from "../../pages/Popups/ConfirmationPopup";
+import UserContext from "../../../config/UserContext";
 
 const MAX_HOURS_PER_DAY = 10;
 const MAX_HOURS_PER_WEEK = 40;
@@ -40,15 +41,15 @@ const CourierWorkingHours = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [sucessMessage, setSucessMessage] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const { user } = useContext(UserContext);
 
   const handleCloseSuccess = () => setSucessMessage(false);
   const handleCloseError = () => setShowError(false);
 
   // get courierId from session storage
-  const userString = sessionStorage.getItem("user");
+
   let courierId = null;
-  if (userString) {
-    const user = JSON.parse(userString);
+  if (user) {
     courierId = user.id;
   }
 
