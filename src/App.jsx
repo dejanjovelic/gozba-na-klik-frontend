@@ -18,7 +18,6 @@ import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
 import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
 import "./styles/usersHomePage.scss";
 import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
-import CourierStatusUpdater from "./components/pages/Courier/CourierStatusUpdater";
 import RestaurantPaginationFilterSort from "./components/pages/Restaurant/RestaurantPaginationFilterSort";
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 import CustomerMeals from "./components/pages/Customer/CustomerMeals";
@@ -38,7 +37,8 @@ const App = () => {
     <div className="content">
       <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
-          <CourierStatusUpdater />
+        <AuthProvider>
+          
           <Header />
           <Routes>
             <Route path="/" element={<RestaurantPaginationFilterSort />} />
