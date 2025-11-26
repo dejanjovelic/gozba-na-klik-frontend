@@ -27,6 +27,7 @@ import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrde
 import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 import { OrderProvider } from "./components/OrderContext";
 import InvoicePage from "./components/pages/Customer/InvoicePage";
+import CustomerOrders from "./components/pages/Customer/CustomerOrders";
 
 const App = () => {
   const token = localStorage.getItem('token');
@@ -37,7 +38,7 @@ const App = () => {
   return (
     <div className="content">
       <UserContext.Provider value={{ user, setUser }}>
-      <BrowserRouter>          
+        <BrowserRouter>
           <Header />
           <Routes>
             <Route path="/" element={<RestaurantPaginationFilterSort />} />
@@ -88,6 +89,7 @@ const App = () => {
               <Route path="addresses" element={<CustomerAddresses />} />
               <Route path="meals" element={<CustomerMeals />} />
                <Route path="invoice" element={<InvoicePage />} />
+              <Route path="orders" element={<CustomerOrders />} />
             </Route>
 
             <Route

@@ -15,6 +15,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { ListItemButton } from '@mui/material';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import UserContext from "../../config/UserContext";
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 
 
 const SideBar = ({ onLogout, onCloseSideMenu }) => {
@@ -35,7 +36,8 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
       { icon: <Home />, path: '/customer', label: 'Home', exact: true },
       { icon: <Egg />, path: '/customer/allergens', label: 'Allergens' },
       { icon: <MapPin />, path: '/customer/addresses', label: 'Addresses', exact: true },
-      { icon: <RestaurantMenuIcon />, path: '/customer/meals', label: 'Meals', exact: true }
+      { icon: <RestaurantMenuIcon />, path: '/customer/meals', label: 'Meals', exact: true },
+      { icon: <ReceiptLongIcon />, path: '/customer/orders', label: 'My orders', exact: true}
     ],
 
     restaurantowner: [
