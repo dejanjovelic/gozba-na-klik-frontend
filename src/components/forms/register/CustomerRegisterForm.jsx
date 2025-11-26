@@ -7,7 +7,6 @@ import ErrorPopup from "../../pages/Popups/ErrorPopup";
 import "react-tooltip/dist/react-tooltip.css";
 import { Eye, EyeOff } from "lucide-react";
 import Spinner from "../../sharedComponents/Spinner";
-import { useAuth } from "../../../config/AuthContext";
 
 const CustomerRegisterForm = () => {
   const {
@@ -24,7 +23,6 @@ const CustomerRegisterForm = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsloading] = useState(false);
-  const { login } = useAuth();
   const navigate = useNavigate();
   const password = watch("password");
 
@@ -43,7 +41,7 @@ const CustomerRegisterForm = () => {
   }
 
   async function onSubmit(data) {
-    const { username, name, surname, email, contactNumber, password } = data
+    const { username, name, surname, email, phoneNumber, password } = data
     try {
       setIsloading(true);
       const user = await createCustomer(data);
@@ -160,11 +158,11 @@ const CustomerRegisterForm = () => {
 
           <input
             type="tel"
-            id="contactNumber"
+            id="phoneNumber"
             placeholder="+381601234567"
             autoComplete="tel"
-            {...register("contactNumber", {
-              required: "Contact number field is required.",
+            {...register("phoneNumber", {
+              required: "Phone number field is required.",
               pattern: {
                 value: /^\+381\d{9}$/,
                 message:
@@ -173,7 +171,7 @@ const CustomerRegisterForm = () => {
             })}
           />
           <div className="input-error-message">
-            {errors.contactNumber?.message}
+            {errors.phoneNumber?.message}
           </div>
 
           <div className="password-wrapper">

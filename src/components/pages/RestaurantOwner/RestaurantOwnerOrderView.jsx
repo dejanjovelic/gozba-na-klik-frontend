@@ -74,22 +74,15 @@ const RestaurantOwnerOrderView = () => {
       )
     );
   };
-  /* const getCurrentTimeString = () => {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const seconds = String(now.getSeconds()).padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
-  };*/
+  
   const handleCancel = async (order) => {
     try {
-      //const currentTime = getCurrentTimeString();
       await updateRestaurantOrdersStatus(order.orderId, "Canceled", null);
       changeStatus(order.orderId, "Canceled", null);
-    } catch (err) {
+    } catch (error) {
       setErrorMessage(error.message);
       setShowError(true);
-      console.error("Greška prilikom otkazivanja porudžbine", err);
+      console.error("Greška prilikom otkazivanja porudžbine", error);
     }
   };
 

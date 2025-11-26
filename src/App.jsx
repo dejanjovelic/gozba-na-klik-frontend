@@ -26,7 +26,6 @@ import UserContext from "./config/UserContext";
 import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrderPage";
 import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 import { OrderProvider } from "./components/OrderContext";
-import InvoicePage from "./components/pages/Customer/InvoicePage";
 import CustomerOrders from "./components/pages/Customer/CustomerOrders";
 
 const App = () => {
@@ -88,7 +87,6 @@ const App = () => {
               <Route path="allergens" element={<CustomerAllergens />} />
               <Route path="addresses" element={<CustomerAddresses />} />
               <Route path="meals" element={<CustomerMeals />} />
-               <Route path="invoice" element={<InvoicePage />} />
               <Route path="orders" element={<CustomerOrders />} />
             </Route>
 

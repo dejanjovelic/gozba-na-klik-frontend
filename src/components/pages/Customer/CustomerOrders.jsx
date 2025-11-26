@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchCustomerActiveOrders, fetchCustomerInactiveOrders } from "../../../services/OrderService";
+import { fetchCustomerActiveOrders, fetchCustomerInactiveOrders, fetchOrderPdfInvoiceAsync } from "../../../services/OrderService";
 import PaginationSection from "../../sharedComponents/PaginationSection";
 import "../../../styles/customerOrders.scss";
 
@@ -75,6 +75,26 @@ const CustomerOrders = () => {
         setInactivePage(1);
     }
 
+    const handleInvoiceBtnClick = (orderId)=>{
+        downloadPdf(orderId)
+    }
+
+    const downloadPdf = async (orderId) => {
+        try {
+          const response = await fetchOrderPdfInvoiceAsync(orderId);
+    
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "Faktura.pdf");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        } catch (err) {
+          console.error("Download error:", err);
+        }
+      };
+
 
     useEffect(() => {
         loadActiveOrders();
@@ -88,7 +108,7 @@ const CustomerOrders = () => {
         <div className="customer-orders-container">
 
             {/* Active Orders */}
-            <h2 style={{borderBottom:"2px solid #4caf50"}}>Active Orders</h2>
+            <h2 style={{ borderBottom: "2px solid #4caf50" }}>Active Orders</h2>
             <div className="orders-section">
                 {isLoading ? (
                     <span className="spinner"></span>
@@ -98,8 +118,8 @@ const CustomerOrders = () => {
                     activeOrders.map((order) => (
                         <div className="customer-order-card active" key={order.id}>
                             <div className="customer-order-card-left">
-                                <img src={order.restaurantImageUrl} alt="Restaurant image" style={{width: "50px", height:"50px", borderRadius:"50%"}} />
-                                <span style={{color:"#4caf50"}}>Order #{order.id}</span>
+                                <img src={order.restaurantImageUrl} alt="Restaurant image" style={{ width: "50px", height: "50px", borderRadius: "50%" }} />
+                                <span style={{ color: "#4caf50" }}>Order #{order.id}</span>
                                 <span className="restaurant-name">{order.restaurantName}</span>
                             </div>
                             <div className="customer-order-card-right">
@@ -112,7 +132,7 @@ const CustomerOrders = () => {
             </div>
 
             {/* Inactive Orders / History */}
-            <h2 style={{borderBottom:"2px solid #ea9332"}}>Order History</h2>
+            <h2 style={{ borderBottom: "2px solid #ea9332" }}>Order History</h2>
             <div className="orders-section">
                 {isLoading ? (
                     <span className="spinner"></span>
@@ -123,13 +143,18 @@ const CustomerOrders = () => {
                         {inactiveOrders.map((order) => (
                             <div className="customer-order-card inactive" key={order.id}>
                                 <div className="customer-order-card-left">
-                                    <span style={{color:"#ea9332"}}>Order #{order.id}</span>
+                                    <span style={{ color: "#ea9332" }}>Order #{order.id}</span>
                                     <span className="restaurant-name">{order.restaurantName}</span>
                                 </div>
                                 <div className="customer-order-card-right">
                                     <span className="date">{order.orderDate}</span>
                                     <span className="status">{order.status}</span>
                                     <span className="total-price">${order.totalPrice.toFixed(2)}</span>
+                                    <button className={
+                                        order.status.toLowerCase() == "delivered"? "invoiceBtn" : "invoiceBtn-hidden"}
+                                        onClick={()=>handleInvoiceBtnClick(order.id)}>
+                                        Download Invoice
+                                    </button>
                                 </div>
                             </div>
                         ))}
