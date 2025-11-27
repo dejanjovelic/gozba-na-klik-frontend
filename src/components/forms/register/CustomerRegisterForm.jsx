@@ -30,7 +30,7 @@ const CustomerRegisterForm = () => {
   const [activationUsername, setActivationUsername] = useState("");
 
   function showErrorMsg(message) {
-    setErrorMsg(message);
+    setErrorMessage(message);
     setShowError(true);
   }
 
