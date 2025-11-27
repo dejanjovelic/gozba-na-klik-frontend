@@ -15,3 +15,8 @@ export async function GetAllUsers() {
   const response = await AxiosConfig.get(RESOURCE);
   return response.data;
 }
+
+export async function resendActivatonEmail(username) {
+    const response = await AxiosConfig.post(`${RESOURCE1}/resend-confirmation-email?username=${username}`);
+    return response.data;
+}
