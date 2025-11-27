@@ -46,9 +46,6 @@ const CustomerRegisterForm = () => {
       setIsloading(true);
       const user = await createCustomer(data);
       setIsloading(false);
-      if (user) {
-        login(user)
-      }
       showSuccessMsg("You have successfuly sign up.")
       navigate(`/customer`);
       reset();
