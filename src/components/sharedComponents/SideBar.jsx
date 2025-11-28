@@ -40,7 +40,7 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
       { icon: <ReceiptLongIcon />, path: '/customer/orders', label: 'My orders', exact: true}
     ],
 
-    restaurantOwner: [
+    restaurantowner: [
       { icon: <Home />, path: "/restaurantOwner", label: "Home", exact: true },
       {
         icon: <CookingPot />,
@@ -70,6 +70,7 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
   };
 
   const role = user?.role?.toLowerCase();
+  console.log(role)
   const links = [...(roleBasedLinks[role] || [])];
 
   return (
