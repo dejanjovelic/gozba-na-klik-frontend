@@ -27,6 +27,8 @@ import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrde
 import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 import { OrderProvider } from "./components/OrderContext";
 import CustomerOrders from "./components/pages/Customer/CustomerOrders";
+import ForgotPasswordPage from "./components/forms/ResetPassword/ForgotPasswordPage";
+import ResetPassword from "./components/forms/ResetPassword/ResetPassword";
 
 const App = () => {
   const token = localStorage.getItem('token');
@@ -44,6 +46,8 @@ const App = () => {
             <Route path="/restaurant-menu/:id" element={<OrderProvider><RestaurantMenu /></OrderProvider>} />
             <Route path="/register" element={<CustomerRegisterForm />} />
             <Route path="/login" element={<LoginForm />}></Route>
+            <Route path="/forgotPassword" element={<ForgotPasswordPage/>}/>
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             <Route
               path="/administrator/*"
