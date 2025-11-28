@@ -76,14 +76,17 @@
       .status {
         font-weight: bold;
         text-transform: uppercase;
+        align-self: center;
       }
 
       .total-price {
         color: #2196f3;
+        align-self: center;
       }
 
       .date {
         font-style: italic;
+        align-self: center;
       }
     }
   }
@@ -92,4 +95,20 @@
     color: #777;
     font-style: italic;
   }
+}
+
+.invoiceBtn {
+  background-color: #ea9332;
+  color: white;
+  padding: 2px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: 1px solid #ea9332;
+  height: 2.4rem;
+  width: 5.5rem;
+  cursor: pointer;
+}
+
+.invoiceBtn-hidden {
+  visibility: hidden;
 }

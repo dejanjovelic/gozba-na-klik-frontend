@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   fetchCustomerActiveOrders,
   fetchCustomerInactiveOrders,
+  fetchOrderPdfInvoiceAsync,
 } from "../../../services/OrderService";
 import PaginationSection from "../../sharedComponents/PaginationSection";
 import "../../../styles/customerOrders.scss";
@@ -97,6 +98,27 @@ const CustomerOrders = () => {
     setInactivePageSize(newSize);
     setInactivePage(1);
   };
+
+  const handleInvoiceBtnClick = (orderId) => {
+    downloadPdf(orderId);
+  };
+
+  const downloadPdf = async (orderId) => {
+    try {
+      const response = await fetchOrderPdfInvoiceAsync(orderId);
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "Faktura.pdf");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("Download error:", err);
+    }
+  };
+
   const handleReviewClick = (orderId) => {};
   useEffect(() => {
     loadActiveOrders();
@@ -174,6 +196,16 @@ const CustomerOrders = () => {
                   <span className="total-price">
                     ${order.totalPrice.toFixed(2)}
                   </span>
+                  <button
+                    className={
+                      order.status.toLowerCase() == "delivered"
+                        ? "invoiceBtn"
+                        : "invoiceBtn-hidden"
+                    }
+                    onClick={() => handleInvoiceBtnClick(order.id)}
+                  >
+                    Download Invoice
+                  </button>
                 </div>
               </div>
             ))}

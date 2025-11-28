@@ -274,6 +274,7 @@ footer {
         width: 40px;
         cursor: pointer;
         background-color: white;
+        color: #000;
         border: none;
         margin-top: 5px;
       }
@@ -455,4 +456,16 @@ footer {
   color: greenyellow;
   font-weight: bold;
   font-size: 20px;
+}
+
+button {
+  background-color: $color-orange;
+  color: $color-text;
+  padding: 5px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: 1px solid $color-orange;
+  height: 2.2rem;
+  width: 6rem;
+  cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../../styles/RestaurantOwnerOrderView.scss";
 import {
   Table,
@@ -15,9 +15,10 @@ import {
 import RestaurantOwnerOrderTimeForm from "./RestaurantOwnerOrderTimeForm";
 import {
   getOrdersByOwnerId,
-  editOrdersStatus,
+  updateRestaurantOrdersStatus,
 } from "../../../services/OrderService";
 import ErrorPopup from "../../pages/Popups/ErrorPopup";
+import UserContext from "../../../config/UserContext";
 
 const RestaurantOwnerOrderView = () => {
   const [orders, setOrders] = useState([]);
@@ -26,10 +27,10 @@ const RestaurantOwnerOrderView = () => {
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const handleCloseError = () => setShowError(false);
-  const userString = sessionStorage.getItem("user");
+  const { user } = useContext(UserContext);
+
   let ownerId = null;
-  if (userString) {
-    const user = JSON.parse(userString);
+  if (user) {
     ownerId = user.id;
   }
 
@@ -38,7 +39,6 @@ const RestaurantOwnerOrderView = () => {
       try {
         const data = await getOrdersByOwnerId(ownerId);
         setOrders(data);
-        console.log(data);
       } catch (error) {
         setErrorMessage(error.message);
         setShowError(true);
@@ -66,30 +66,23 @@ const RestaurantOwnerOrderView = () => {
       prevOrders.map((order) =>
         order.orderId === orderId
           ? {
-              ...order,
-              status: newStatus,
-              orderTime: newTime || order.orderTime,
-            }
+            ...order,
+            status: newStatus,
+            orderTime: newTime || order.orderTime,
+          }
           : order
       )
     );
   };
-  /* const getCurrentTimeString = () => {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const seconds = String(now.getSeconds()).padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
-  };*/
+  
   const handleCancel = async (order) => {
     try {
-      //const currentTime = getCurrentTimeString();
-      await editOrdersStatus(order.orderId, "Canceled", null);
+      await updateRestaurantOrdersStatus(order.orderId, "Canceled", null);
       changeStatus(order.orderId, "Canceled", null);
-    } catch (err) {
+    } catch (error) {
       setErrorMessage(error.message);
       setShowError(true);
-      console.error("Greška prilikom otkazivanja porudžbine", err);
+      console.error("Greška prilikom otkazivanja porudžbine", error);
     }
   };
 
@@ -170,8 +163,8 @@ const RestaurantOwnerOrderView = () => {
                   <TableCell>
                     {order.orderItems && order.orderItems.length > 0
                       ? order.orderItems
-                          .map((item) => `${item.quantity} ${item.mealName}`)
-                          .join(", ")
+                        .map((item) => `${item.quantity} ${item.mealName}`)
+                        .join(", ")
                       : "-"}
                   </TableCell>
                   <TableCell>{order.totalPrice} €</TableCell>
@@ -215,16 +208,20 @@ const RestaurantOwnerOrderView = () => {
             const [hour, minute] = time.split(":");
 
             // Create a full Date object
-            const isoDateTime = new Date();
-            isoDateTime.setHours(parseInt(hour, 10));
-            isoDateTime.setMinutes(parseInt(minute, 10));
-            isoDateTime.setSeconds(0);
-            isoDateTime.setMilliseconds(0);
+            const now = new Date();
+            const isoDateTime = new Date(Date.UTC(
+              now.getFullYear(),
+              now.getMonth(),
+              now.getDate(),
+              parseInt(hour, 10),
+              parseInt(minute, 10),
+              0, 0
+            ));
 
             const fullISO = isoDateTime.toISOString();
 
             // Send full ISO string to backend
-            await editOrdersStatus(selectedOrder.orderId, "Accepted", fullISO);
+            await updateRestaurantOrdersStatus(selectedOrder.orderId, "Accepted", fullISO);
 
             // Update frontend state with full ISO string
             changeStatus(selectedOrder.orderId, "Accepted", fullISO);
