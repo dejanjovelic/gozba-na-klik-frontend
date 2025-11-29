@@ -10,11 +10,13 @@ import ErrorPopup from "./Popups/ErrorPopup";
 import RestaurantBasket from "./Restaurant/RestaurantBasket";
 import { OrderContext } from "../OrderContext";
 import UserContext from "../../config/UserContext";
+import RestaurantReviewsModal from "./Restaurant/RestaurantReviewsModal";
+import { fetchRestaurantReviewsCount } from "../../services/OrderReviewService";
 
 const RestaurantMenu = () => {
   const [restaurant, setRestaurant] = useState(null);
   const [customerAllergens, setCustomerAllergens] = useState(null);
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,7 +24,9 @@ const RestaurantMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const selectedMeal = location.state?.selectedMealId || null;
-  const {dispatch} = useContext(OrderContext);
+  const { dispatch } = useContext(OrderContext);
+  const [showReviewsModal, setShowReviewsModal] = useState(false);
+  const [totalReviewsCount, setTotalReviewsCount] = useState(0);
 
   const handleCloseError = () => setShowError(false);
 
@@ -32,11 +36,16 @@ const RestaurantMenu = () => {
       const restaurant = await getRestaurantWithMeals(id);
       setRestaurant(restaurant);
 
-      const customerAllergensData = await getCustomerAllergens(user.id);
-      setCustomerAllergens(customerAllergensData);
+      if (user) {
+        const customerAllergensData = await getCustomerAllergens(user.id);
+        setCustomerAllergens(customerAllergensData);
 
-      dispatch({ type: "SET_RESTAURANT", payload: restaurant.id });
-      dispatch({ type: "SET_CUSTOMER", payload: user.id });
+        dispatch({ type: "SET_RESTAURANT", payload: restaurant.id });
+        dispatch({ type: "SET_CUSTOMER", payload: user.id });
+      }
+
+      const reviewsCount = await fetchRestaurantReviewsCount(restaurant.id);
+      setTotalReviewsCount(reviewsCount);
     } catch (error) {
       if (error.status) {
         if (error.status === 500) {
@@ -58,10 +67,8 @@ const RestaurantMenu = () => {
         setShowError(true);
       }
       console.log(`An error occured while fetching data:`, error);
-      if (!user) navigate('/');
-      setIsLoading(false);
     } finally {
-      setInterval(() => {
+      setTimeout(() => {
         setIsLoading(false);
       }, 1000);
     }
@@ -88,8 +95,8 @@ const RestaurantMenu = () => {
               <div id="restaurant-upper-section">
                 <h2>{restaurant.name}</h2>
                 <div id="rate-capacity">
-                  <span>
-                    <RatingComponent rating={restaurant.averageRating} />
+                  <span onClick={totalReviewsCount > 0 ? () => setShowReviewsModal(true) : undefined} style={{ cursor: totalReviewsCount > 0 ? "pointer" : "default"}}>
+                    <RatingComponent rating={restaurant.averageRating} /> <span>({totalReviewsCount})</span>
                   </span>
                   <p id="restaurant-capacity">
                     {restaurant.capacity} <PeopleAlt />
@@ -107,59 +114,71 @@ const RestaurantMenu = () => {
                 <p id="restaurant-desc">{restaurant.description}</p>
               </div>
             </div>
-            <h2>Menu</h2>
-            <div className="meals-div">
-              {restaurant.mealsOnMenu.map((meal) => (
-                <div key={meal.id} className={`meal-card ${meal.id === selectedMeal ? 'selected' : ''}`}>
-                  <div className="meal-data">
-                    <div>
-                      <p>{meal.mealName}</p>
-                      <p id="meal-desc">{meal.description}</p>
-                      {meal.allergens.length > 0 && (
-                        <p>
-                          Allergens:{" "}
-                          {meal.allergens.map((a, index) => {
-                            const hasMatch = customerAllergens?.some(
-                              (ca) => ca.id == a.id
-                            );
-                            return (
-                              <span
-                                key={a.id}
-                                style={{ color: hasMatch ? "red" : "black" }}
-                              >
-                                {a.name}
-                                {index < meal.allergens.length - 1 && ", "}
-                              </span>
-                            );
-                          })}
-                        </p>
-                      )}
+            {user &&
+              <>
+                <h2>Menu</h2>
+                <div className="meals-div">
+                  {restaurant.mealsOnMenu.map((meal) => (
+                    <div key={meal.id} className={`meal-card ${meal.id === selectedMeal ? 'selected' : ''}`}>
+                      <div className="meal-data">
+                        <div>
+                          <p>{meal.mealName}</p>
+                          <p id="meal-desc">{meal.description}</p>
+                          {meal.allergens.length > 0 && (
+                            <p>
+                              Allergens:{" "}
+                              {meal.allergens.map((a, index) => {
+                                const hasMatch = customerAllergens?.some(
+                                  (ca) => ca.id == a.id
+                                );
+                                return (
+                                  <span
+                                    key={a.id}
+                                    style={{ color: hasMatch ? "red" : "black" }}
+                                  >
+                                    {a.name}
+                                    {index < meal.allergens.length - 1 && ", "}
+                                  </span>
+                                );
+                              })}
+                            </p>
+                          )}
+                        </div>
+                        <p id="meal-price">{meal.price} €</p>
+                      </div>
+                      <div className="meal-image">
+                        <img src={meal.mealImageUrl} alt="Meal image" />
+                        <button id="add-meal-to-cart" onClick={() =>
+                          dispatch({
+                            type: "ADD_ITEM",
+                            payload: {
+                              id: meal.id,
+                              mealName: meal.mealName,
+                              price: meal.price,
+                              allergens: meal.allergens,
+                              mealImageUrl: meal.mealImageUrl,
+                            },
+                          })
+                        }>+</button>
+                      </div>
                     </div>
-                    <p id="meal-price">{meal.price} €</p>
-                  </div>
-                  <div className="meal-image">
-                    <img src={meal.mealImageUrl} alt="Meal image" />
-                    <button id="add-meal-to-cart"  onClick={() =>
-                      dispatch({
-                        type: "ADD_ITEM",
-                        payload: {
-                          id: meal.id,
-                          mealName: meal.mealName,
-                          price: meal.price,
-                          allergens: meal.allergens,
-                          mealImageUrl: meal.mealImageUrl,
-                        },
-                      })
-                    }>+</button>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            }
           </>
         )}
-        
+
       </div>
-      <RestaurantBasket />
+      {user && <RestaurantBasket />}
+      
+      {showReviewsModal && (
+        <RestaurantReviewsModal
+          restaurantId={id}
+          open={showReviewsModal}
+          onClose={() => setShowReviewsModal(false)}
+        />
+      )}
     </div>
   );
 };

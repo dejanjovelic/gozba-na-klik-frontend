@@ -56,19 +56,20 @@ const PagionationSection = ({
             <IconButton onClick={handleNext} disabled={!hasNextPage}>
                 {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
             </IconButton>
-
-            <Select
-                value={pageSize}
-                onChange={handlePageSizeChange}
-                size="small"
-                sx={{ ml: 2 }}
-            >
-                {[6, 12, 18].map((size) => (
-                    <MenuItem key={size} value={size}>
-                        {size} / page
-                    </MenuItem>
-                ))}
-            </Select>
+            {pageSize >= 6 || pageSize <= 18 &&
+                <Select
+                    value={pageSize}
+                    onChange={handlePageSizeChange}
+                    size="small"
+                    sx={{ ml: 2 }}
+                >
+                    {[6, 12, 18].map((size) => (
+                        <MenuItem key={size} value={size}>
+                            {size} / page
+                        </MenuItem>
+                    ))}
+                </Select>
+            }
 
             <Typography variant="body2" sx={{ ml: 2 }}>
                 Total: {totalRowsCount}
