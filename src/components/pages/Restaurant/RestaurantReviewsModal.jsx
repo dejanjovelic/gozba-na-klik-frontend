@@ -13,54 +13,10 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const RestaurantReviewsModal = ({ restaurantId, open, onClose }) => {
-    const [reviews, setReviews] = useState([]);
-    const [page, setPage] = useState(0);
-    const [totalRows, setTotalRows] = useState(0);
-    const [hasNextPage, setHasNextPage] = useState(false);
-    const [hasPreviousPage, setHasPreviousPage] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [showError, setShowError] = useState(false);
-
-    const loadReviews = async () => {
-        setIsLoading(true);
-        try {
-            const data = await fetchRestaurantReviewsPaginated(restaurantId, page + 1);
-
-            setReviews(data.items);
-            setTotalRows(data.totalRowsCount);
-            setHasNextPage(data.hasNextPage);
-            setHasPreviousPage(data.hasPreviousPage);
-        } catch (error) {
-            if (error.status && error.status === 500) {
-                setErrorMessage("We're experiencing technical difficulties. Please try again shortly.")
-            } else if (error.request) {
-                setErrorMessage("The server seems to be taking too long to respond. Please try again in a moment.");
-            } else {
-                setErrorMessage("Something went wrong. Please try again.");
-            }
-            console.log("An error occurred while fetching restaurant reviews:", error);
-            setShowError(true);
-        } finally {
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 1000);
-        }
-    };
-
-    const handlePageChange = (newPageIndex) => {
-        setPage(newPageIndex);
-    };
-
-    useEffect(() => {
-        console.log("loadReviews called, page:", page);
-        loadReviews();
-    }, [page]);
-
+const RestaurantReviewsModal = ({ reviews, onClose, handlePageChange }) => {
     return (
-        <Dialog
-            open={open}
+        <Dialog className="reviews-dialog"
+            open={true}
             onClose={onClose}
             maxWidth={false}
             slotProps={{
@@ -85,7 +41,7 @@ const RestaurantReviewsModal = ({ restaurantId, open, onClose }) => {
 
             <DialogContent dividers sx={{ pt: 2, backgroundColor: "white" }}>
                 {/* All reviews list */}
-                {reviews.map((r) => (
+                {reviews.items.map((r) => (
                     <Box key={r.id} sx={{ mb: 3 }}>
                         {/* Customer header */}
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -158,11 +114,11 @@ const RestaurantReviewsModal = ({ restaurantId, open, onClose }) => {
                 }}
             >
                 <PagionationSection
-                    page={page}
-                    hasNextPage={hasNextPage}
-                    hasPreviousPage={hasPreviousPage}
-                    totalRowsCount={totalRows}
-                    onPageChange={handlePageChange}
+                    page={reviews.pageIndex}
+                    hasNextPage={reviews.hasNextPage}
+                    hasPreviousPage={reviews.hasPreviousPage}
+                    totalRowsCount={reviews.totalRowsCount}
+                    onPageChange={(e, newPage) => handlePageChange(newPage)}
                 />
             </Box>
         </Dialog>

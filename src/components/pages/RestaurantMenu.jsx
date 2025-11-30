@@ -11,22 +11,23 @@ import RestaurantBasket from "./Restaurant/RestaurantBasket";
 import { OrderContext } from "../OrderContext";
 import UserContext from "../../config/UserContext";
 import RestaurantReviewsModal from "./Restaurant/RestaurantReviewsModal";
-import { fetchRestaurantReviewsCount } from "../../services/OrderReviewService";
+import { fetchRestaurantReviewsPaginated } from "../../services/OrderReviewService";
 
 const RestaurantMenu = () => {
   const [restaurant, setRestaurant] = useState(null);
+  const [reviews, setReviews] = useState(null);
+  const [reviewsPage, setReviewsPage] = useState(0);
+  const [totalReviewsCount, setTotalReviewsCount] = useState(0);
   const [customerAllergens, setCustomerAllergens] = useState(null);
   const { user } = useContext(UserContext);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
-  const navigate = useNavigate();
   const location = useLocation();
   const selectedMeal = location.state?.selectedMealId || null;
   const { dispatch } = useContext(OrderContext);
   const [showReviewsModal, setShowReviewsModal] = useState(false);
-  const [totalReviewsCount, setTotalReviewsCount] = useState(0);
 
   const handleCloseError = () => setShowError(false);
 
@@ -36,6 +37,8 @@ const RestaurantMenu = () => {
       const restaurant = await getRestaurantWithMeals(id);
       setRestaurant(restaurant);
 
+      await loadReviews();
+
       if (user) {
         const customerAllergensData = await getCustomerAllergens(user.id);
         setCustomerAllergens(customerAllergensData);
@@ -43,9 +46,6 @@ const RestaurantMenu = () => {
         dispatch({ type: "SET_RESTAURANT", payload: restaurant.id });
         dispatch({ type: "SET_CUSTOMER", payload: user.id });
       }
-
-      const reviewsCount = await fetchRestaurantReviewsCount(restaurant.id);
-      setTotalReviewsCount(reviewsCount);
     } catch (error) {
       if (error.status) {
         if (error.status === 500) {
@@ -74,6 +74,30 @@ const RestaurantMenu = () => {
     }
   }
 
+  const loadReviews = async () => {
+    setIsLoading(true);
+    try {
+      const data = await fetchRestaurantReviewsPaginated(id, reviewsPage + 1);
+
+      setReviews(data);
+      setTotalReviewsCount(data.totalRowsCount);
+    } catch (error) {
+      if (error.status && error.status === 500) {
+        setErrorMessage("We're experiencing technical difficulties. Please try again shortly.")
+      } else if (error.request) {
+        setErrorMessage("The server seems to be taking too long to respond. Please try again in a moment.");
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
+      }
+      console.log("An error occurred while fetching restaurant reviews:", error);
+      setShowError(true);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+  };
+
   useEffect(() => {
     loadData();
   }, []);
@@ -95,7 +119,7 @@ const RestaurantMenu = () => {
               <div id="restaurant-upper-section">
                 <h2>{restaurant.name}</h2>
                 <div id="rate-capacity">
-                  <span onClick={totalReviewsCount > 0 ? () => setShowReviewsModal(true) : undefined} style={{ cursor: totalReviewsCount > 0 ? "pointer" : "default"}}>
+                  <span onClick={totalReviewsCount > 0 ? () => setShowReviewsModal(true) : undefined} style={{ cursor: totalReviewsCount > 0 ? "pointer" : "default" }}>
                     <RatingComponent rating={restaurant.averageRating} /> <span>({totalReviewsCount})</span>
                   </span>
                   <p id="restaurant-capacity">
@@ -171,12 +195,15 @@ const RestaurantMenu = () => {
 
       </div>
       {user && <RestaurantBasket />}
-      
+
       {showReviewsModal && (
         <RestaurantReviewsModal
-          restaurantId={id}
-          open={showReviewsModal}
+          reviews={reviews}
           onClose={() => setShowReviewsModal(false)}
+          handlePageChange={(newPage) => {
+            setReviewsPage(newPage);
+            loadReviews(newPage);
+          }}
         />
       )}
     </div>

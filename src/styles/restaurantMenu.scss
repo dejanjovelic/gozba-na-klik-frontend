@@ -160,8 +160,8 @@ $color-text: white;
   cursor: pointer;
 }
 
-.MuiPaper-root {
-  background-color: white;
-  width: 500px;
-  max-width: 50%;
-}
+  .reviews-dialog .MuiPaper-root {
+    background-color: white;
+    width: 500px;
+    max-width: 50%;
+  }
