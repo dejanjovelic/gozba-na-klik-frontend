@@ -41,7 +41,7 @@ const CustomerRegisterForm = () => {
   }
 
   async function onSubmit(data) {
-    const { username, name, surname, email, phoneNumber, password } = data
+    const { username, name, surname, email, phoneNumber, password } = data;
     setIsLoading(true);
     try {
       await createCustomer(data);
@@ -50,13 +50,14 @@ const CustomerRegisterForm = () => {
     } catch (error) {
       if (error.status) {
         if (error.status === 500) {
-          showErrorMsg("Server is temporarily unavailable. Please refresh or try again later.")
+          showErrorMsg(
+            "Server is temporarily unavailable. Please refresh or try again later."
+          );
         } else {
           showErrorMsg(`Error: ${error.status}`);
         }
       } else if (error.request) {
         showErrorMsg("The server is not responding. Please try again later.");
-
       } else {
         showErrorMsg("Something went wrong. Please try again.");
       }
@@ -67,7 +68,7 @@ const CustomerRegisterForm = () => {
   }
 
   if (isLoading) {
-    return <Spinner text="Sending..." />
+    return <Spinner text="Sending..." />;
   }
 
   return (
@@ -76,12 +77,13 @@ const CustomerRegisterForm = () => {
         <AccountActivationNotice
           mode="register"
           email={activationEmail}
-          username = {activationUsername}
+          username={activationUsername}
           setErrorMessage={setErrorMessage}
           setShowError={setShowError}
           setSuccessMessage={setSuccessMessage}
           onClose={() => setShowActivationNotice(false)}
-        />) :
+        />
+      ) : (
         <div className="form-div">
           <h2>Sign Up</h2>
 
@@ -99,7 +101,9 @@ const CustomerRegisterForm = () => {
                 },
               })}
             />
-            <div className="input-error-message">{errors.username?.message}</div>
+            <div className="input-error-message">
+              {errors.username?.message}
+            </div>
 
             <div className="name-surname-container">
               <div className="name-container">
@@ -115,7 +119,9 @@ const CustomerRegisterForm = () => {
                     },
                   })}
                 />
-                <div className="input-error-message">{errors.name?.message}</div>
+                <div className="input-error-message">
+                  {errors.name?.message}
+                </div>
               </div>
 
               <div className="surname-container">
@@ -195,14 +201,26 @@ const CustomerRegisterForm = () => {
             </div>
 
             <div className="password-wrapper">
-              <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword" placeholder="Confirm password" autoComplete="new-password"
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                placeholder="Confirm password"
+                autoComplete="new-password"
                 {...register("confirmPassword", {
                   required: "Confirm Password field is required.",
                   validate: (value) =>
-                    value === password || "Passwords do not match."
-                })} />
-              <div className="input-error-message">{errors.confirmPassword?.message}</div>
-              <span className="toggle-password" onClick={() => { setShowConfirmPassword(prev => !prev) }}>
+                    value === password || "Passwords do not match.",
+                })}
+              />
+              <div className="input-error-message">
+                {errors.confirmPassword?.message}
+              </div>
+              <span
+                className="toggle-password"
+                onClick={() => {
+                  setShowConfirmPassword((prev) => !prev);
+                }}
+              >
                 {showConfirmPassword ? <Eye /> : <EyeOff />}
               </span>
             </div>
@@ -218,13 +236,14 @@ const CustomerRegisterForm = () => {
               {!isValid && <Tooltip id="username-tooltip" place="right" />}
             </div>
           </form>
-
-
         </div>
-      }
-      
+      )}
+
       {showError && (
-        <ErrorPopup message={errorMessage} onClose={() => setShowError(false)} />
+        <ErrorPopup
+          message={errorMessage}
+          onClose={() => setShowError(false)}
+        />
       )}
 
       {successMessage && (
@@ -234,7 +253,6 @@ const CustomerRegisterForm = () => {
           onClose={() => setSuccessMessage("")}
         />
       )}
-
     </div>
   );
 };
