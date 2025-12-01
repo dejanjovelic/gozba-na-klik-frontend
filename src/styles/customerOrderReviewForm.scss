@@ -17,12 +17,25 @@ $color-text: white;
   opacity: 0;
   z-index: 1000;
   animation: popupFadeInMain 0.3s ease forwards;
+  .spinner {
+    margin-top: 16px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #555;
+    border-radius: 50%;
+    animation: spinForm 0.8s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+  }
   #submitBtn {
     background-color: $color-orange;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 60px;
+    width: 100%;
   }
   .MuiSlider-track {
     background-color: $color-orange; /* filled track */
@@ -59,21 +72,7 @@ $color-text: white;
     justify-content: space-between;
     margin-bottom: 1rem;
     font-weight: 600;
-    #closeFormBtn {
-      display: flex;
-      justify-content: center; /* horizontal */
-      align-items: center; /* vertical */
-      text-align: center; /* fallback for text */
 
-      width: 35px;
-      border-radius: 10px;
-      background-color: red;
-      color: white;
-      border: 3px solid rgb(255, 255, 255);
-      &:hover {
-        cursor: pointer;
-      }
-    }
     .rating-section {
       margin-bottom: 1rem;
 
@@ -112,18 +111,7 @@ $color-text: white;
 .submitTxt {
   color: white;
 }
-.spinner {
-  margin-top: 16px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #555;
-  border-radius: 50%;
-  animation: spinForm 0.8s linear infinite;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-}
+
 @keyframes spinForm {
   0% {
     transform: rotate(0deg);
