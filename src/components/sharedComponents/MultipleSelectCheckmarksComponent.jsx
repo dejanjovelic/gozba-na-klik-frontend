@@ -19,16 +19,18 @@ const MenuProps = {
 };
 
 export default function MultipleSelectCheckmarksComponent({ allAllergens, onChange, customerAllergens }) {
-  const [selectedNames, setSelectedNames] = useState([]);
-  const initialLockedNamesRef = useRef([]);
+  const [selectedNames, setSelectedNames] = useState(
+    customerAllergens ? customerAllergens.map(a => a.name) : []
+  );
+  const [initialized, setInitialized] = useState(false);
+
   useEffect(() => {
-    const initialLocked = customerAllergens
-      .map(a => a.name);
-
-    initialLockedNamesRef.current = initialLocked;
-
-    setSelectedNames(prev => [...new Set([...prev, ... initialLockedNamesRef.current])]);
-  }, [allAllergens]);
+    if(!initialized && customerAllergens&& customerAllergens.length>0){
+        setSelectedNames(customerAllergens.map(a=>a.name));
+        setInitialized(true);
+    }
+   
+  }, [customerAllergens]);
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -37,35 +39,31 @@ export default function MultipleSelectCheckmarksComponent({ allAllergens, onChan
   };
 
   const handleSaveClick = () => {
-    const additional = selectedNames.filter(name =>
-      !initialLockedNamesRef.current.includes(name)
-    );
 
-    const additionalIds = allAllergens
-      .filter(a => additional.includes(a.name))
+    const AllergensIds = allAllergens
+      .filter(a => selectedNames.includes(a.name))
       .map(a => a.id);
 
     if (onChange) {
-      onChange(additionalIds);
+      onChange(AllergensIds);
     }
   };
 
   return (
     <>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="allergen-select-label">Additional allergens</InputLabel>
+        <InputLabel id="allergen-select-label">Allergens</InputLabel>
         <Select
           labelId="allergen-select-label"
           multiple
           value={selectedNames}
           onChange={handleChange}
-          input={<OutlinedInput label="Additional allergens" />}
+          input={<OutlinedInput label="Allergens" />}
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
         >
           {allAllergens.map((allergen) => (
             <MenuItem key={allergen.id} value={allergen.name}
-              disabled={initialLockedNamesRef.current.includes(allergen.name)}
             >
               <Checkbox checked={selectedNames.includes(allergen.name)} />
               <ListItemText primary={allergen.name} />
