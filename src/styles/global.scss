@@ -110,6 +110,9 @@ nav {
     z-index: 1400;
     color: black;
     transition: color 0.3s ease-in-out;
+    &:hover {
+      cursor: pointer;
+    }
 
     &.active {
       color: $color-hamburgerIcon; // ili neka kontrastna boja
