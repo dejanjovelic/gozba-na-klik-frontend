@@ -21,12 +21,14 @@ import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
 import RestaurantPaginationFilterSort from "./components/pages/Restaurant/RestaurantPaginationFilterSort";
 import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
 import CustomerMeals from "./components/pages/Customer/CustomerMeals";
-import RestaurantMenu from "./components/pages/RestaurantMenu";
+import RestaurantMenu from "./components/pages/Restaurant/RestaurantMenu";
 import UserContext from "./config/UserContext";
 import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrderPage";
 import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 import { OrderProvider } from "./components/OrderContext";
 import CustomerOrders from "./components/pages/Customer/CustomerOrders";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const App = () => {
   const token = localStorage.getItem('token');
