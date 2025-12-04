@@ -32,3 +32,13 @@ export async function getProfile() {
   const response = await AxiosConfig.get(`${RESOURCE1}/profile`);
   return response.data;
 }
+
+export async function forgotPassword(data) {
+  const response = await AxiosConfig.post(`${RESOURCE1}/forgot-password`, data);
+  return response.data;
+}
+
+export async function resetPassword(data) {
+  const response = await AxiosConfig.post(`${RESOURCE1}/reset-password`, data);
+  return response.data;
+}

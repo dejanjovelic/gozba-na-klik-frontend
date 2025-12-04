@@ -38,7 +38,6 @@ const CustomerMeals = () => {
 
     const handleHideMealsWithAllergensChange = () => {
         setHideMealsWithAllergens(!hideMealsWithAllergens);
-        console.log(hideMealsWithAllergens);
     }
 
     const handleAdditionalAllergens = (newAdditionalAllergensIds) => {

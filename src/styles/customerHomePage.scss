@@ -1,0 +1,119 @@
+@use "./global.scss" as *;
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+.restaurants-slider-container {
+
+    .slick-arrow.slick-next,
+    .slick-arrow.slick-prev {
+        top: 45%;
+    }
+
+    .restaurant-card.customer-page {
+        width: 300px;
+        max-width: 100%;
+    }
+
+}
+
+.restaurants-slider-container,
+.meals-slider-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    flex-shrink: 1;
+    
+
+
+    .slick-arrow.slick-next,
+    .slick-arrow.slick-prev {
+        background-color: black;
+        position: absolute;
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: white transparent;
+        background-color: white;
+        color: white transparent;
+        transform: translateY(-50%);
+
+
+        &::before {
+            font-size: 40px;
+            background-color: grey;
+            color: white transparent;
+            border-radius: 50%;
+        }
+    }
+
+    .slick-arrow.slick-prev {
+        left: 10px;
+        z-index: 1;
+    }
+
+    .slick-arrow.slick-next {
+        right: 10px;
+    }
+
+
+    .slick-slide {
+        margin: 0 15px;
+    }
+
+
+    .slick-slider.slick-initialized {
+        width: 90%;
+        height: 400px;
+        position: relative;
+    }
+
+    .slick-list,
+    .slick-track {
+        overflow: hidden;
+    }
+
+}
+
+
+.meals-slider-container {
+
+    .slick-arrow.slick-next,
+    .slick-arrow.slick-prev {
+        top: 30%;
+    }
+
+    div.customerMeal-card.customer-page {
+        display: flex !important;
+    }
+
+}
+
+.customer-home-page-conatiner {
+
+    h1 {
+        margin-left: 50px;
+        cursor: pointer;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.no-resturants-message-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-meals-message-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

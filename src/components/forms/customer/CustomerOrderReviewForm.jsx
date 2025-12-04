@@ -27,16 +27,16 @@ const CustomerOrderReviewForm = ({
       CourierRating: 5,
       RestaurantComment: "",
       CourierComment: "",
-      //RestaurantReviewImage: "",
+      RestaurantReviewImage: "",
     },
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
   const handleCloseError = () => setShowError(false);
-  //const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const onSubmit = async (data) => {
     try {
-      /*let imageUrl = "";
+      let imageUrl = "";
 
       // If a file was chosen → upload before sending review
       if (selectedFile) {
@@ -56,11 +56,11 @@ const CustomerOrderReviewForm = ({
         const cloudinaryData = await res.json();
         imageUrl = cloudinaryData.secure_url || "";
       }
-      */
+
       const review = {
         OrderId,
         ...data,
-        //RestaurantReviewImage: imageUrl, // attach uploaded image URL
+        RestaurantReviewImage: imageUrl, // attach uploaded image URL
       };
       console.log(review);
       await createOrderReviewAsync(review);
@@ -125,7 +125,6 @@ const CustomerOrderReviewForm = ({
             helperText={errors.restaurantComment?.message}
           />
 
-          {/* 
           <Typography variant="body2" className="fileLabel">
             Upload an image of your order
           </Typography>
@@ -140,7 +139,6 @@ const CustomerOrderReviewForm = ({
               />
             )}
           />
-          */}
 
           {/* Courier Rating */}
           <Box className="rating-section">
