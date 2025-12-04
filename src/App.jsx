@@ -27,8 +27,7 @@ import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrde
 import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
 import { OrderProvider } from "./components/OrderContext";
 import CustomerOrders from "./components/pages/Customer/CustomerOrders";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 
 const App = () => {
   const token = localStorage.getItem('token');
