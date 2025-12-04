@@ -27,6 +27,7 @@ const LoginForm = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [showActivationNotice, setShowActivationNotice] = useState(false);
   const [activationUsername, setActivationUsername] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState("");
 
   function lowercaseFirstLetter(word) {
     return `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
@@ -54,6 +55,11 @@ const LoginForm = () => {
     }
   };
 
+  function handleFortgotBtnclick(e) {
+    e.preventDefault();
+    navigate("/forgotPassword");
+  }
+
   useEffect(() => {
     if (user) {
       navigate(`/${lowercaseFirstLetter(user.role)}`);
@@ -77,6 +83,7 @@ const LoginForm = () => {
             <h2 id="LogInTitle">Log in</h2>
 
             <div id="FormLoginInputsContainer">
+              <label htmlFor="username">Username</label>
               <input
                 id="username"
                 placeholder="Your username"
@@ -91,6 +98,7 @@ const LoginForm = () => {
               <br />
 
               <div id="password-container">
+                <label htmlFor="password">Password</label>
                 <input
                   id="password"
                   placeholder="Your password"
@@ -114,26 +122,34 @@ const LoginForm = () => {
               )}
             </div>
             <br />
-            <div
-              id="signUpBtn-container"
-              data-tooltip-id="username-tooltip"
-              data-tooltip-content="All field are required."
-            >
-              <button
-                className="LoginSubmitButton"
-                type="submit"
-                disabled={!isDirty || !isValid || isSubmitting || user}
+            <div className="logInButtons-container">
+
+              <div
+                id="signUpBtn-container"
+                data-tooltip-id="username-tooltip"
+                data-tooltip-content="All field are required."
               >
-                {isSubmitting ? (
-                  <>
-                    <span className="spinner"></span>
-                  </>
-                ) : (
-                  "Log in"
-                )}
-              </button>
-              {!isValid && <Tooltip id="username-tooltip" place="right" />}
+                <button
+                  className="LoginSubmitButton"
+                  type="submit"
+                  disabled={!isDirty || !isValid || isSubmitting || user}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="spinner"></span>
+                    </>
+                  ) : (
+                    "Log in"
+                  )}
+                </button>
+
+                {!isValid && <Tooltip id="username-tooltip" place="right" />}
+              </div>
+              <div className="forgotBtn-container">
+                <button id="forgotBtn" onClick={handleFortgotBtnclick}>Forgot password?</button>
+              </div>
             </div>
+
           </form>
         </div>
       }
