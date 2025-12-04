@@ -20,3 +20,8 @@ export async function getRestaurantWithMeals(id) {
     const response = await AxiosConfig.get(`${RESOURCE}/${id}/meals`);
     return response.data;
 }
+
+export async function fetchTopRatedRestaurants() {
+    const response = await AxiosConfig.get(`${RESOURCE}/top-rated`);
+    return response.data;
+}
