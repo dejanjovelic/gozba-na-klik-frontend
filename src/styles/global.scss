@@ -143,7 +143,6 @@ nav {
       display: inline-block;
       text-align: center;
       cursor: pointer;
-      position: relative;
     }
 
     #DropDownMenuContent {
@@ -304,28 +303,6 @@ footer {
         }
       }
     }
-  }
-}
-
-.password-wrapper {
-  position: relative;
-  width: 100%;
-
-  input {
-    width: 100%;
-    padding-right: 40px;
-    padding: 5px;
-    border-radius: 2px;
-  }
-
-  .toggle-password {
-    position: absolute;
-    top: 30%;
-    right: 50px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 1.2rem;
-    user-select: none;
   }
 }
 

@@ -21,7 +21,11 @@ $color-text: white;
   flex-wrap: wrap;
   justify-content: center;
   height: 500px;
-
+  background: rgba(255, 255, 255, 0.377);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: transparent;
+  padding-bottom: 50px;
   #User {
     margin-bottom: -10px;
   }
@@ -54,7 +58,7 @@ $color-text: white;
     align-items: center;
     justify-content: center;
 
-    background: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.377);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 
@@ -151,4 +155,12 @@ $color-text: white;
       }
     }
   }
+}
+#forgotBtn {
+  background-color: transparent;
+  color: #2975a8;
+  width: 100%;
+  border: none;
+  text-decoration: underline;
+  font-size: 16px;
 }

@@ -30,6 +30,7 @@ const LoginForm = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [showActivationNotice, setShowActivationNotice] = useState(false);
   const [activationUsername, setActivationUsername] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState("");
 
   function lowercaseFirstLetter(word) {
     return `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
@@ -60,8 +61,13 @@ const LoginForm = () => {
     }
   };
 
+  function handleFortgotBtnclick(e) {
+    e.preventDefault();
+    navigate("/forgotPassword");
+  }
+
   useEffect(() => {
-    if (user) {
+    if (user?.role) {
       navigate(`/${lowercaseFirstLetter(user.role)}`);
     }
   }, [user]);
@@ -133,6 +139,11 @@ const LoginForm = () => {
               >
                 {isSubmitting ? <span className="spinner"></span> : "Log in"}
               </button>
+              <div className="forgotBtn-container">
+                <button id="forgotBtn" onClick={handleFortgotBtnclick}>
+                  Forgot password?
+                </button>
+              </div>
             </form>
           </div>
         )}
