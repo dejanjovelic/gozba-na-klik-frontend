@@ -1,7 +1,7 @@
 import AxiosConfig from "../config/axiosConfig";
 
 const RESOURCE = "/api/users";
-const RESOURCE1 = "api/auth"
+const RESOURCE1 = "api/auth";
 
 export const login = async (username, password) => {
   const response = await AxiosConfig.post(`${RESOURCE1}/login`, {
@@ -17,7 +17,19 @@ export async function GetAllUsers() {
 }
 
 export async function resendActivatonEmail(username) {
-  const response = await AxiosConfig.post(`${RESOURCE1}/resend-confirmation-email?username=${username}`);
+  const response = await AxiosConfig.post(
+    `${RESOURCE1}/resend-confirmation-email?username=${username}`
+  );
+  return response.data;
+}
+export async function updateProfileImage(profileImageUrl) {
+  const response = await AxiosConfig.patch(`${RESOURCE1}/profileImage`, {
+    profileImageUrl,
+  });
+  return response.data;
+}
+export async function getProfile() {
+  const response = await AxiosConfig.get(`${RESOURCE1}/profile`);
   return response.data;
 }
 
