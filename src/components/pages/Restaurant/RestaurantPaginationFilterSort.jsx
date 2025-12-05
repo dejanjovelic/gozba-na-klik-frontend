@@ -16,7 +16,7 @@ const RestaurantPaginationFilterSort = () => {
     const [sortTypes, setSortTypes] = useState([]);
     const [chosenSortType, setChosenSortType] = useState(0);
     const [page, setPage] = useState(0);
-    const [pageSize, setPageSize] = useState(6);
+    const [pageSize, setPageSize] = useState(8);
     const [totalRowsCount, setTotalRowsCount] = useState(0);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [hasPreviousPage, setHasPreviousPage] = useState(false);

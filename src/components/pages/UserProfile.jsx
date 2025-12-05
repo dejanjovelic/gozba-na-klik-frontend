@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/userProfile.scss";
 import { Eye, EyeOff } from "lucide-react";
 import { updateProfileImage, getProfile } from "../../services/userServices";
 import ErrorPopup from "./Popups/ErrorPopup";
+import UserContext from "../../config/UserContext";
 import CustomerAddresses from "../pages/Customer/CustomerAddresses";
 import CustomerAllergens from "../pages/Customer/CustomerAllergens";
 export default function UserProfile() {
@@ -22,6 +23,8 @@ export default function UserProfile() {
     newPassword: "",
   });
   const [data, setData] = useState();
+  const { user, setUser } = useContext(UserContext);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormState((prev) => ({
@@ -68,7 +71,10 @@ export default function UserProfile() {
       setShowError(true);
     }
     try {
-      await updateProfileImage(imageUrl);
+      const token = await updateProfileImage(imageUrl);
+      localStorage.setItem("token", token);
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      setUser(payload);
     } catch (error) {
       if (error.status) {
         if (error.status === 500) {
@@ -95,6 +101,7 @@ export default function UserProfile() {
   const handleCancel = () => {
     setMessage(null);
   };
+
   useEffect(() => {
     GetProfileAsync();
   }, []);

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { login as loginService } from "../../../services/userServices";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../config/AuthContext";
 import "../../../styles/global.scss";
 import "../../../styles/loginForm.scss";
 import { Eye, EyeOff } from "lucide-react";
