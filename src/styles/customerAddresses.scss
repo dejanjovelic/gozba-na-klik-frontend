@@ -1,235 +1,233 @@
-@use 'sass:color';
+@use "sass:color";
 
 $color-cream: #f5e4cb;
 $color-brown: #5d402b;
 $color-orange: #ea9332;
-
+#Container {
+}
 .addresses-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .addresses-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  height: 70vh;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  background-color: white;
+  .addresses-header {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    width: 50%;
-    height: 70vh;
-    border-radius: 10px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    padding: 20px;
 
-    .addresses-header {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: $color-orange;
-        }
-
-        button {
-            height: 50px;
-            width: 15.5%;
-            padding: 10px 15px;
-            background-color: $color-orange;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 10px;
-            border: none;
-
-            &:hover {
-                cursor: pointer;
-                background-color: color.adjust($color-orange, $lightness: 5%);
-            }
-        }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: $color-orange;
     }
+
+    button {
+      height: 50px;
+      width: 15.5%;
+      padding: 10px 15px;
+      background-color: $color-orange;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 10px;
+      border: none;
+
+      &:hover {
+        cursor: pointer;
+        background-color: color.adjust($color-orange, $lightness: 5%);
+      }
+    }
+  }
 }
 
 .cards-container {
-    margin-top: 3rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 50px;
-    width: 100%;
-    overflow: auto;
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  width: 100%;
+  overflow: auto;
 }
 
 .address-card {
-    background-color: $color-cream;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    width: 30%;
+  background-color: $color-cream;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .input-wrapper {
     display: flex;
     flex-direction: column;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 10px;
+    flex: 1;
 
-    .input-wrapper {
-        display: flex;
-        flex-direction: column;
-        margin-right: 10px;
-        flex: 1;
-
-        label {
-            white-space: nowrap;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
+    label {
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
     }
+  }
 
-    .first-row,
-    .second-row {
-        display: flex;
-        gap: 2rem;
-        margin-bottom: 10px;
+  .first-row,
+  .second-row {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .first-row .input-wrapper:first-child,
+  .second-row .input-wrapper:first-child {
+    flex: 2.5;
+  }
+
+  .first-row .input-wrapper:last-child,
+  .second-row .input-wrapper:last-child {
+    flex: 1;
+  }
+
+  input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    font-size: 14px;
+    width: 100%;
+
+    &:focus {
+      outline: none;
     }
+  }
 
-    .first-row .input-wrapper:first-child,
-    .second-row .input-wrapper:first-child {
-        flex: 2.5;
+  input[placeholder="Number"],
+  input[placeholder="ZIP code"] {
+    flex: 1;
+  }
+
+  button {
+    align-self: flex-start;
+    background-color: $color-orange;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+
+    &:hover {
+      background-color: color.adjust($color-orange, $lightness: -5%);
     }
-
-    .first-row .input-wrapper:last-child,
-    .second-row .input-wrapper:last-child {
-        flex: 1;
-    }
-
-    input {
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        background-color: #ffffff;
-        font-size: 14px;
-        width: 100%;
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    .input-error {
-        border-color: red;
-    }
-
-    input[placeholder="Number"],
-    input[placeholder="ZIP code"] {
-        flex: 1;
-    }
-
-    button {
-        align-self: flex-start;
-        background-color: $color-orange;
-        color: white;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        margin-top: 10px;
-
-        &:hover {
-            background-color: color.adjust($color-orange, $lightness: -5%);
-        }
-    }
+  }
 }
 
-
 .empty-addresses {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-    color: rgb(247, 72, 72);
-    font-weight: bold;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: rgb(247, 72, 72);
+  font-weight: bold;
 }
 
 .button-wrapper {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 
-    button {
-        padding: 10px 20px !important;
-        width: 6rem;
+  button {
+    padding: 10px 20px !important;
+    width: 6rem;
+  }
+
+  .add-button {
+    background-color: $color-orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+
+    &:hover {
+      background-color: color.adjust($color-orange, $lightness: 5%);
+    }
+  }
+
+  #delete-button {
+    background-color: rgb(247, 72, 72);
+
+    &:hover {
+      background-color: color.adjust(rgb(247, 72, 72), $lightness: 5%);
     }
 
-    .add-button {
-        background-color: $color-orange;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 20px;
-
-        &:hover {
-            background-color: color.adjust($color-orange, $lightness: 5%);
-        }
+    &:disabled {
+      background-color: lightgray;
+      color: rgb(175, 175, 175);
+      cursor: default;
     }
-
-    #delete-button {
-        background-color: rgb(247, 72, 72);
-
-        &:hover {
-            background-color: color.adjust(rgb(247, 72, 72), $lightness: 5%);
-        }
-
-        &:disabled {
-            background-color: lightgray;
-            color: rgb(175, 175, 175);
-            cursor: default;
-        }
-    }
+  }
 }
 
 #add-button:disabled {
-    background-color: lightgray;
-    color: rgb(175, 175, 175);
-    cursor: default;
+  background-color: lightgray;
+  color: rgb(175, 175, 175);
+  cursor: default;
 }
 
-
 @media (max-width: 1200px) {
-    .address-card {
-        width: 50%;
-    }
+  .address-card {
+    width: 50%;
+  }
 }
 
 @media (max-width: 1000px) {
-    .address-card {
-        width: 70%;
-    }
+  .address-card {
+    width: 70%;
+  }
 
-    .addresses-header {
-        flex-direction: column;
+  .addresses-header {
+    flex-direction: column;
 
-        button {
-            width: 50% !important;
-        }
+    button {
+      width: 50% !important;
     }
+  }
 
-    .cards-container {
-        align-items: center;
-        flex-direction: column;
-    }
+  .cards-container {
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 590px) {
-    .addresses-div {
-        min-width: 300px;
+  .addresses-div {
+    min-width: 300px;
 
-        .add-button {
-            width: 50% !important;
-        }
+    .add-button {
+      width: 50% !important;
     }
+  }
 }

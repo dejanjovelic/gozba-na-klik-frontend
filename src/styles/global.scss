@@ -5,11 +5,12 @@ $color-cream: #f5e4cb;
 $color-orange: #ea9332;
 $color-hamburgerIcon: white;
 $color-text: white;
-
+$color-background: #fffbf4;
 html,
 body,
 #root {
   height: 100%;
+  background: $color-background;
 }
 
 //SPINNER
@@ -291,7 +292,8 @@ button {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-5px);
-    transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s linear 0.6s;
+    transition: opacity 0.6s ease, transform 0.6s ease,
+      visibility 0s linear 0.6s;
     background-color: white;
     padding: 5px;
     margin-top: 5px;
@@ -302,17 +304,16 @@ button {
     transition-delay: 2s;
   }
 
-  .user-img:hover+.user-hover-fullname {
+  .user-img:hover + .user-hover-fullname {
     visibility: visible;
     opacity: 1;
     transform: translateY(0);
     transition-delay: 1s;
   }
 
-  .user-img:not(:hover)+.user-hover-fullname {
+  .user-img:not(:hover) + .user-hover-fullname {
     transition-delay: 0s;
   }
-
 }
 
 .user-profile-div.open .user-hover-fullname {

@@ -33,13 +33,7 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
 
     customer: [
       { icon: <Home />, path: "/customer", label: "Home", exact: true },
-      { icon: <Egg />, path: "/customer/allergens", label: "Allergens" },
-      {
-        icon: <MapPin />,
-        path: "/customer/addresses",
-        label: "Addresses",
-        exact: true,
-      },
+
       {
         icon: <RestaurantMenuIcon />,
         path: "/customer/meals",
