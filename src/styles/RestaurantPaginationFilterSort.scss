@@ -121,9 +121,10 @@
 }
 
 @media (max-width: 2000px) {
-    .RestaurantPaginationFilterSort-pageContainer{
+    .RestaurantPaginationFilterSort-pageContainer {
         padding: 7px;
     }
+
     .restaurant-card {
         border-radius: 10px;
         width: 20%;
@@ -131,6 +132,7 @@
         margin: 10px;
         max-height: 11.0rem;
         max-width: 350px;
+        padding-bottom: 18px;
     }
 
     #restaurant-img {
