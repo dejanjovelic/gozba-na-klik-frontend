@@ -3,6 +3,8 @@ import "../../styles/userProfile.scss";
 import { Eye, EyeOff } from "lucide-react";
 import { updateProfileImage, getProfile } from "../../services/userServices";
 import ErrorPopup from "./Popups/ErrorPopup";
+import CustomerAddresses from "../pages/Customer/CustomerAddresses";
+import CustomerAllergens from "../pages/Customer/CustomerAllergens";
 export default function UserProfile() {
   const [preview, setPreview] = useState(null);
   const [showOldPass, setShowOldPass] = useState(false);
@@ -132,7 +134,7 @@ export default function UserProfile() {
     }
   };
   return (
-    <>
+    <div className="background">
       <div className="page">
         <div className="container">
           <div className="leftCard">
@@ -271,12 +273,18 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
+      <div id="customerAllergenProfile">
+        <CustomerAllergens />
+      </div>
+      <div id="customerAddressesProfile">
+        <CustomerAddresses />
+      </div>
       {showError && (
         <ErrorPopup
           message={errorMessage}
           onClose={() => setShowError(false)}
         />
       )}
-    </>
+    </div>
   );
 }

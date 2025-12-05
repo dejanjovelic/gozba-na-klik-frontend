@@ -31,7 +31,7 @@
 
     display: flex;
     top: 150%;
-    left: 85%;
+    left: 88%;
     &:hover {
       background-color: color.adjust($color-orange, $lightness: 5%);
     }
@@ -49,4 +49,14 @@
 #AllergenFormCard {
   display: flex;
   flex-direction: column;
+  background-color: white;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+#Container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }

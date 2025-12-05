@@ -141,77 +141,80 @@ const CustomerAllergens = () => {
   const onClose = () => {};
 
   return (
-    <div id="allergenContainer">
-      <>
-        <Card
-          variant="outlined"
-          style={{ height: "400px", width: "700px" }}
-          id="AllergenFormCard"
-        >
-          <CardHeader
-            title="Select your allergens"
-            subheader="To keep your meals safe and enjoyable, please select all ingredients you'd like to avoid."
-            sx={{ paddingBottom: 1 }}
-          />
-          <CardContent>
-            <Autocomplete
-              multiple
-              id="allergens-checkbox"
-              options={allergens}
-              disableCloseOnSelect
-              value={customerAllergens}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              onChange={(event, newValue) => setCustomerAllergens(newValue)}
-              getOptionLabel={(option) => option.name}
-              slotProps={{
-                popper: {},
-                listbox: {
-                  sx: {
-                    maxHeight: 150,
-                    overflowY: "auto",
-                  },
-                },
-              }}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox
-                    icon={icon}
-                    checkedIcon={checkedIcon}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                  />
-                  {option.name}
-                </li>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Allergens"
-                  placeholder="Select..."
-                />
-              )}
+    <div id="Container">
+      <div id="allergenContainer">
+        <>
+          <Card
+            variant="outlined"
+            style={{ height: "400px", width: "980px" }}
+            id="AllergenFormCard"
+          >
+            <CardHeader
+              title="Select your allergens"
+              subheader="To keep your meals safe and enjoyable, please select all ingredients you'd like to avoid."
+              sx={{ paddingBottom: 1 }}
+              style={{ color: "#ea9332" }}
             />
-            {successMsg && (
-              <Alert
-                icon={<CheckCircleOutlineIcon fontSize="inherit" />}
-                severity="success"
+            <CardContent>
+              <Autocomplete
+                multiple
+                id="allergens-checkbox"
+                options={allergens}
+                disableCloseOnSelect
+                value={customerAllergens}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                onChange={(event, newValue) => setCustomerAllergens(newValue)}
+                getOptionLabel={(option) => option.name}
+                slotProps={{
+                  popper: {},
+                  listbox: {
+                    sx: {
+                      maxHeight: 150,
+                      overflowY: "auto",
+                    },
+                  },
+                }}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox
+                      icon={icon}
+                      checkedIcon={checkedIcon}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {option.name}
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Allergens"
+                    placeholder="Select..."
+                  />
+                )}
+              />
+              {successMsg && (
+                <Alert
+                  icon={<CheckCircleOutlineIcon fontSize="inherit" />}
+                  severity="success"
+                  sx={{ mt: 2 }}
+                >
+                  {successMsg}
+                </Alert>
+              )}
+              <Button
+                className="saveBtn"
+                onClick={handleSave}
+                variant="contained"
+                color="primary"
                 sx={{ mt: 2 }}
               >
-                {successMsg}
-              </Alert>
-            )}
-            <Button
-              className="saveBtn"
-              onClick={handleSave}
-              variant="contained"
-              color="primary"
-              sx={{ mt: 2 }}
-            >
-              Save
-            </Button>
-          </CardContent>
-        </Card>
-      </>
+                Save
+              </Button>
+            </CardContent>
+          </Card>
+        </>
+      </div>
     </div>
   );
 };
