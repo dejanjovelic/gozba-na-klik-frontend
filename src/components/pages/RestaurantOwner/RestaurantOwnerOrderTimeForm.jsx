@@ -2,18 +2,18 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import "../../../styles/RestaurauntOwnerOrderTime.scss";
 
-const RestaurauntOwnerOrderTimeForm = ({ order, onClose, onSubmitTime }) => {
+const RestaurauntOwnerOrderTimeForm = ({ onClose, onSubmitMinutes }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: { time: order?.time || "" },
+    defaultValues: { pickupReadyIn: 5 },
   });
 
   const onSubmit = (data) => {
-    onSubmitTime(data.time);
+    onSubmitMinutes(data.pickupReadyIn);
     reset();
   };
 
@@ -26,23 +26,27 @@ const RestaurauntOwnerOrderTimeForm = ({ order, onClose, onSubmitTime }) => {
           onSubmit={handleSubmit(onSubmit)}
           className="RestaurauntOwnerOrderTimeForm"
         >
-          <label htmlFor="time">Vreme kada je porudžbina spremna: </label>
+          <label htmlFor="pickupReadyIn">Preparation time (in minutes): </label>
           <br />
           <br />
           <input
-            type="time"
-            id="time"
-            {...register("time", { required: "Molimo izaberite vreme." })}
-            className={errors.time ? "inputError" : ""}
+            type="number"
+            id="pickupReadyIn"
+            {...register("pickupReadyIn", {
+              required: "Please enter the preparation time.",
+              min: { value: 1, message: "Time must be between 1 and 60 minutes." },
+              max: { value: 60, message: "Time must be between 1 and 60 minutes." }
+            })}
+            className={errors.pickupReadyIn ? "inputError" : ""}
           />
-          {errors.time && <p className="errorText">{errors.time.message}</p>}
+          {errors.pickupReadyIn && <p className="errorText">{errors.pickupReadyIn.message}</p>}
 
           <div className="buttonGroup">
             <button type="submit" className="submitButton">
-              Sačuvaj
+              Save
             </button>
             <button type="button" className="closeButton" onClick={onClose}>
-              Zatvori
+              Close
             </button>
           </div>
         </form>
