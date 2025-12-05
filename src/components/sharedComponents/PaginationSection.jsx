@@ -63,7 +63,7 @@ const PagionationSection = ({
                 size="small"
                 sx={{ ml: 2 }}
             >
-                {[6, 12, 18].map((size) => (
+                {[8, 16, 24].map((size) => (
                     <MenuItem key={size} value={size}>
                         {size} / page
                     </MenuItem>

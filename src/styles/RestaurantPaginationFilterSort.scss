@@ -1,4 +1,4 @@
-@use "./global.scss" as*;
+@use "./global.scss" as global;
 
 .restaurants-container {
     display: flex;
@@ -11,17 +11,18 @@
 .restaurant-card {
     border-radius: 10px;
     width: 25%;
-    min-height: 18.0rem;    // mozda na 19.5 da bi velicina kartica bila ista kao sa slikom?
+    min-height: 14.0rem; // mozda na 19.5 da bi velicina kartica bila ista kao sa slikom?
     margin: 10px;
+    max-height: 18.5rem;
+    max-width: 500px;
     padding: 10px;
-    min-width: 300px;
+    min-width: 200px;
     box-shadow: 0 0 10px #0000001a;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     cursor: pointer;
 
     &:hover {
         transform: scale(1.03);
-
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     }
 
@@ -41,7 +42,7 @@
 
 #restaurant-img {
     width: 100%;
-    height: 220px;
+    height: 200px;
 }
 
 .restaurantData-capacity {
@@ -56,20 +57,21 @@
 .restaurantData-section {
     display: flex;
 
-    .restaurantData-section-rightSide {
-        flex: 1;
-        min-width: 25%;
-    }
-
     .restaurantData-section-leftSide {
         flex: 1 1;
         min-width: 70%;
+    }
+
+    .restaurantData-section-rightSide {
+        flex: 1;
+        min-width: 25%;
     }
 }
 
 //CONTAINER FILTERA
 .MuiBox-root.css-0 {
     width: 50%;
+    margin-right: 30px;
 }
 
 .sortAndFilter-container {
@@ -92,3 +94,66 @@
     margin-top: 10px;
 }
 
+.MuiBox-root.css-0 {
+    width: 600px;
+
+    .MuiGrid-root.MuiGrid-container.MuiGrid-direction-xs-row.MuiGrid-spacing-xs-2.css-zjhuaj-MuiGrid-root {
+        width: 600px;
+    }
+}
+
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-outlined.MuiFormLabel-colorPrimary.Mui-focused.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-outlined.css-113d811-MuiFormLabel-root-MuiInputLabel-root {
+    color: gray;
+    z-index: 1;
+    background-color: white;
+}
+
+.css-sc8y68-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: grey;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.css-1blvszr-MuiButtonBase-root-MuiButton-root {
+    background-color: global.$color-orange;
+    color: global.$color-text;
+    font-weight: bold;
+    border: 0.5px solid global.$color-orange;
+    outline: 0.5px solid global.$color-orange;
+}
+
+@media (max-width: 2000px) {
+    .RestaurantPaginationFilterSort-pageContainer{
+        padding: 7px;
+    }
+    .restaurant-card {
+        border-radius: 10px;
+        width: 20%;
+        min-height: 9.0rem;
+        margin: 10px;
+        max-height: 11.0rem;
+        max-width: 350px;
+    }
+
+    #restaurant-img {
+        width: 100%;
+        height: 130px;
+    }
+
+    .restaurants-title {
+        margin: 8px;
+        font-size: 25px;
+    }
+
+    .restaurant-name {
+        margin: 8px;
+        font-size: 19px;
+    }
+
+    p {
+        margin: 10px 0;
+    }
+
+    .MuiBox-root.css-nt4rx7 {
+        width: 80%;
+    }
+
+}
