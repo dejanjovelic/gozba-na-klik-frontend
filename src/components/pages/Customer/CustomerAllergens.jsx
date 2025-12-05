@@ -29,7 +29,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import UserContext from "../../../config/UserContext";
 
 const CustomerAllergens = () => {
-
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -40,7 +39,7 @@ const CustomerAllergens = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsloading] = useState(true);
 
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const getLoadingData = async () => {
     try {
@@ -85,7 +84,6 @@ const CustomerAllergens = () => {
     setMessage(message);
     setTimeout(() => {
       setMessage("");
-      navigate("/customer");
     }, 2000);
   };
 
@@ -140,117 +138,81 @@ const CustomerAllergens = () => {
     getLoadingData();
   }, []);
 
-  const onClose = () => {
-    navigate("/customer");
-  };
+  const onClose = () => {};
 
   return (
-    <>
-      <Backdrop
-        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
-        open={isLoading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      {errorMsg && !isLoading && (
-        <Dialog open={true} onClose={onClose} fullWidth maxWidth="sm">
-          <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
-            {errorMsg}
-          </Alert>
-        </Dialog>
-      )}
-      {!isLoading && !errorMsg && (
-        <Dialog
-          open={true}
-          onClose={onClose}
-          fullWidth
-          maxWidth="md"
-          slotProps={{
-            paper: {
-              style: {
-                height: "70vh",
-              },
-            },
-          }}
+    <div id="allergenContainer">
+      <>
+        <Card
+          variant="outlined"
+          style={{ height: "400px", width: "700px" }}
+          id="AllergenFormCard"
         >
-          <DialogTitle>Choose Allergens</DialogTitle>
-          <DialogContent dividers>
-            <Card variant="outlined">
-              <CardHeader
-                title="Select your allergens"
-                subheader="To keep your meals safe and enjoyable, please select all ingredients you'd like to avoid."
-                sx={{ paddingBottom: 1 }}
-              />
-
-              <CardContent>
-                <Autocomplete
-                  multiple
-                  id="allergens-checkbox"
-                  options={allergens}
-                  disableCloseOnSelect
-                  value={customerAllergens}
-                  isOptionEqualToValue={(option, value) =>
-                    option.id === value.id
-                  }
-                  onChange={(event, newValue) => setCustomerAllergens(newValue)}
-                  getOptionLabel={(option) => option.name}
-                  slotProps={{
-                    popper: {},
-                    listbox: {
-                      sx: {
-                        maxHeight: 150,
-                        overflowY: "auto",
-                      },
-                    },
-                  }}
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.name}
-                    </li>
-                  )}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Allergens"
-                      placeholder="Select..."
-                    />
-                  )}
-                />
-              </CardContent>
-              {successMsg && (
-                <Alert
-                  icon={<CheckCircleOutlineIcon fontSize="inherit" />}
-                  severity="success"
-                  sx={{ mx: 3, mb: 1 }}
-                >
-                  {successMsg}
-                </Alert>
+          <CardHeader
+            title="Select your allergens"
+            subheader="To keep your meals safe and enjoyable, please select all ingredients you'd like to avoid."
+            sx={{ paddingBottom: 1 }}
+          />
+          <CardContent>
+            <Autocomplete
+              multiple
+              id="allergens-checkbox"
+              options={allergens}
+              disableCloseOnSelect
+              value={customerAllergens}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              onChange={(event, newValue) => setCustomerAllergens(newValue)}
+              getOptionLabel={(option) => option.name}
+              slotProps={{
+                popper: {},
+                listbox: {
+                  sx: {
+                    maxHeight: 150,
+                    overflowY: "auto",
+                  },
+                },
+              }}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.name}
+                </li>
               )}
-            </Card>
-          </DialogContent>
-          <DialogActions>
-            <Button className="cancelBtn" onClick={onClose}>
-              Cancel
-            </Button>
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Allergens"
+                  placeholder="Select..."
+                />
+              )}
+            />
+            {successMsg && (
+              <Alert
+                icon={<CheckCircleOutlineIcon fontSize="inherit" />}
+                severity="success"
+                sx={{ mt: 2 }}
+              >
+                {successMsg}
+              </Alert>
+            )}
             <Button
               className="saveBtn"
               onClick={handleSave}
               variant="contained"
               color="primary"
+              sx={{ mt: 2 }}
             >
               Save
             </Button>
-          </DialogActions>
-        </Dialog>
-      )}
-    </>
+          </CardContent>
+        </Card>
+      </>
+    </div>
   );
 };
 
