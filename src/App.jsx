@@ -30,12 +30,10 @@ import CustomerOrders from "./components/pages/Customer/CustomerOrders";
 import ForgotPasswordPage from "./components/forms/ResetPassword/ForgotPasswordPage";
 import ResetPassword from "./components/forms/ResetPassword/ResetPassword";
 
-
 const App = () => {
-  const token = localStorage.getItem('token');
-  const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
+  const token = localStorage.getItem("token");
+  const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;
   const [user, setUser] = useState(payload);
-
 
   return (
     <div className="content">
@@ -44,10 +42,17 @@ const App = () => {
           <Header />
           <Routes>
             <Route path="/" element={<RestaurantPaginationFilterSort />} />
-            <Route path="/restaurant-menu/:id" element={<OrderProvider><RestaurantMenu /></OrderProvider>} />
+            <Route
+              path="/restaurant-menu/:id"
+              element={
+                <OrderProvider>
+                  <RestaurantMenu />
+                </OrderProvider>
+              }
+            />
             <Route path="/register" element={<CustomerRegisterForm />} />
             <Route path="/login" element={<LoginForm />}></Route>
-            <Route path="/forgotPassword" element={<ForgotPasswordPage/>}/>
+            <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPassword />} />
 
             <Route
