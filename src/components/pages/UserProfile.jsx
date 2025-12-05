@@ -280,12 +280,27 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
-      <div id="customerAllergenProfile">
-        <CustomerAllergens />
-      </div>
-      <div id="customerAddressesProfile">
-        <CustomerAddresses />
-      </div>
+      {role === "Customer" && (
+        <>
+          <div id="customerAllergenProfile">
+            <CustomerAllergens
+              onError={(msg) => {
+                setErrorMessage(msg);
+                setShowError(true);
+              }}
+            />
+          </div>
+
+          <div id="customerAddressesProfile">
+            <CustomerAddresses
+              onError={(msg) => {
+                setErrorMessage(msg);
+                setShowError(true);
+              }}
+            />
+          </div>
+        </>
+      )}
       {showError && (
         <ErrorPopup
           message={errorMessage}

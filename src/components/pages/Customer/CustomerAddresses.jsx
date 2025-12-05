@@ -7,15 +7,29 @@ import {
   updateAddress,
 } from "../../../services/CustomerService";
 import CustomerAddressForm from "../../forms/customer/CustomerAddressForm";
-import ErrorPopup from "../Popups/ErrorPopup";
 import UserContext from "../../../config/UserContext";
 
-const CustomerAddresses = () => {
+const CustomerAddresses = ({ onError }) => {
   const [addresses, setAddresses] = useState([]);
   const { user } = useContext(UserContext);
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const handleCloseError = () => setShowError(false);
+
+  const throwError = (error) => {
+    if (!onError) return;
+
+    if (error.status === 500) {
+      onError(
+        "We're experiencing technical difficulties. Please try again shortly."
+      );
+    } else if (error.request) {
+      onError(
+        "The server seems to be taking too long to respond. Please try again in a moment."
+      );
+    } else {
+      onError("Something went wrong. Please try again.");
+    }
+
+    console.log("CustomerAddresses error:", error);
+  };
 
   const handleEdit = (id) => {
     setAddresses(
@@ -40,15 +54,14 @@ const CustomerAddresses = () => {
       } else {
         await updateAddress(user.id, id, data);
 
-        setAddresses((prevAddresses) => {
-          const updated = prevAddresses.map((addr) =>
+        setAddresses((prev) =>
+          prev.map((addr) =>
             addr.id === id ? { ...addr, ...data, isEditing: false } : addr
-          );
-          return updated;
-        });
+          )
+        );
       }
     } catch (error) {
-      console.error("An error occured while saving address:", error);
+      throwError(error);
     }
   };
 
@@ -72,44 +85,21 @@ const CustomerAddresses = () => {
       await deleteAddress(user.id, addressId);
       loadAddresses();
     } catch (error) {
-      if (error.status && error.status === 500) {
-        setErrorMessage(
-          "We're experiencing technical difficulties. Please try again shortly."
-        );
-      } else if (error.request) {
-        setErrorMessage(
-          "The server seems to be taking too long to respond. Please try again in a moment."
-        );
-      } else {
-        setErrorMessage("Something went wrong. Please try again.");
-      }
-      console.log("An error occurred while deleting Address:", error);
-      setShowError(true);
+      throwError(error);
     }
   };
 
   async function loadAddresses() {
     try {
       const data = await getAddresses(user.id);
-      const dataWithEdit = data.map((data) => ({
-        ...data,
-        isEditing: false,
-      }));
-      setAddresses(dataWithEdit);
+      setAddresses(
+        data.map((item) => ({
+          ...item,
+          isEditing: false,
+        }))
+      );
     } catch (error) {
-      if (error.status && error.status === 500) {
-        setErrorMessage(
-          "We're experiencing technical difficulties. Please try again shortly."
-        );
-      } else if (error.request) {
-        setErrorMessage(
-          "The server seems to be taking too long to respond. Please try again in a moment."
-        );
-      } else {
-        setErrorMessage("Something went wrong. Please try again.");
-      }
-      console.log("An error occurred while fetching Addresses:", error);
-      setShowError(true);
+      throwError(error);
     }
   }
 
@@ -117,7 +107,7 @@ const CustomerAddresses = () => {
     loadAddresses();
   }, []);
 
-  const isAnyEditing = addresses?.some((address) => address.isEditing);
+  const isAnyEditing = addresses.some((address) => address.isEditing);
 
   return (
     <div id="Content">
@@ -137,19 +127,17 @@ const CustomerAddresses = () => {
 
           {addresses.length > 0 ? (
             <div className="cards-container">
-              <>
-                {addresses.map((address) => (
-                  <CustomerAddressForm
-                    key={address.id}
-                    addressId={address.id}
-                    defaultValues={address}
-                    isEditing={address.isEditing}
-                    onEdit={handleEdit}
-                    onSave={handleSave}
-                    onDelete={handleDelete}
-                  />
-                ))}
-              </>
+              {addresses.map((address) => (
+                <CustomerAddressForm
+                  key={address.id}
+                  addressId={address.id}
+                  defaultValues={address}
+                  isEditing={address.isEditing}
+                  onEdit={handleEdit}
+                  onSave={handleSave}
+                  onDelete={handleDelete}
+                />
+              ))}
             </div>
           ) : (
             <span className="empty-addresses">
@@ -159,9 +147,6 @@ const CustomerAddresses = () => {
           )}
         </div>
       </div>
-      {showError && (
-        <ErrorPopup message={errorMessage} onClose={handleCloseError} />
-      )}
     </div>
   );
 };
