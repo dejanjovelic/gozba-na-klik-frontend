@@ -8,6 +8,7 @@ import { Eye, EyeOff } from "lucide-react";
 import Spinner from "../../sharedComponents/Spinner";
 import AccountActivationNotice from "../../sharedComponents/AccountActivationNotice";
 import SucessPopup from "../../pages/Popups/SucessPopup";
+import "../../../styles/registrationForm.scss";
 
 const CustomerRegisterForm = () => {
   const {
@@ -72,187 +73,212 @@ const CustomerRegisterForm = () => {
   }
 
   return (
-    <div className="registerForm-container">
-      {showActivationNotice ? (
-        <AccountActivationNotice
-          mode="register"
-          email={activationEmail}
-          username={activationUsername}
-          setErrorMessage={setErrorMessage}
-          setShowError={setShowError}
-          setSuccessMessage={setSuccessMessage}
-          onClose={() => setShowActivationNotice(false)}
-        />
-      ) : (
-        <div className="form-div">
-          <h2>Sign Up</h2>
-
-          <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <input
-              type="text"
-              placeholder="Your username"
-              id="username"
-              autoComplete="username"
-              {...register("username", {
-                required: "Username field is required.",
-                minLength: {
-                  value: 3,
-                  message: "Username must be at least 3 characters long.",
-                },
-              })}
+    <div className="Container">
+      <div className="registration">
+        <h2 id="title"> Sign Up</h2>
+        <div className="imgContainer">
+          <div className="imgContainer">
+            <img
+              src="https://res.cloudinary.com/dsgans7nh/image/upload/v1764622415/LoginForma-removebg-preview_k7pt5t.png"
+              alt="Login illustration"
             />
-            <div className="input-error-message">
-              {errors.username?.message}
-            </div>
-
-            <div className="name-surname-container">
-              <div className="name-container">
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Your name"
-                  {...register("name", {
-                    required: "Name field is required.",
-                    minLength: {
-                      value: 2,
-                      message: "Name must have at least 2 letters.",
-                    },
-                  })}
-                />
-                <div className="input-error-message">
-                  {errors.name?.message}
-                </div>
-              </div>
-
-              <div className="surname-container">
-                <input
-                  type="text"
-                  id="surname"
-                  placeholder="Your surname"
-                  {...register("surname", {
-                    required: "Surname field is required.",
-                    minLength: {
-                      value: 2,
-                      message: "Surname must have at least 2 letters.",
-                    },
-                  })}
-                />
-                <div className="input-error-message">
-                  {errors.surname?.message}
-                </div>
-              </div>
-            </div>
-
-            <input
-              type="email"
-              id="email"
-              placeholder="someone@example.com"
-              {...register("email", {
-                required: "Email field is required.",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Enter a valid email address.",
-                },
-              })}
-            />
-            <div className="input-error-message">{errors.email?.message}</div>
-
-            <input
-              type="tel"
-              id="phoneNumber"
-              placeholder="+381601234567"
-              autoComplete="tel"
-              {...register("phoneNumber", {
-                required: "Phone number field is required.",
-                pattern: {
-                  value: /^\+381\d{9}$/,
-                  message:
-                    "Phone number must start with +381 and contain 9 digits.",
-                },
-              })}
-            />
-            <div className="input-error-message">
-              {errors.phoneNumber?.message}
-            </div>
-
-            <div className="password-wrapper">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                placeholder="Your password"
-                autoComplete="new-password"
-                {...register("password", {
-                  required: "Password field is required.",
-                  minLength: {
-                    value: 5,
-                    message: "Password must have at least 5 characters.",
-                  },
-                })}
-              />
-              <div className="input-error-message">
-                {errors.password?.message}
-              </div>
-              <span
-                className="toggle-password"
-                onClick={() => setShowPassword((prev) => !prev)}
-              >
-                {showPassword ? <Eye /> : <EyeOff />}
-              </span>
-            </div>
-
-            <div className="password-wrapper">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                placeholder="Confirm password"
-                autoComplete="new-password"
-                {...register("confirmPassword", {
-                  required: "Confirm Password field is required.",
-                  validate: (value) =>
-                    value === password || "Passwords do not match.",
-                })}
-              />
-              <div className="input-error-message">
-                {errors.confirmPassword?.message}
-              </div>
-              <span
-                className="toggle-password"
-                onClick={() => {
-                  setShowConfirmPassword((prev) => !prev);
-                }}
-              >
-                {showConfirmPassword ? <Eye /> : <EyeOff />}
-              </span>
-            </div>
-
-            <div
-              id="signUpBtn-container"
-              data-tooltip-id="username-tooltip"
-              data-tooltip-content="All fields are required."
-            >
-              <button disabled={!isValid} id="signUpBtn" type="submit">
-                Sign Up
-              </button>
-              {!isValid && <Tooltip id="username-tooltip" place="right" />}
-            </div>
-          </form>
+          </div>
         </div>
-      )}
+        <div className="registerForm-container">
+          {showActivationNotice ? (
+            <AccountActivationNotice
+              mode="register"
+              email={activationEmail}
+              username={activationUsername}
+              setErrorMessage={setErrorMessage}
+              setShowError={setShowError}
+              setSuccessMessage={setSuccessMessage}
+              onClose={() => setShowActivationNotice(false)}
+            />
+          ) : (
+            <div className="form-div">
+              <form className="form" onSubmit={handleSubmit(onSubmit)}>
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  placeholder="Your username"
+                  id="username"
+                  autoComplete="username"
+                  {...register("username", {
+                    required: "Username field is required.",
+                    minLength: {
+                      value: 3,
+                      message: "Username must be at least 3 characters long.",
+                    },
+                  })}
+                />
+                <div className="input-error-message">
+                  {errors.username?.message}
+                </div>
 
-      {showError && (
-        <ErrorPopup
-          message={errorMessage}
-          onClose={() => setShowError(false)}
-        />
-      )}
+                <div className="name-surname-container">
+                  <div className="name-container">
+                    <label className="labelNameSurName" for="name">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      placeholder="Your name"
+                      {...register("name", {
+                        required: "Name field is required.",
+                        minLength: {
+                          value: 2,
+                          message: "Name must have at least 2 letters.",
+                        },
+                      })}
+                    />
+                    <div className="input-error-message">
+                      {errors.name?.message}
+                    </div>
+                  </div>
 
-      {successMessage && (
-        <SucessPopup
-          message={successMessage}
-          timeOut={2}
-          onClose={() => setSuccessMessage("")}
-        />
-      )}
+                  <div className="surname-container">
+                    <label className="labelNameSurName" for="surname">
+                      Surname
+                    </label>
+                    <input
+                      type="text"
+                      id="surname"
+                      placeholder="Your surname"
+                      {...register("surname", {
+                        required: "Surname field is required.",
+                        minLength: {
+                          value: 2,
+                          message: "Surname must have at least 2 letters.",
+                        },
+                      })}
+                    />
+                    <div className="input-error-message">
+                      {errors.surname?.message}
+                    </div>
+                  </div>
+                </div>
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="someone@example.com"
+                  {...register("email", {
+                    required: "Email field is required.",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Enter a valid email address.",
+                    },
+                  })}
+                />
+                <div className="input-error-message">
+                  {errors.email?.message}
+                </div>
+                <label for="phoneNumber">Phone number</label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  placeholder="+381601234567"
+                  autoComplete="tel"
+                  {...register("phoneNumber", {
+                    required: "Phone number field is required.",
+                    pattern: {
+                      value: /^\+381\d{9}$/,
+                      message:
+                        "Phone number must start with +381 and contain 9 digits.",
+                    },
+                  })}
+                />
+                <div className="input-error-message">
+                  {errors.phoneNumber?.message}
+                </div>
+                <label for="password">Password</label>
+                <div className="password-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    placeholder="Your password"
+                    autoComplete="new-password"
+                    {...register("password", {
+                      required: "Password field is required.",
+                      minLength: {
+                        value: 5,
+                        message: "Password must have at least 5 characters.",
+                      },
+                      pattern: {
+                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/,
+                        message:
+                          "Password needs to have 1 lower letter, 1 upper letter, 1 number, and 1 special char.",
+                      },
+                    })}
+                  />
+                  <div className="input-error-message">
+                    {errors.password?.message}
+                  </div>
+                  <span
+                    className="toggle-password"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? <Eye /> : <EyeOff />}
+                  </span>
+                </div>
+                <label for="confirmPassword">Confirm password</label>
+                <div className="password-wrapper">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    id="confirmPassword"
+                    placeholder="Confirm password"
+                    autoComplete="new-password"
+                    {...register("confirmPassword", {
+                      required: "Confirm Password field is required.",
+                      validate: (value) =>
+                        value === password || "Passwords do not match.",
+                    })}
+                  />
+                  <div className="input-error-message">
+                    {errors.confirmPassword?.message}
+                  </div>
+                  <span
+                    className="toggle-password"
+                    onClick={() => {
+                      setShowConfirmPassword((prev) => !prev);
+                    }}
+                  >
+                    {showConfirmPassword ? <Eye /> : <EyeOff />}
+                  </span>
+                </div>
+
+                <div
+                  id="signUpBtn-container"
+                  data-tooltip-id="username-tooltip"
+                  data-tooltip-content="All fields are required."
+                >
+                  <button disabled={!isValid} id="signUpBtn" type="submit">
+                    Sign Up
+                  </button>
+                  {!isValid && <Tooltip id="username-tooltip" place="right" />}
+                </div>
+              </form>
+            </div>
+          )}
+
+          {showError && (
+            <ErrorPopup
+              message={errorMessage}
+              onClose={() => setShowError(false)}
+            />
+          )}
+
+          {successMessage && (
+            <SucessPopup
+              message={successMessage}
+              timeOut={2}
+              onClose={() => setSuccessMessage("")}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };
