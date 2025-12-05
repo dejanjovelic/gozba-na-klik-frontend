@@ -1,42 +1,52 @@
-$color-brown: #5d402b;
+$color-white: #ffffff;
 $color-cream: #f5e4cb;
 $color-orange: #ea9332;
-$color-hamburgerIcon: white;
-$color-text: white;
+$color-brown: #5d402b;
+$color-text: #333;
+@use "sass:color";
+
 .orderViewContainer {
   padding: 2rem;
 
-  // Optional shadow and rounded corners for the table container
+  // Table container
   .MuiPaper-root {
+    min-height: 500px;
+    max-height: 75vh;
+    overflow-y: auto;
     border-radius: 12px;
     box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.1);
-    border: 2px solid $color-brown;
-    width: 1000px;
+    border: 2px solid $color-orange;
+    border-right: none;
+    background-color: $color-white;
   }
 
-  // Typography (Table title)
+  // Table title
   .MuiTypography-root {
     font-weight: 600;
-    color: #333;
+    color: $color-text;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
-  // Table container styling
+  // Table root
   .MuiTable-root {
-    background-color: $color-cream;
+    background-color: $color-white;
     border-collapse: separate;
     border-spacing: 0;
+    font-size: 0.930rem;
   }
 
-  // Table header styling
+  // Table header
   .MuiTableHead-root {
-    background-color: $color-brown;
+    background-color: $color-orange;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
     .MuiTableCell-root {
       font-weight: 700;
-      color: white;
-      text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
-        1px 1px 0 black;
+      color: $color-white;
+      text-shadow: none;
     }
   }
 
@@ -46,36 +56,51 @@ $color-text: white;
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: #dfc3a4;
+        background-color: color.adjust($color-orange, $lightness: 40%);
       }
 
       .MuiTableCell-root {
+        color: $color-text;
       }
     }
   }
 
-  // Chip styles override
   .MuiChip-root {
     font-weight: 500;
     text-transform: none;
 
-    &.MuiChip-colorSuccess {
-      background-color: #c8e6c9;
+    &.status-pending {
+      background-color: #FFF3E0;
+      color: #FB8C00;
+    }
+
+    &.status-accepted {
+      background-color: #C8E6C9;
       color: #256029;
     }
 
-    &.MuiChip-colorError {
-      background-color: #ffcdd2;
-      color: #b71c1c;
+    &.status-cancelled {
+      background-color: #FFCDD2;
+      color: #B71C1C;
     }
 
-    &.MuiChip-colorWarning {
-      background-color: #fff9c4;
-      color: #8d6e63;
+    &.status-pickup {
+      background-color: #BBDEFB;
+      color: #0D47A1;
+    }
+
+    &.status-delivery {
+      background-color: #FFE082;
+      color: #F57F17;
+    }
+
+    &.status-delivered {
+      background-color: #C8E6C9;
+      color: #256029;
     }
   }
 
-  // Buttons for actions
+  // Buttons
   .MuiButton-root {
     font-size: 0.8rem;
     text-transform: none;
@@ -84,18 +109,20 @@ $color-text: white;
     transition: all 0.2s ease-in-out;
 
     &.MuiButton-containedSuccess {
-      background-color: #2e7d32;
+      background-color: $color-orange;
+      color: $color-white;
 
       &:hover {
-        background-color: #1b5e20;
+        background-color: color.adjust($color-orange, $lightness: -10%);
       }
     }
 
     &.MuiButton-containedError {
       background-color: #c62828;
+      color: $color-white;
 
       &:hover {
-        background-color: #b71c1c;
+        background-color: color.adjust(#c62828, $lightness: -10%);
       }
     }
   }

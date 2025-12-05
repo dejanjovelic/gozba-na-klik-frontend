@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getRestaurantWithMeals } from "../../services/RestaurantService";
-import "../../styles/restaurantMenu.scss";
-import RatingComponent from "../sharedComponents/RatingComponent";
+import { getRestaurantWithMeals } from "../../../services/RestaurantService";
+import "../../../styles/restaurantMenu.scss";
+import RatingComponent from "../../sharedComponents/RatingComponent";
 import { PeopleAlt } from "@mui/icons-material";
-import { getCustomerAllergens } from "../../services/CustomerService";
+import { getCustomerAllergens } from "../../../services/CustomerService";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import Spiner from "../sharedComponents/Spinner";
-import ErrorPopup from "./Popups/ErrorPopup";
-import RestaurantBasket from "./Restaurant/RestaurantBasket";
-import { OrderContext } from "../OrderContext";
-import UserContext from "../../config/UserContext";
-import RestaurantReviewsModal from "./Restaurant/RestaurantReviewsModal";
-import { fetchRestaurantReviewsPaginated } from "../../services/OrderReviewService";
+import Spiner from "../../sharedComponents/Spinner";
+import ErrorPopup from "../Popups/ErrorPopup";
+import RestaurantBasket from "./RestaurantBasket";
+import { OrderContext } from "../../OrderContext";
+import UserContext from "../../../config/UserContext";
+import RestaurantReviewsModal from "./RestaurantReviewsModal";
+import { fetchRestaurantReviewsPaginated } from "../../../services/OrderReviewService";
 
 const RestaurantMenu = () => {
   const [restaurant, setRestaurant] = useState(null);

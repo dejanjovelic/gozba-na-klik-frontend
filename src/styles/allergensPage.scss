@@ -1,42 +1,52 @@
-@use "./global.scss" as*;
+@use "./global.scss" as *;
 @use "sass:color";
 
 .MuiPaper-root {
-    background-color: $color-cream;
+  background-color: $color-cream;
 
-    .MuiCardContent-root {
-        .MuiFormControl-root {
-            background-color: white;
-        }
+  .MuiCardContent-root {
+    .MuiFormControl-root {
+      background-color: white;
     }
+  }
+}
+.MuiBackdrop-root {
+  background-color: transparent;
 }
 
 .MuiPopper-root .MuiPaper-root.MuiAutocomplete-paper {
-    background-color: white !important;
-    border: 1px solid #ccc !important;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: white !important;
+  border: 1px solid #ccc !important;
 }
 
 .MuiAlert-root.MuiAlert-standardSuccess {
-    background-color: #EDF7ED;
+  background-color: #edf7ed;
+  height: 100px;
 }
 
 .MuiButtonBase-root.MuiButton-root {
-    &.saveBtn {
-        background-color: $color-orange;
-        border: 2px solid $color-orange;
-        &:hover {
-            background-color: color.adjust($color-orange, $lightness: 5%);
-        }
-    }
+  &.saveBtn {
+    background-color: $color-orange;
+    border: 2px solid $color-orange;
 
-    &.cancelBtn {
-        background-color: $color-cream;
-        color: $color-orange;
-        border: 2px solid $color-orange;
-       &:hover {
-            background-color: color.adjust($color-cream, $lightness: 5%);
-        } 
-
+    display: flex;
+    top: 150%;
+    left: 85%;
+    &:hover {
+      background-color: color.adjust($color-orange, $lightness: 5%);
     }
+  }
+
+  &.cancelBtn {
+    background-color: $color-cream;
+    color: $color-orange;
+    border: 2px solid $color-orange;
+    &:hover {
+      background-color: color.adjust($color-cream, $lightness: 5%);
+    }
+  }
+}
+#AllergenFormCard {
+  display: flex;
+  flex-direction: column;
 }
