@@ -10,16 +10,15 @@ import {
   MapPin,
   Handbag,
 } from "lucide-react";
-import "../../styles/usersHomePage.scss"
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import { ListItemButton } from '@mui/material';
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import "../../styles/usersHomePage.scss";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import { ListItemButton } from "@mui/material";
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import UserContext from "../../config/UserContext";
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 
 const SideBar = ({ onLogout, onCloseSideMenu }) => {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const roleBasedLinks = {
     administrator: [
@@ -33,11 +32,26 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
     ],
 
     customer: [
-      { icon: <Home />, path: '/customer', label: 'Home', exact: true },
-      { icon: <Egg />, path: '/customer/allergens', label: 'Allergens' },
-      { icon: <MapPin />, path: '/customer/addresses', label: 'Addresses', exact: true },
-      { icon: <RestaurantMenuIcon />, path: '/customer/meals', label: 'Meals', exact: true },
-      { icon: <ReceiptLongIcon />, path: '/customer/orders', label: 'My orders', exact: true}
+      { icon: <Home />, path: "/customer", label: "Home", exact: true },
+      { icon: <Egg />, path: "/customer/allergens", label: "Allergens" },
+      {
+        icon: <MapPin />,
+        path: "/customer/addresses",
+        label: "Addresses",
+        exact: true,
+      },
+      {
+        icon: <RestaurantMenuIcon />,
+        path: "/customer/meals",
+        label: "Meals",
+        exact: true,
+      },
+      {
+        icon: <ReceiptLongIcon />,
+        path: "/customer/orders",
+        label: "My orders",
+        exact: true,
+      },
     ],
 
     restaurantowner: [
@@ -65,12 +79,17 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
         path: "/courier/workingHours",
         label: "Working hours",
       },
-      { icon: <AssignmentIcon />, path: "/courier/order", label: "Order", exact: true },
+      {
+        icon: <AssignmentIcon />,
+        path: "/courier/order",
+        label: "Order",
+        exact: true,
+      },
     ],
   };
 
   const role = user?.role?.toLowerCase();
-  console.log(role)
+  console.log(role);
   const links = [...(roleBasedLinks[role] || [])];
 
   return (
@@ -78,7 +97,7 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
       <div className="profile-container">
         <NavLink to={"/profile"}>
           {({ isActive }) => (
-            <ListItemButton selected={isActive}>
+            <ListItemButton selected={isActive} onClick={onCloseSideMenu}>
               <User /> {user?.name} {user?.surname}
             </ListItemButton>
           )}

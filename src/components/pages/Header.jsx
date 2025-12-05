@@ -49,7 +49,6 @@ const Header = () => {
   }, [user]); //Kada se promenmi isLoggedIn se zatvara dropdown, ovo radimo ako se izlogujemo i ulogujemo opet
 
   return (
-
     <nav>
       {!user ? (
         <div className="button-section">

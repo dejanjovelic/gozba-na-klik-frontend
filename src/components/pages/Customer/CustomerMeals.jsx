@@ -24,12 +24,13 @@ const CustomerMeals = () => {
     const [hasNextPage, setHasNextPage] = useState(false);
     const [hasPreviousPage, setHasPreviousPage] = useState(false);
     const navigate = useNavigate();
+    const [isFirstLoad, setIsFirstLoad] = useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [showError, setShowError] = useState(false);
 
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
 
     const handleQueryChange = (newQuery) => {
@@ -66,10 +67,9 @@ const CustomerMeals = () => {
     const reqBody = {
         customerId: user.id,
         hideMealsWithAllergens: hideMealsWithAllergens,
-        additionalAllergensIds: additionalAllergensIds,
+        AllergensIds: additionalAllergensIds,
         query: query
     }
-
 
     const getFilteredMeals = async () => {
         try {
@@ -131,14 +131,16 @@ const CustomerMeals = () => {
     useEffect(() => {
         const onMounting = async () => {
             setIsLoading(true);
-            await getFilteredMeals();
             await fetchCustomerAllegrens();
+            await getFilteredMeals();
             setIsLoading(false);
+            setIsFirstLoad(true);
         }
         onMounting();
     }, [])
 
     useEffect(() => {
+        setIsFirstLoad(false);
         getFilteredMeals();
         fetchCustomerAllegrens();
     }, [additionalAllergensIds, hideMealsWithAllergens, page, pageSize, hasNextPage, hasPreviousPage, query]);
@@ -188,18 +190,23 @@ const CustomerMeals = () => {
                                             <div className="customerMeal-description">{meal.description}</div>
                                             <div className="customerMeal-allergens">
                                                 Allergens:{' '}
-                                                {meal.allergens.map((allergen, index) => (
-                                                    <span
-                                                        key={allergen.id}
-                                                        style={{ color: allergen.isCustomerAllergen ? 'red' : 'inherit' }}
-                                                    >
-                                                        {allergen.name}
-                                                        {index < meal.allergens.length - 1 ? ', ' : ''}
-                                                    </span>
-                                                ))}
+                                                {meal.allergens.map((allergen, index) => {
+                                                    const isSelected =
+                                                        allergen.isCustomerAllergen || (
+                                                            isFirstLoad && customerAllergens.some(ca => ca.id === allergen.id))
+                                                    return (
+                                                        <span
+                                                            key={allergen.id}
+                                                            style={{ color: isSelected ? 'red' : 'inherit' }}
+                                                        >
+                                                            {allergen.name}
+                                                            {index < meal.allergens.length - 1 ? ', ' : ''}
+                                                        </span>
+                                                    );
+                                                })}
 
                                             </div>
-                                            <div className="customerMeal-price">{meal.price} eur</div>
+                                            <div className="customerMeal-price"><b>{meal.price} €</b></div>
                                         </div>
 
                                         <div className="customerMealImage-section">
