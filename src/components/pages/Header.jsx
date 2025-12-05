@@ -77,17 +77,22 @@ const Header = () => {
             <div className="user-fullname"><b>Welcome</b>, {user.name} {user.surname}</div>
           </div>
 
-          <div className="user-profile-div">
+          <div className={`user-profile-div ${open ? "open" : ""}`}>
             <div className="user-info-section">
 
             </div>
             <span id="profileDropDownList" onClick={() => setOpen(prev => !prev)}>
-              {user.profileImageUrl ?
-                (<img className="user-img" src={user.profileImageUrl} alt="Profile picture" />)
-                :
-                (<CircleUser className="user-icon" size={25} />)
-              }
+              <div>
+                {user.profileImageUrl ?
+                  (<img className="user-img" src={user.profileImageUrl} alt="Profile picture" />)
+                  :
+                  (<CircleUser className="user-icon" size={25} />)
+                }
+                <div className="user-hover-fullname">{user.name} {user.surname}</div>
+              </div>
+
             </span>
+
 
             <div id="DropDownMenuContent" className={open ? "open" : ""}>
               <div className="DropDownMenuItem">

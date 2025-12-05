@@ -38,7 +38,7 @@ const FilterSection = (props) => {
     return (
         <Box >
             <Grid container spacing={2} >
-                <Grid item size={3}>
+                <Grid item size={6}>
                     <TextField fullWidth
                         id="resturant-name"
                         label="Name" variant="filled"
@@ -46,7 +46,7 @@ const FilterSection = (props) => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </Grid>
-                <Grid item size={3}>
+                <Grid item size={6}>
                     <TextField fullWidth
                         id="resturant-city"
                         label="City" variant="filled"
@@ -89,7 +89,7 @@ const FilterSection = (props) => {
                         }}
                     />
                 </Grid>
-                <Grid item size={6}>
+                <Grid item size={3}>
                     <TextField
                         fullWidth id="resturant-averageRatingFrom"
                         type="number"
@@ -108,7 +108,7 @@ const FilterSection = (props) => {
 
                     />
                 </Grid>
-                <Grid item size={6}>
+                <Grid item size={3}>
                     <TextField
                         fullWidth id="resturant-averageRatingTo"
                         type="number"

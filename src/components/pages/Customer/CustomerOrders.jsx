@@ -12,7 +12,7 @@ const CustomerOrders = () => {
   const [activeOrders, setActiveOrders] = useState([]);
   const [inactiveOrders, setInactiveOrders] = useState([]);
   const [inactivePage, setInactivePage] = useState(1);
-  const [inactivePageSize, setInactivePageSize] = useState(6);
+  const [inactivePageSize, setInactivePageSize] = useState(8);
   const [inactiveTotalRowsCount, setInactiveTotalRowsCount] = useState(0);
   const [inactiveTotalPages, setInactiveTotalPages] = useState(0);
   const [inactiveHasNextPage, setInactiveHasNextPage] = useState(false);

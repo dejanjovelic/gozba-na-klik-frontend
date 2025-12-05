@@ -19,7 +19,7 @@ const CustomerMeals = () => {
     const [query, setQuery] = useState('');
     const [hideMealsWithAllergens, setHideMealsWithAllergens] = useState(false);
     const [page, setPage] = useState(0);
-    const [pageSize, setPageSize] = useState(6);
+    const [pageSize, setPageSize] = useState(8);
     const [totalRowsCount, setTotalRowsCount] = useState(0);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [hasPreviousPage, setHasPreviousPage] = useState(false);
