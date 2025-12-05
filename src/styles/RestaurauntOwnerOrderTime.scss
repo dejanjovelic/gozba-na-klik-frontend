@@ -1,7 +1,12 @@
+$color-white: #ffffff;
+$color-orange: #ea9332;
+$color-text: #333;
+@use "sass:color";
+
 .formContainer {
-  width: 300px;
-  height: 150px;
-  border-radius: 10px;
+  width: 350px;
+  border-radius: 12px;
+  border: 2px solid $color-orange;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -9,44 +14,90 @@
   opacity: 0;
   z-index: 1000;
   animation: popupFadeIn4 0.3s ease forwards;
-  background-color: rgb(235, 180, 109);
-  padding: 20px;
+  background-color: $color-white;
+  padding: 30px 20px;
   overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
   form {
     text-align: center;
-    .submitButton {
-      background-color: green;
+
+    label {
+      font-weight: 600;
+      color: $color-text;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
     }
-    .closeButton {
-      background-color: red;
+
+    input[type="number"] {
+      width: 80px;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 2px solid $color-orange;
+      text-align: center;
+      margin-bottom: 20px;
+
+      &:focus {
+        outline: none;
+        border-color: color.adjust($color-orange, $lightness: -10%);
+      }
     }
-    button {
-      padding: 10px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 15px;
-      width: 100px;
-      border-radius: 10px;
-      border: none;
-      margin-left: 20px;
-      margin-right: 20px;
-      margin-top: 30px;
-      color: white;
+
+    .buttonGroup {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+
+      .submitButton {
+        background-color: $color-orange;
+        color: $color-white;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: color.adjust($color-orange, $lightness: -10%);
+        }
+      }
+
+      .closeButton {
+        background-color: #c62828; // crvena za zatvaranje
+        color: $color-white;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: color.adjust(#c62828, $lightness: -10%);
+        }
+      }
     }
   }
 }
+
 #Overlay {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(3px);
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 999;
 }
+
 @keyframes popupFadeIn4 {
   from {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
@@ -58,6 +109,7 @@
     opacity: 1;
     transform: scale(1);
   }
+
   to {
     opacity: 0;
     transform: scale(0.8);

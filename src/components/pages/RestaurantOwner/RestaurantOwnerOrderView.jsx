@@ -19,6 +19,7 @@ import {
 } from "../../../services/OrderService";
 import ErrorPopup from "../../pages/Popups/ErrorPopup";
 import UserContext from "../../../config/UserContext";
+import "../../../styles/global.scss";
 
 const RestaurantOwnerOrderView = () => {
   const [orders, setOrders] = useState([]);
@@ -34,17 +35,17 @@ const RestaurantOwnerOrderView = () => {
     ownerId = user.id;
   }
 
+  const fetchOrders = async () => {
+    try {
+      const data = await getOrdersByOwnerId(ownerId);
+      setOrders(data);
+    } catch (error) {
+      setErrorMessage(error.message);
+      setShowError(true);
+      console.error("Greška pri učitavanju porudžbina:", error);
+    }
+  };
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const data = await getOrdersByOwnerId(ownerId);
-        setOrders(data);
-      } catch (error) {
-        setErrorMessage(error.message);
-        setShowError(true);
-        console.error("Greška pri učitavanju porudžbina:", error);
-      }
-    };
     fetchOrders();
   }, [ownerId]);
 
@@ -54,31 +55,23 @@ const RestaurantOwnerOrderView = () => {
         return "Pending";
       case "Accepted":
         return "Accepted";
-      case "Canceled":
-        return "Canceled";
+      case "Cancelled":
+        return "Cancelled";
+      case "PickupInProgress":
+        return "Pickup in progress"
+      case "DeliveryInProgress":
+        return "Delivery in progress"
+      case "Delivered":
+        return "Delivered"
       default:
         return status;
     }
   };
 
-  const changeStatus = (orderId, newStatus, newTime = null) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.orderId === orderId
-          ? {
-            ...order,
-            status: newStatus,
-            orderTime: newTime || order.orderTime,
-          }
-          : order
-      )
-    );
-  };
-  
   const handleCancel = async (order) => {
     try {
-      await updateRestaurantOrdersStatus(order.orderId, "Canceled", null);
-      changeStatus(order.orderId, "Canceled", null);
+      await updateRestaurantOrdersStatus(order.orderId, "Cancelled");
+      await fetchOrders();
     } catch (error) {
       setErrorMessage(error.message);
       setShowError(true);
@@ -100,11 +93,17 @@ const RestaurantOwnerOrderView = () => {
     const readableStatus = translateStatus(status);
     switch (readableStatus) {
       case "Pending":
-        return <Chip label={readableStatus} color="warning" />;
+        return <Chip label={readableStatus} className="status-pending" />;
       case "Accepted":
-        return <Chip label={readableStatus} color="success" />;
-      case "Canceled":
-        return <Chip label={readableStatus} color="error" />;
+        return <Chip label={readableStatus} className="status-accepted" />;
+      case "Cancelled":
+        return <Chip label={readableStatus} className="status-cancelled" />;
+      case "Pickup in progress":
+        return <Chip label={readableStatus} className="status-pickup" />;
+      case "Delivery in progress":
+        return <Chip label={readableStatus} className="status-delivery" />;
+      case "Delivered":
+        return <Chip label="Delivered" />
       default:
         return <Chip label={readableStatus} />;
     }
@@ -112,7 +111,7 @@ const RestaurantOwnerOrderView = () => {
 
   return (
     <div className="orderViewContainer">
-      <TableContainer component={Paper} sx={{ mt: 3 }}>
+      <TableContainer className="scrollWrapper" component={Paper} sx={{ mt: 3 }}>
         <Typography variant="h6" sx={{ m: 2 }}>
           Orders
         </Typography>
@@ -123,10 +122,13 @@ const RestaurantOwnerOrderView = () => {
                 <b>ID</b>
               </TableCell>
               <TableCell>
-                <b>Customer</b>
+                <b>Restaurant</b>
               </TableCell>
               <TableCell>
-                <b>Restaurant</b>
+                <b>Ordered At</b>
+              </TableCell>
+              <TableCell>
+                <b>Customer</b>
               </TableCell>
               <TableCell>
                 <b>Customer address</b>
@@ -154,11 +156,14 @@ const RestaurantOwnerOrderView = () => {
               return (
                 <TableRow key={order.orderId}>
                   <TableCell>{order.orderId}</TableCell>
-                  <TableCell>{order.customerName}</TableCell>
                   <TableCell>{order.restaurantName}</TableCell>
+                  <TableCell>
+                    {new Date(order.orderTime).toLocaleString("sr-RS").slice(0, -3)}
+                  </TableCell>
+                  <TableCell>{order.customerName}</TableCell>
                   <TableCell>{order.customerAddress}</TableCell>
                   <TableCell>
-                    {order.orderTime ? order.orderTime.substring(11, 16) : "-"}
+                    {order.pickupReadyAt ? new Date(order.pickupReadyAt).toLocaleTimeString("sr-RS").slice(0, -3) : "-"}
                   </TableCell>
                   <TableCell>
                     {order.orderItems && order.orderItems.length > 0
@@ -203,28 +208,10 @@ const RestaurantOwnerOrderView = () => {
         <RestaurantOwnerOrderTimeForm
           order={selectedOrder}
           onClose={handleCloseForm}
-          onSubmitTime={async (time) => {
-            // time is "HH:mm"
-            const [hour, minute] = time.split(":");
+          onSubmitMinutes={async (minutes) => {
+            await updateRestaurantOrdersStatus(selectedOrder.orderId, "Accepted", minutes);
 
-            // Create a full Date object
-            const now = new Date();
-            const isoDateTime = new Date(Date.UTC(
-              now.getFullYear(),
-              now.getMonth(),
-              now.getDate(),
-              parseInt(hour, 10),
-              parseInt(minute, 10),
-              0, 0
-            ));
-
-            const fullISO = isoDateTime.toISOString();
-
-            // Send full ISO string to backend
-            await updateRestaurantOrdersStatus(selectedOrder.orderId, "Accepted", fullISO);
-
-            // Update frontend state with full ISO string
-            changeStatus(selectedOrder.orderId, "Accepted", fullISO);
+            await fetchOrders();
 
             handleCloseForm();
           }}

@@ -18,10 +18,10 @@ export async function getOrdersByOwnerId(ownerId) {
   return response.data;
 }
 
-export async function updateRestaurantOrdersStatus(orderId, newStatus, newTime) {
+export async function updateRestaurantOrdersStatus(orderId, newStatus, pickupReadyIn) {
   const payload = {
     newStatus,
-    newTime: newTime || null,
+    pickupReadyIn: pickupReadyIn || 0,
   };
   const response = await AxiosConfig.put(
     `${RESOURCE}/${orderId}/status`,
