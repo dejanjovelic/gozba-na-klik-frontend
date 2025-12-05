@@ -1,4 +1,3 @@
-import { useAuth } from "../../config/AuthContext";
 import React, { useContext, useRef } from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,13 +12,13 @@ import UserContext from "../../config/UserContext";
 
 const Header = () => {
   const navigate = useNavigate();
-  const dropdownRef = useRef(null);  
+  const dropdownRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
 
-  const {user, setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
-  
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser(null);
@@ -50,7 +49,6 @@ const Header = () => {
   }, [user]); //Kada se promenmi isLoggedIn se zatvara dropdown, ovo radimo ako se izlogujemo i ulogujemo opet
 
   return (
-
     <nav>
       {!user ? (
         <div className="button-section">
@@ -75,16 +73,20 @@ const Header = () => {
             <SideBar onLogout={handleLogout} onCloseSideMenu={() => toggleDrawer(false)} />
           </Drawer>
 
-          <div className="logo-div"></div>
+          <div className="logo-div">
+            <div className="user-fullname"><b>Welcome</b>, {user.name} {user.surname}</div>
+          </div>
 
           <div className="user-profile-div">
+            <div className="user-info-section">
+
+            </div>
             <span id="profileDropDownList" onClick={() => setOpen(prev => !prev)}>
               {user.profileImageUrl ?
-                (<img src={user.profileImageUrl} alt="Profile picture" />)
+                (<img className="user-img" src={user.profileImageUrl} alt="Profile picture" />)
                 :
                 (<CircleUser className="user-icon" size={25} />)
               }
-              <div className="user-fullname"> {user.name} {user.surname}</div>
             </span>
 
             <div id="DropDownMenuContent" className={open ? "open" : ""}>
