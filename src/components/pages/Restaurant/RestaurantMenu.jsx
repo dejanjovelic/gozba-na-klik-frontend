@@ -12,6 +12,8 @@ import { OrderContext } from "../../OrderContext";
 import UserContext from "../../../config/UserContext";
 import RestaurantReviewsModal from "./RestaurantReviewsModal";
 import { fetchRestaurantReviewsPaginated } from "../../../services/OrderReviewService";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { MapPin } from "lucide-react";
 
 const RestaurantMenu = () => {
   const [restaurant, setRestaurant] = useState(null);
@@ -116,17 +118,6 @@ const RestaurantMenu = () => {
         {restaurant && (
           <>
             <div className="restaurant-div">
-              <div id="restaurant-upper-section">
-                <h2>{restaurant.name}</h2>
-                <div id="rate-capacity">
-                  <span onClick={totalReviewsCount > 0 ? () => setShowReviewsModal(true) : undefined} style={{ cursor: totalReviewsCount > 0 ? "pointer" : "default" }}>
-                    <RatingComponent rating={restaurant.averageRating} /> <span>({totalReviewsCount})</span>
-                  </span>
-                  <p id="restaurant-capacity">
-                    {restaurant.capacity} <PeopleAlt />
-                  </p>
-                </div>
-              </div>
               <div id="restaurant-middle-section">
                 <img
                   id="restaurant-image"
@@ -134,44 +125,57 @@ const RestaurantMenu = () => {
                   alt="Restaurant image"
                 />
               </div>
+              <div id="restaurant-upper-section">
+                <h2>{restaurant.name}</h2>
+                <span onClick={totalReviewsCount > 0 ? () => setShowReviewsModal(true) : undefined} style={{ cursor: totalReviewsCount > 0 ? "pointer" : "default" }}>
+                  <RatingComponent rating={restaurant.averageRating} /> <span>({totalReviewsCount}) <MdOutlineKeyboardArrowRight id="reviews-arrow-right" /></span>
+                </span>
+                <p id="restaurant-capacity">
+                  {restaurant.capacity} <PeopleAlt />
+                </p>
+                <p id="restaurant-address">
+                  <MapPin />{restaurant.address}, {restaurant.city}
+                </p>
+              </div>
+
               <div id="restaurant-bottom-section">
                 <p id="restaurant-desc">{restaurant.description}</p>
               </div>
             </div>
-            {user &&
-              <>
-                <h2>Menu</h2>
-                <div className="meals-div">
-                  {restaurant.mealsOnMenu.map((meal) => (
-                    <div key={meal.id} className={`meal-card ${meal.id === selectedMeal ? 'selected' : ''}`}>
-                      <div className="meal-data">
-                        <div>
-                          <p>{meal.mealName}</p>
-                          <p id="meal-desc">{meal.description}</p>
-                          {meal.allergens.length > 0 && (
-                            <p>
-                              Allergens:{" "}
-                              {meal.allergens.map((a, index) => {
-                                const hasMatch = customerAllergens?.some(
-                                  (ca) => ca.id == a.id
-                                );
-                                return (
-                                  <span
-                                    key={a.id}
-                                    style={{ color: hasMatch ? "red" : "black" }}
-                                  >
-                                    {a.name}
-                                    {index < meal.allergens.length - 1 && ", "}
-                                  </span>
-                                );
-                              })}
-                            </p>
-                          )}
-                        </div>
-                        <p id="meal-price">{meal.price} €</p>
+            <div className="meals-container">
+              <h2>Menu</h2>
+              <div className="meals-div">
+                {restaurant.mealsOnMenu.map((meal) => (
+                  <div key={meal.id} className={`meal-card ${meal.id === selectedMeal ? 'selected' : ''}`}>
+                    <div className="meal-data">
+                      <div>
+                        <p>{meal.mealName}</p>
+                        <p id="meal-desc">{meal.description}</p>
+                        {meal.allergens.length > 0 && (
+                          <p>
+                            Allergens:{" "}
+                            {meal.allergens.map((a, index) => {
+                              const hasMatch = customerAllergens?.some(
+                                (ca) => ca.id == a.id
+                              );
+                              return (
+                                <span
+                                  key={a.id}
+                                  style={{ color: hasMatch ? "red" : "black" }}
+                                >
+                                  {a.name}
+                                  {index < meal.allergens.length - 1 && ", "}
+                                </span>
+                              );
+                            })}
+                          </p>
+                        )}
                       </div>
-                      <div className="meal-image">
-                        <img src={meal.mealImageUrl} alt="Meal image" />
+                      <p id="meal-price">{meal.price} €</p>
+                    </div>
+                    <div className="meal-image">
+                      <img src={meal.mealImageUrl} alt="Meal image" />
+                      {user &&
                         <button id="add-meal-to-cart" onClick={() =>
                           dispatch({
                             type: "ADD_ITEM",
@@ -184,17 +188,21 @@ const RestaurantMenu = () => {
                             },
                           })
                         }>+</button>
-                      </div>
+                      }
                     </div>
-                  ))}
-                </div>
-              </>
-            }
+                  </div>
+                ))}
+              </div>
+            </div>
           </>
         )}
 
       </div>
-      {user && <RestaurantBasket />}
+      {user &&
+        <div className="basket-placeholder">
+          <RestaurantBasket />
+        </div>
+      }
 
       {showReviewsModal && (
         <RestaurantReviewsModal

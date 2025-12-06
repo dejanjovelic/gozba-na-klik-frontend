@@ -40,6 +40,7 @@ $color-text: white;
   .MuiSlider-track {
     background-color: $color-orange; /* filled track */
     height: 7px;
+    width: 80%;
   }
 
   .MuiSlider-rail {
