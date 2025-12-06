@@ -12,6 +12,7 @@ import {
     Chip
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import RatingComponent from "../../sharedComponents/RatingComponent";
 
 const RestaurantReviewsModal = ({ reviews, onClose, handlePageChange }) => {
     return (
@@ -55,6 +56,7 @@ const RestaurantReviewsModal = ({ reviews, onClose, handlePageChange }) => {
                                     alignItems: "center",
                                     justifyContent: "center",
                                     fontSize: 20,
+                                    flexShrink: 0
                                 }}
                             >
                                 👤
@@ -66,7 +68,7 @@ const RestaurantReviewsModal = ({ reviews, onClose, handlePageChange }) => {
                                 </Typography>
 
                                 <Typography sx={{ color: "green", fontSize: 14 }}>
-                                    {"⭐".repeat(r.restaurantRating / 2)}
+                                    <RatingComponent rating={r.restaurantRating} />
                                 </Typography>
                             </Box>
                         </Box>

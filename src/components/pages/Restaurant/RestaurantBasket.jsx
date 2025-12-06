@@ -7,10 +7,12 @@ import ErrorPopup from "../Popups/ErrorPopup";
 import SucessPopup from "../Popups/SucessPopup";
 import ConfirmationPopup from "../Popups/ConfirmationPopup";
 import UserContext from "../../../config/UserContext";
+import { LuShoppingBasket } from "react-icons/lu";
+import { createPortal } from "react-dom";
 
 const RestaurantBasket = () => {
     const { state, dispatch } = useContext(OrderContext);
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [addresses, setAddresses] = useState(null);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -177,75 +179,91 @@ const RestaurantBasket = () => {
 
     return (
         <div className="basket-container">
-            <h3>Your order</h3>
+            <h3>Your basket</h3>
 
-            {groupedItems.length === 0 ? (
-                <p>No items yet</p>
-            ) : (
-                groupedItems.map((meal) => (
-                    <div key={meal.id}>
-                        <hr />
-                        <div className="basket-item">
-                            <p>{meal.mealName} {meal.quantity}x</p>
-                            <p>{meal.price * meal.quantity} €</p>
-                        </div>
+            <div className={`basket-items-container ${groupedItems.length === 0 && "empty"}`}>
+                {groupedItems.length === 0 ? (
+                    <div className="empty-basket-text">
+                        <span><LuShoppingBasket /></span>
+                        <p>No items yet</p>
                     </div>
-                ))
-            )}
+                ) : (
+                    groupedItems.map((meal, index) => (
+                        <div key={meal.id}>
+
+                            <div className="basket-item">
+                                <p>{meal.mealName} {meal.quantity}x</p>
+                                <p>{meal.price * meal.quantity} €</p>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
 
             <hr />
-            <label htmlFor="addressSelect">Deliver to:</label>
-            {addresses?.length > 0 ?
-                <select
-                    id="addressSelect"
-                    value={state.deliveryAddressId || ""}
-                    onChange={handleAddressChange}
-                >
-                    {addresses.map((addr) => (
-                        <option key={addr.id} value={addr.id}>
-                            {addr.street} {addr.streetNumber}, {addr.city}
-                        </option>
-                    ))}
-                </select> : <p>
-                    You don't have any saved address,{" "}
-                    <span className="link" onClick={() => navigate("/customer/addresses")}>
-                        click here to create one
-                    </span>
-                </p>}
-            <br />
-            <p>Delivery fee: {state.items.length > 0 ? `2` : `0`} €</p>
+            <div className="basket-address-delivery">
+                <label htmlFor="addressSelect">Deliver to:</label>
+                {addresses?.length > 0 ?
+                    <select
+                        id="addressSelect"
+                        value={state.deliveryAddressId || ""}
+                        onChange={handleAddressChange}
+                    >
+                        {addresses.map((addr) => (
+                            <option key={addr.id} value={addr.id}>
+                                {addr.street} {addr.streetNumber}, {addr.city}
+                            </option>
+                        ))}
+                    </select> : <p>
+                        You don't have any saved address,{" "}
+                        <span className="link" onClick={() => navigate("/customer/addresses")}>
+                            click here to create one
+                        </span>
+                    </p>}
+                <br />
 
 
+            </div>
+            <div className="basket-delivery-fee">
+                <p>Delivery fee </p>
+                <p>{state.items.length > 0 ? `2` : `0`} €</p>
+            </div>
 
             <hr />
 
             <p className="basket-total">
                 <strong>Total:</strong> {total} €
             </p>
+            <div className="basket-checkout">
+                <button id="checkout-btn" onClick={handleCheckout}>{isLoading ? <span className="spinner"></span> : "Checkout"}</button>
+            </div>
+            {createPortal(
+                <>
+                    {successMessage && (
+                        <SucessPopup
+                            message={successMessage}
+                            timeOut={2}
+                            onClose={() => handleCloseSuccess()}
+                        />
+                    )}
+                    {showAllergenConfirmation && (
+                        <ConfirmationPopup
+                            message={allergenConfirmationMessage}
+                            onYes={handleAllergenConfirmYes}
+                            onNo={() => handleAllergenConfirmNo(orderId)}
+                        />
+                    )}
+                    {showOrderConfirmation && (
+                        <ConfirmationPopup
+                            message={orderConfirmationMessage}
+                            onYes={confirmOrder}
+                            onNo={cancelCheckout}
+                        />
+                    )}
+                    {showError && <ErrorPopup message={errorMessage} onClose={handleCloseError} />}
+                </>, document.body
+            )}
 
-            <button id="checkout-btn" onClick={handleCheckout}>{isLoading ? <span className="spinner"></span> : "Checkout"}</button>
-            {successMessage && (
-                <SucessPopup
-                    message={successMessage}
-                    timeOut={2}
-                    onClose={() => handleCloseSuccess()}
-                />
-            )}
-            {showAllergenConfirmation && (
-                <ConfirmationPopup
-                    message={allergenConfirmationMessage}
-                    onYes={handleAllergenConfirmYes}
-                    onNo={() => handleAllergenConfirmNo(orderId)}
-                />
-            )}
-            {showOrderConfirmation && (
-                <ConfirmationPopup
-                    message={orderConfirmationMessage}
-                    onYes={confirmOrder}
-                    onNo={cancelCheckout}
-                />
-            )}
-            {showError && <ErrorPopup message={errorMessage} onClose={handleCloseError} />}
         </div>
     );
 }

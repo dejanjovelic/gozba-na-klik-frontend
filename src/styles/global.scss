@@ -5,11 +5,13 @@ $color-cream: #f5e4cb;
 $color-orange: #ea9332;
 $color-hamburgerIcon: white;
 $color-text: white;
+$color-background: #fffbf4;
 
 html,
 body,
 #root {
   height: 100%;
+  background-color: $color-background;
 }
 
 //SPINNER
@@ -64,6 +66,7 @@ body {
 }
 
 nav {
+  z-index: 2;
   background-color: $color-cream;
   padding: 10px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
