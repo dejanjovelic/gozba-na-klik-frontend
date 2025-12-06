@@ -1,0 +1,153 @@
+$color-brown: #5d402b;
+$color-cream: #f5e4cb;
+$color-orange: #ea9332;
+$color-hamburgerIcon: white;
+$color-text: white;
+.Container {
+  background-image: url("https://res.cloudinary.com/dsgans7nh/image/upload/v1764622760/Background_bv3fos.jpg");
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .registration {
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+
+    background: rgba(255, 255, 255, 0.377);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.151);
+
+    #title {
+      width: 100%;
+      position: absolute;
+      text-align: center;
+      padding-top: 10px;
+    }
+    .imgContainer {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: -20px;
+
+      align-items: center;
+      align-content: center;
+      img {
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+        margin-left: 20px;
+        width: 100%;
+      }
+    }
+  }
+  .registerForm-container {
+    margin-top: 20px;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+    .form-div {
+      display: inline-block;
+
+      width: 500px;
+      min-width: 400px;
+      text-align: center;
+      border-radius: 12px;
+      padding: 20px;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+        .password-wrapper {
+          width: 100%;
+        }
+        label {
+          margin-left: 0px;
+          font-weight: bold;
+        }
+        .labelNameSurName {
+          display: flex;
+          justify-content: left;
+          margin-left: 5px;
+          font-weight: bold;
+        }
+
+        input {
+          width: 80%;
+          border-radius: 5px;
+          border-style: none;
+          padding: 10px;
+          font-size: 15px;
+          background-color: rgba(255, 255, 255, 0.7);
+          margin-top: 5px;
+          &::placeholder {
+            color: #000000;
+            opacity: 28%;
+          }
+        }
+
+        .name-surname-container {
+          display: flex;
+          justify-content: space-between;
+          width: 85%;
+          gap: 10px;
+
+          .surname-container {
+            width: 100%;
+            display: inline-block;
+          }
+
+          .name-container {
+            width: 100%;
+            display: inline-block;
+          }
+
+          input {
+            width: 94%;
+          }
+        }
+
+        #signUpBtn-container {
+          display: inline-block;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          margin-right: 10px;
+
+          #signUpBtn {
+            background-color: $color-brown;
+            color: $color-text;
+            padding: 5px;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 1px solid $color-brown;
+            height: 2.5rem;
+            width: 6rem;
+            cursor: pointer;
+
+            &:disabled {
+              background-color: lightgray;
+              border: 1px solid lightgray;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.toggle-password {
+  position: fixed;
+
+  cursor: pointer;
+  margin-top: -58px;
+  margin-left: 16%;
+}

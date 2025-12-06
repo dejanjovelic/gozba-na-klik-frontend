@@ -4,6 +4,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { updateProfileImage, getProfile } from "../../services/userServices";
 import ErrorPopup from "./Popups/ErrorPopup";
 import UserContext from "../../config/UserContext";
+import CustomerAddresses from "../pages/Customer/CustomerAddresses";
+import CustomerAllergens from "../pages/Customer/CustomerAllergens";
 export default function UserProfile() {
   const [preview, setPreview] = useState(null);
   const [showOldPass, setShowOldPass] = useState(false);
@@ -70,8 +72,8 @@ export default function UserProfile() {
     }
     try {
       const token = await updateProfileImage(imageUrl);
-      localStorage.setItem('token', token)
-      const payload = JSON.parse(atob(token.split(".")[1]))
+      localStorage.setItem("token", token);
+      const payload = JSON.parse(atob(token.split(".")[1]));
       setUser(payload);
     } catch (error) {
       if (error.status) {
@@ -139,7 +141,7 @@ export default function UserProfile() {
     }
   };
   return (
-    <>
+    <div className="background">
       <div className="page">
         <div className="container">
           <div className="leftCard">
@@ -278,12 +280,33 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
+      {role === "Customer" && (
+        <>
+          <div id="customerAllergenProfile">
+            <CustomerAllergens
+              onError={(msg) => {
+                setErrorMessage(msg);
+                setShowError(true);
+              }}
+            />
+          </div>
+
+          <div id="customerAddressesProfile">
+            <CustomerAddresses
+              onError={(msg) => {
+                setErrorMessage(msg);
+                setShowError(true);
+              }}
+            />
+          </div>
+        </>
+      )}
       {showError && (
         <ErrorPopup
           message={errorMessage}
           onClose={() => setShowError(false)}
         />
       )}
-    </>
+    </div>
   );
 }

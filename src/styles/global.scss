@@ -11,7 +11,6 @@ html,
 body,
 #root {
   height: 100%;
-  background-color: $color-background;
 }
 
 //SPINNER
@@ -234,86 +233,6 @@ footer {
   }
 }
 
-.registerForm-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-
-  .form-div {
-    display: inline-block;
-    background-color: $color-cream;
-    border: 1px solid $color-cream;
-    width: 500px;
-    min-width: 400px;
-    text-align: center;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
-
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex-wrap: wrap;
-
-      input {
-        width: 80%;
-        margin-bottom: 5px;
-        padding: 7px;
-        border-color: 1px solid $color-cream;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-      }
-
-      .name-surname-container {
-        display: flex;
-        justify-content: space-between;
-        width: 82%;
-        gap: 10px;
-
-        .surname-container {
-          width: 100%;
-          display: inline-block;
-        }
-
-        .name-container {
-          width: 100%;
-          display: inline-block;
-        }
-
-        input {
-          width: 94%;
-        }
-      }
-
-      #signUpBtn-container {
-        display: inline-block;
-        margin-top: 20px;
-        margin-right: 10px;
-
-        #signUpBtn {
-          background-color: $color-brown;
-          color: $color-text;
-          padding: 5px;
-          border-radius: 8px;
-          font-weight: bold;
-          border: 1px solid $color-brown;
-          height: 2.5rem;
-          width: 6rem;
-          cursor: pointer;
-
-          &:disabled {
-            background-color: lightgray;
-            border: 1px solid lightgray;
-          }
-        }
-      }
-    }
-  }
-}
-
 .input-error-message {
   color: red;
   font-size: 0.8rem;
@@ -374,7 +293,8 @@ button {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-5px);
-    transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s linear 0.6s;
+    transition: opacity 0.6s ease, transform 0.6s ease,
+      visibility 0s linear 0.6s;
     background-color: white;
     padding: 5px;
     margin-top: 5px;
@@ -385,17 +305,16 @@ button {
     transition-delay: 2s;
   }
 
-  .user-img:hover+.user-hover-fullname {
+  .user-img:hover + .user-hover-fullname {
     visibility: visible;
     opacity: 1;
     transform: translateY(0);
     transition-delay: 1s;
   }
 
-  .user-img:not(:hover)+.user-hover-fullname {
+  .user-img:not(:hover) + .user-hover-fullname {
     transition-delay: 0s;
   }
-
 }
 
 .user-profile-div.open .user-hover-fullname {

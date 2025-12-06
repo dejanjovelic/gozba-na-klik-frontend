@@ -1,12 +1,15 @@
+$color-background: #fffaf1;
 .page {
-  min-height: 100vh;
-  background: #fffbf5;
-  display: block;
+  background: $color-background;
   padding: 40px;
   box-sizing: border-box;
   font-family: sans-serif;
+  display: flex;
+  flex-direction: row;
 }
-
+.background {
+  background-color: $color-background;
+}
 .container {
   width: 100%;
   max-width: 1200px;
@@ -14,16 +17,15 @@
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 32px;
-  align-items: start;
 }
 
 .leftCard,
 .rightCard {
-  background: #ffffff;
   border-radius: 12px;
   padding: 32px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   border: 1px solid #e6dccf;
+  background-color: white;
 }
 
 .leftCard {
@@ -55,9 +57,7 @@
   border-radius: 12px;
   border: 1px solid #ddd;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   background-color: #fdfdfd;
   background-image: linear-gradient(45deg, #efefef 25%, transparent 25%),
     linear-gradient(-45deg, #efefef 25%, transparent 25%),
@@ -252,4 +252,8 @@
   color: #28a745;
   font-size: 12px;
   font-weight: bold;
+}
+#customerAllergenProfile {
+}
+#customerAddressProfile {
 }

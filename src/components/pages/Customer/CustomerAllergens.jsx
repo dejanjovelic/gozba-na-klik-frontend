@@ -3,18 +3,11 @@ import {
   Autocomplete,
   Button,
   Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
   Card,
   CardContent,
   CardHeader,
+  TextField,
   Alert,
-  AlertTitle,
-  Backdrop,
-  CircularProgress,
 } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -23,114 +16,65 @@ import {
   getCustomerAllergens,
   updateCustomersAllergens,
 } from "../../../services/CustomerService";
-import { useNavigate } from "react-router-dom";
 import "../../../styles/allergensPage.scss";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import UserContext from "../../../config/UserContext";
 
-const CustomerAllergens = () => {
+const CustomerAllergens = ({ onError }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
   const [allergens, setAllergens] = useState([]);
   const [customerAllergens, setCustomerAllergens] = useState([]);
-  const navigate = useNavigate();
   const [successMsg, setSuccessMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isLoading, setIsloading] = useState(true);
 
   const { user } = useContext(UserContext);
+
+  const throwError = (error) => {
+    if (!onError) return;
+
+    if (error.status === 404) {
+      onError("Customer not found.");
+    } else if (error.status === 400) {
+      onError("One or more allergens do not exist.");
+    } else if (error.status === 500) {
+      onError("Server is temporarily unavailable. Please try again later.");
+    } else if (error.request) {
+      onError("The server is not responding. Please try again later.");
+    } else {
+      onError("Something went wrong. Please try again.");
+    }
+
+    console.log("CustomerAllergens error:", error);
+  };
 
   const getLoadingData = async () => {
     try {
       const allergensFromDb = await getAllAllergens();
       setAllergens(allergensFromDb);
+
       const customerAllergensFromDb = await getCustomerAllergens(user.id);
       setCustomerAllergens(customerAllergensFromDb);
-      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      await new Promise((resolve) => setTimeout(resolve, 300));
     } catch (error) {
-      if (error.status) {
-        if (error.status === 404) {
-          showMessageAndNavigate(
-            `Customer with ${user.id} ${user.name} not found`,
-            setErrorMsg
-          );
-        } else if (error.status === 500) {
-          showMessageAndNavigate(
-            "Server is temporarily unavailable. Please refresh or try again later.",
-            setErrorMsg
-          );
-        } else {
-          showMessageAndNavigate(`Error: ${error.status}`, setErrorMsg);
-        }
-      } else if (error.request) {
-        showMessageAndNavigate(
-          "The server is not responding. Please try again later.",
-          setErrorMsg
-        );
-      } else {
-        showMessageAndNavigate(
-          "Something went wrong. Please try again.",
-          setErrorMsg
-        );
-      }
-      console.log(`An error occured while creating Customer:`, error);
-    } finally {
-      setIsloading(false);
+      throwError(error);
     }
   };
 
-  const showMessageAndNavigate = (message, setMessage) => {
-    setMessage(message);
-    setTimeout(() => {
-      setMessage("");
-    }, 2000);
+  const showMessage = (message) => {
+    setSuccessMsg(message);
+    setTimeout(() => setSuccessMsg(""), 2000);
   };
 
   const handleSave = async () => {
     try {
-      const allergensId = customerAllergens.map((allergen) => allergen.id);
-      await updateCustomersAllergens(user.id, allergensId);
-      showMessageAndNavigate(
-        "You successfuly updated your allergen list.",
-        setSuccessMsg
-      );
+      const allergenIds = customerAllergens.map((a) => a.id);
+      await updateCustomersAllergens(user.id, allergenIds);
+
+      showMessage("You successfully updated your allergen list.");
     } catch (error) {
-      if (error.status) {
-        if (error.status === 404) {
-          showMessageAndNavigate(
-            `Customer with ${user.id} ${user.name} not found`,
-            setErrorMsg
-          );
-        } else if (error.status === 400) {
-          showMessageAndNavigate(
-            "One or more allergens do not exist.",
-            setErrorMsg
-          );
-        } else if (error.status === 500) {
-          showMessageAndNavigate(
-            "Server is temporarily unavailable. Please refresh or try again later.",
-            setErrorMsg
-          );
-        } else {
-          showMessageAndNavigate(`Error: ${error.status}`, setErrorMsg);
-        }
-      } else if (error.request) {
-        showMessageAndNavigate(
-          "The server is not responding. Please try again later.",
-          setErrorMsg
-        );
-      } else {
-        showMessageAndNavigate(
-          "Something went wrong. Please try again.",
-          setErrorMsg
-        );
-      }
-      console.log(
-        `An error occured while creating Customer:`,
-        error,
-        setErrorMsg
-      );
+      throwError(error);
     }
   };
 
@@ -138,20 +82,19 @@ const CustomerAllergens = () => {
     getLoadingData();
   }, []);
 
-  const onClose = () => {};
-
   return (
-    <div id="allergenContainer">
-      <>
+    <div id="Container">
+      <div id="allergenContainer">
         <Card
           variant="outlined"
-          style={{ height: "400px", width: "700px" }}
+          style={{ height: "400px", width: "980px" }}
           id="AllergenFormCard"
         >
           <CardHeader
             title="Select your allergens"
-            subheader="To keep your meals safe and enjoyable, please select all ingredients you'd like to avoid."
+            subheader="Select all ingredients you'd like to avoid."
             sx={{ paddingBottom: 1 }}
+            style={{ color: "#ea9332" }}
           />
           <CardContent>
             <Autocomplete
@@ -160,18 +103,9 @@ const CustomerAllergens = () => {
               options={allergens}
               disableCloseOnSelect
               value={customerAllergens}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
               onChange={(event, newValue) => setCustomerAllergens(newValue)}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               getOptionLabel={(option) => option.name}
-              slotProps={{
-                popper: {},
-                listbox: {
-                  sx: {
-                    maxHeight: 150,
-                    overflowY: "auto",
-                  },
-                },
-              }}
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
                   <Checkbox
@@ -191,6 +125,7 @@ const CustomerAllergens = () => {
                 />
               )}
             />
+
             {successMsg && (
               <Alert
                 icon={<CheckCircleOutlineIcon fontSize="inherit" />}
@@ -200,6 +135,7 @@ const CustomerAllergens = () => {
                 {successMsg}
               </Alert>
             )}
+
             <Button
               className="saveBtn"
               onClick={handleSave}
@@ -211,7 +147,7 @@ const CustomerAllergens = () => {
             </Button>
           </CardContent>
         </Card>
-      </>
+      </div>
     </div>
   );
 };
