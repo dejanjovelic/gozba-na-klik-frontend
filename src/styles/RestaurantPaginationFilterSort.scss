@@ -16,7 +16,7 @@
     max-height: 18.5rem;
     max-width: 500px;
     padding: 10px;
-    min-width: 200px;
+    min-width: 290px;
     box-shadow: 0 0 10px #0000001a;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     cursor: pointer;
@@ -59,12 +59,12 @@
 
     .restaurantData-section-leftSide {
         flex: 1 1;
-        min-width: 70%;
+        min-width: 67%;
     }
 
     .restaurantData-section-rightSide {
         flex: 1;
-        min-width: 25%;
+        min-width: 23%;
     }
 }
 

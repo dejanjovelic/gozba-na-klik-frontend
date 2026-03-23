@@ -10,6 +10,7 @@
     }
   }
 }
+
 .MuiBackdrop-root {
   background-color: transparent;
 }
@@ -28,10 +29,8 @@
   &.saveBtn {
     background-color: $color-orange;
     border: 2px solid $color-orange;
-
     display: flex;
-    top: 150%;
-    left: 88%;
+
     &:hover {
       background-color: color.adjust($color-orange, $lightness: 5%);
     }
@@ -41,22 +40,39 @@
     background-color: $color-cream;
     color: $color-orange;
     border: 2px solid $color-orange;
+
     &:hover {
       background-color: color.adjust($color-cream, $lightness: 5%);
     }
   }
 }
+
 #AllergenFormCard {
   display: flex;
   flex-direction: column;
   background-color: white;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
-#Container {
-  width: 100%;
+
+#customer-allergen-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin: 40px 0 0 0;
+  
+}
+
+#allergenContainer {
+  display: flex;
+  width: 100%;
+  border-radius: 10px;
+}
+
+
+#SucessPopupContainer.allergen-page {
+  position: fixed;
+  z-index: 999;
+  top: 10%;
+  right: 3%;
 }

@@ -3,78 +3,161 @@
 $color-cream: #f5e4cb;
 $color-brown: #5d402b;
 $color-orange: #ea9332;
-#Container {
+
+
+#customer-addresses-page-content {
+
+  margin-top: 40px;
 }
+
 .addresses-content {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
 
-.addresses-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  height: 70vh;
-  border-radius: 10px;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  background-color: white;
-  .addresses-header {
+  .addresses-div {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: $color-orange;
-    }
+    min-width: 600px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    background-color: white;
 
-    button {
-      height: 50px;
-      width: 15.5%;
-      padding: 10px 15px;
-      background-color: $color-orange;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      border-radius: 10px;
-      border: none;
+    .addresses-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 0 30px 30px 20px;
+      padding-bottom: 10px;
+      border-bottom: none;
+      position: relative;
 
-      &:hover {
-        cursor: pointer;
-        background-color: color.adjust($color-orange, $lightness: 5%);
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 1%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: radial-gradient(ellipse at center,
+            color.adjust(lightgray, $lightness: -5%) 50%,
+            transparent 65%);
       }
+
+      .addresses-header-text {
+        text-align: center;
+        margin: 0 0 0 0;
+        color: $color-orange;
+      }
+
+      #add-button {
+        border-radius: 5px;
+        margin: 0 50px 10px 0;
+        min-width: 95px;
+        min-height: 50px;
+        width: 15.5%;
+
+        &:disabled {
+          background-color: lightgray;
+          color: rgb(175, 175, 175);
+          border: 1px solid rgb(175, 175, 175);
+          cursor: default;
+        }
+      }
+
     }
   }
 }
 
-.cards-container {
-  margin-top: 3rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 50px;
+
+button.customer-address-button,
+.positive-action {
+
+  background-color: #ea9332;
+  color: white;
+  padding: 3px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: medium;
+  border: 1px solid #ea9332;
+  height: 2.2rem;
+  width: 6rem;
+  cursor: pointer;
+
+  &:hover {
+    cursor: pointer;
+    background-color: color.adjust($color-orange, $lightness: -5%);
+  }
+}
+
+.customer-addresses-table {
+  border-collapse: collapse;
   width: 100%;
-  overflow: auto;
+
+  th,
+  td {
+    text-align: center;
+    padding: 8px 0;
+  }
+
+  tbody tr td:nth-child(-n+4) {
+  position: relative;
+}
+
+tbody tr td:nth-child(4)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -380%;
+  width: 480%;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(200, 200, 200, 0.4) 10%,
+    rgba(200, 200, 200, 1) 50%,
+    rgba(200, 200, 200, 0.4) 90%,
+    transparent 100%
+  );
+}
+
+}
+
+
+.cards-container {
+
+  width: 100%;
+
+  .negative-action {
+    background-color: rgb(247, 72, 72);
+    border: 1px solid rgb(247, 72, 72);
+
+    &:hover {
+      background-color: color.adjust(rgb(247, 72, 72), $lightness: -5%);
+    }
+
+    &:disabled {
+      background-color: lightgray;
+      color: rgb(175, 175, 175);
+      border: 1px solid rgb(175, 175, 175);
+      cursor: default;
+    }
+  }
 }
 
 .address-card {
   background-color: $color-cream;
   border: 1px solid #ccc;
   border-radius: 10px;
-  padding: 20px;
-  width: 30%;
+  padding: 30px;
+  width: 25rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .input-wrapper {
     display: flex;
@@ -89,23 +172,6 @@ $color-orange: #ea9332;
       margin-bottom: 5px;
       color: #333;
     }
-  }
-
-  .first-row,
-  .second-row {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 10px;
-  }
-
-  .first-row .input-wrapper:first-child,
-  .second-row .input-wrapper:first-child {
-    flex: 2.5;
-  }
-
-  .first-row .input-wrapper:last-child,
-  .second-row .input-wrapper:last-child {
-    flex: 1;
   }
 
   input {
@@ -126,22 +192,55 @@ $color-orange: #ea9332;
     flex: 1;
   }
 
-  button {
-    align-self: flex-start;
-    background-color: $color-orange;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
+}
 
-    &:hover {
-      background-color: color.adjust($color-orange, $lightness: -5%);
-    }
+.customer-address-card-title-container {
+  display: flex;
+  justify-content: center;
+
+  .customer-address-card-title-text {
+    color: #333;
+    margin: 5px;
   }
 }
+
+.customer-address-card-form-wrapper {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+
+}
+
+.address-card-close-button-conteiner {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 10px;
+  font-size: large;
+  font-weight: bold;
+
+  .address-card-close-button-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .address-card-close-button-label {
+      margin-right: 5px;
+    }
+  }
+
+}
+
+.customer-address-button.positive-action.save-button {
+  margin-top: 10px;
+}
+
 
 .empty-addresses {
   height: 100%;
@@ -162,51 +261,10 @@ $color-orange: #ea9332;
     padding: 10px 20px !important;
     width: 6rem;
   }
-
-  .add-button {
-    background-color: $color-orange;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-
-    &:hover {
-      background-color: color.adjust($color-orange, $lightness: 5%);
-    }
-  }
-
-  #delete-button {
-    background-color: rgb(247, 72, 72);
-
-    &:hover {
-      background-color: color.adjust(rgb(247, 72, 72), $lightness: 5%);
-    }
-
-    &:disabled {
-      background-color: lightgray;
-      color: rgb(175, 175, 175);
-      cursor: default;
-    }
-  }
 }
 
-#add-button:disabled {
-  background-color: lightgray;
-  color: rgb(175, 175, 175);
-  cursor: default;
-}
-
-@media (max-width: 1200px) {
-  .address-card {
-    width: 50%;
-  }
-}
 
 @media (max-width: 1000px) {
-  .address-card {
-    width: 70%;
-  }
 
   .addresses-header {
     flex-direction: column;
@@ -222,12 +280,18 @@ $color-orange: #ea9332;
   }
 }
 
-@media (max-width: 590px) {
+@media (max-width: 660px) {
   .addresses-div {
-    min-width: 300px;
-
-    .add-button {
+    #add-button {
       width: 50% !important;
+    }
+  }
+
+  .user-profile-links-section {
+    flex-direction: column;
+
+    .user-profile-link {
+      margin-top: 10px;
     }
   }
 }

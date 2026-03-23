@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../styles/userProfile.scss";
-import { Eye, EyeOff } from "lucide-react";
 import { updateProfileImage, getProfile } from "../../services/userServices";
 import ErrorPopup from "./Popups/ErrorPopup";
 import UserContext from "../../config/UserContext";
-import CustomerAddresses from "../pages/Customer/CustomerAddresses";
-import CustomerAllergens from "../pages/Customer/CustomerAllergens";
+// import CustomerAddresses from "../pages/Customer/CustomerAddresses";
+// import CustomerAllergens from "../pages/Customer/CustomerAllergens";
+import { Link, Outlet } from "react-router-dom";
 export default function UserProfile() {
   const [preview, setPreview] = useState(null);
-  const [showOldPass, setShowOldPass] = useState(false);
-  const [showNewPass, setShowNewPass] = useState(false);
+  // const [showOldPass, setShowOldPass] = useState(false);
+  // const [showNewPass, setShowNewPass] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState(null);
@@ -115,9 +115,10 @@ export default function UserProfile() {
         email: payload.email || "",
         contact: payload.phoneNumber || "",
       }));
+
       setPreview(payload.profileImageUrl);
       setRole(payload.role);
-      console.log(payload);
+
     } catch (error) {
       if (error.status) {
         if (error.status === 500) {
@@ -141,85 +142,86 @@ export default function UserProfile() {
     }
   };
   return (
-    <div className="background">
-      <div className="page">
-        <div className="container">
-          <div className="leftCard">
-            <div className="avatarWrap">
-              <div className="avatarBox">
-                {preview ? (
-                  <img src={preview} alt="Preview" className="avatarImg" />
-                ) : (
-                  <div className="noImage">No image</div>
-                )}
-              </div>
-              <label className="editBtn">
-                <input
-                  type="file"
-                  className="hiddenInput"
-                  onChange={handleImageUpload}
-                />
-                ✎
-              </label>
-            </div>
-
-            <h2 className="name">
-              {formState.name} {formState.surname}
-            </h2>
-            <p className="role">{role}</p>
-          </div>
-
-          <div className="rightCard">
-            <h2 className="profileTitle">Profile</h2>
-
-            <form className="form">
-              <div className="rowTwo">
-                <div className="field">
-                  <label className="label">Name</label>
-                  <input
-                    className="input"
-                    name="name"
-                    value={formState.name}
-                    onChange={handleChange}
-                    disabled={true}
-                  />
+  
+        <div className="user-profile-wrapper">
+          <div className="user-profile-section">
+            <div className="user-profile-container">
+              <div className="leftCard">
+                <div className="avatarWrap">
+                  <div className="avatarBox">
+                    {preview ? (
+                      <img src={preview} alt="Preview" className="avatarImg" />
+                    ) : (
+                      <div className="noImage">No image</div>
+                    )}
+                  </div>
+                  <label className="editBtn">
+                    <input
+                      type="file"
+                      className="hiddenInput"
+                      onChange={handleImageUpload}
+                    />
+                    ✎
+                  </label>
                 </div>
 
-                <div className="field">
-                  <label className="label">Surname</label>
-                  <input
-                    className="input"
-                    name="surname"
-                    value={formState.surname}
-                    onChange={handleChange}
-                    disabled={true}
-                  />
-                </div>
+                <h2 className="name">
+                  {formState.name} {formState.surname}
+                </h2>
+                <p className="role">{role}</p>
               </div>
 
-              <div className="field">
-                <label className="label">Email</label>
-                <input
-                  className="input"
-                  name="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                  disabled={true}
-                />
-              </div>
+              <div className="rightCard">
+                <h2 className="profileTitle">Profile</h2>
 
-              <div className="field">
-                <label className="label">Contact Number</label>
-                <input
-                  className="input"
-                  name="contact"
-                  value={formState.contact}
-                  onChange={handleChange}
-                  disabled={true}
-                />
-              </div>
+                <form className="form">
+                  <div className="rowTwo">
+                    <div className="field">
+                      <label className="label">Name</label>
+                      <input
+                        className="input"
+                        name="name"
+                        value={formState.name}
+                        onChange={handleChange}
+                        disabled={true}
+                      />
+                    </div>
 
-              {/*}
+                    <div className="field">
+                      <label className="label">Surname</label>
+                      <input
+                        className="input"
+                        name="surname"
+                        value={formState.surname}
+                        onChange={handleChange}
+                        disabled={true}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label">Email</label>
+                    <input
+                      className="input"
+                      name="email"
+                      value={formState.email}
+                      onChange={handleChange}
+                      disabled={true}
+                    />
+                  </div>
+
+                  <div className="field">
+                    <label className="label">Contact Number</label>
+                    <input
+                      className="input"
+                      name="contact"
+                      value={formState.contact}
+                      onChange={handleChange}
+                      disabled={true}
+                    />
+                  </div>
+
+                  {/*}
             <div className="field relative">
               <label className="label">Old Password</label>
               <input
@@ -257,7 +259,7 @@ export default function UserProfile() {
             </div>
 */}
 
-              {/*<div className="buttons">
+                  {/*<div className="buttons">
               <button type="submit" className="editButton">
                 Edit
               </button>
@@ -270,43 +272,23 @@ export default function UserProfile() {
               </button>
             </div>*/}
 
-              {message && (
-                <div className="success">
-                  <span className="check">✔</span>
-                  <p>{message}</p>
-                </div>
-              )}
-            </form>
-          </div>
-        </div>
-      </div>
-      {role === "Customer" && (
-        <>
-          <div id="customerAllergenProfile">
-            <CustomerAllergens
-              onError={(msg) => {
-                setErrorMessage(msg);
-                setShowError(true);
-              }}
-            />
+                  {message && (
+                    <div className="success">
+                      <span className="check">✔</span>
+                      <p>{message}</p>
+                    </div>
+                  )}
+                </form>
+              </div>
+            </div>
           </div>
 
-          <div id="customerAddressesProfile">
-            <CustomerAddresses
-              onError={(msg) => {
-                setErrorMessage(msg);
-                setShowError(true);
-              }}
+          {showError && (
+            <ErrorPopup
+              message={errorMessage}
+              onClose={() => setShowError(false)}
             />
-          </div>
-        </>
-      )}
-      {showError && (
-        <ErrorPopup
-          message={errorMessage}
-          onClose={() => setShowError(false)}
-        />
-      )}
-    </div>
+          )}
+        </div>
   );
 }

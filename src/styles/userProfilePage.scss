@@ -1,0 +1,12 @@
+.profile-page-container {
+    flex: 1;
+    padding: 20px;
+    background: #fffaf1;
+    display: flex;
+    justify-content: center;
+
+    .profile-page-wrapper {
+        max-width: 80%;
+        min-width: 50%;
+    }
+}

@@ -29,6 +29,7 @@ import { OrderProvider } from "./components/OrderContext";
 import CustomerOrders from "./components/pages/Customer/CustomerOrders";
 import ForgotPasswordPage from "./components/forms/ResetPassword/ForgotPasswordPage";
 import ResetPassword from "./components/forms/ResetPassword/ResetPassword";
+import UserProfilePage from "./components/pages/UserProfilePage";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -125,7 +126,15 @@ const App = () => {
               <Route path="workingHours" element={<EmployeeHomePage />} />
             </Route>
 
-            <Route path="/profile" element={<UserProfile />} />
+            {user?.role === "Customer" ? (
+              <Route path="/profile" element={<UserProfilePage />} >
+                <Route index element={<UserProfile />} />
+                <Route path="allergens" element={<CustomerAllergens />} />
+                <Route path="addresses" element={<CustomerAddresses />} />
+              </Route>
+            ) : (
+              <Route path="/profile" element={<UserProfile />} />
+            )}
           </Routes>
           <Footer />
         </BrowserRouter>

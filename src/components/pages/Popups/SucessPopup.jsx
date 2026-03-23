@@ -3,7 +3,7 @@ import "../../../styles/popups.scss";
 import { CircleCheck } from "lucide-react";
 import { useEffect } from "react";
 import { useState } from "react";
-const SucessPopup = ({ addClassName, message, timeOut, onClose }) => {
+const SucessPopup = ({ addClassName, message, timeOut ,onClose }) => {
   const [fadeOut, setFadeOut] = useState(false);
   const fadeClass = fadeOut ? "fade-out" : "fade-in";
 
@@ -17,6 +17,7 @@ const SucessPopup = ({ addClassName, message, timeOut, onClose }) => {
       clearTimeout(closeTimer);
     };
   }, [timeOut, onClose]);
+
   return (
     <>
       <div
