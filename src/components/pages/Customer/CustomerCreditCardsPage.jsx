@@ -5,13 +5,12 @@ import {
     createCreditCard,
     updateCreditCard,
     deleteCreditCard,
+    getCardBrands,
 } from "../../../services/CreditCardService";
 import CustomerCreditCardAddForm from "../../forms/customer/CustomerCreditCardAddForm";
 import CustomerCreditCardEditFrom from "../../forms/customer/CustomerCreditCardEditFrom";
 import UserContext from "../../../config/UserContext";
 import ConfirmationPopup from "../Popups/ConfirmationPopup";
-
-const CARD_BRANDS = ["Visa", "Mastercard", "AmericanExpress", "Dina"];
 
 const getBrandLogo = (brand) => {
     switch (brand) {
@@ -32,6 +31,7 @@ const maskCardNumber = (cardNumber) => {
 
 const CustomerCreditCardsPage = ({ onError }) => {
     const [creditCards, setCreditCards] = useState([]);
+    const [cardBrands, setCardBrands] = useState(null);
     const [openAddForm, setOpenAddForm] = useState(false);
     const [editingCardId, setEditingCardId] = useState(null);
     const [editFormData, setEditFormData] = useState({});
@@ -60,8 +60,19 @@ const CustomerCreditCardsPage = ({ onError }) => {
         }
     }
 
+    async function loadCardBrands() {
+        try {
+            const data = await getCardBrands();
+            setCardBrands(data);
+        } catch (error) {
+            setCardBrands([]);
+            throwError(error);
+        }
+    }
+
     useEffect(() => {
         loadCreditCards();
+        loadCardBrands();
     }, []);
 
     const handleAdd = async (data) => {
@@ -133,6 +144,9 @@ const CustomerCreditCardsPage = ({ onError }) => {
         setEditFormData((prev) => ({ ...prev, [field]: value }));
     };
 
+    const brandsLoaded = cardBrands !== null;
+    const brandsAvailable = brandsLoaded && cardBrands.length > 0;
+
     return (
         <div id="customer-credit-cards-page-content">
             <div className="credit-cards-content">
@@ -143,15 +157,23 @@ const CustomerCreditCardsPage = ({ onError }) => {
                             onClick={() => setOpenAddForm(true)}
                             id="add-card-button"
                             className="positive-action"
+                            disabled={!brandsAvailable}
                         >
                             Add New Card
                         </button>
                     </div>
 
+                    {brandsLoaded && !brandsAvailable && (
+                        <span className="empty-credit-cards">
+                            No card brands are currently available. Please try again later.
+                        </span>
+                    )}
+
                     <CustomerCreditCardAddForm
                         onSave={handleAdd}
                         open={openAddForm}
                         setOpen={setOpenAddForm}
+                        cardBrands={cardBrands || []}
                     />
 
                     {showConfirmationPopUp && (
@@ -180,6 +202,7 @@ const CustomerCreditCardsPage = ({ onError }) => {
                                                 onFieldChange={handleEditFieldChange}
                                                 onCancel={handleEditCancel}
                                                 onSave={() => handleEditSave(card)}
+                                                cardBrands={cardBrands || []}
                                             />
                                         ) : (
                                             <>

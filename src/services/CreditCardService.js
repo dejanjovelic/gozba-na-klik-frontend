@@ -21,3 +21,8 @@ export async function deleteCreditCard(customerId, creditCardId) {
     const response = await AxiosConfig.delete(`${RESOURCE}/${customerId}/credit-cards/${creditCardId}`);
     return response.data;
 }
+
+export async function getCardBrands() {
+    const response = await AxiosConfig.get(`${RESOURCE}/card-brands`);
+    return response.data;
+}

@@ -3,14 +3,12 @@ import { useForm, Controller } from "react-hook-form";
 import "../../../styles/creditCards.scss";
 import { SquareX } from "lucide-react";
 
-const CARD_BRANDS = ["Visa", "Mastercard", "AmericanExpress", "Discover"];
-
-const CustomerCreditCardAddForm = ({ onSave, open, setOpen }) => {
+const CustomerCreditCardAddForm = ({ onSave, open, setOpen, cardBrands }) => {
     const { control, handleSubmit, reset } = useForm({
         defaultValues: {
             bank: "",
             cardNumber: "",
-            brand: "Visa",
+            brand: "",
             cardHolderFirstName: "",
             cardHolderLastName: "",
         },
@@ -21,12 +19,12 @@ const CustomerCreditCardAddForm = ({ onSave, open, setOpen }) => {
             reset({
                 bank: "",
                 cardNumber: "",
-                brand: "Visa",
+                brand: cardBrands[0] ?? "",
                 cardHolderFirstName: "",
                 cardHolderLastName: "",
             });
         }
-    }, [open, reset]);
+    }, [open, reset, cardBrands]);
 
     const onSubmit = (data) => {
         onSave(data);
@@ -76,7 +74,7 @@ const CustomerCreditCardAddForm = ({ onSave, open, setOpen }) => {
                                         style={error ? { borderColor: "red" } : {}}
                                         {...field}
                                     >
-                                        {CARD_BRANDS.map((b) => (
+                                        {cardBrands.map((b) => (
                                             <option key={b} value={b}>{b}</option>
                                         ))}
                                     </select>

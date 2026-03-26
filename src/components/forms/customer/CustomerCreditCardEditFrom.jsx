@@ -1,12 +1,11 @@
 import React from "react";
 
-const CARD_BRANDS = ["Visa", "Mastercard", "AmericanExpress", "Dina"];
-
 const CustomerCreditCardEditFrom = ({
     editFormData,
     onFieldChange,
     onCancel,
     onSave,
+    cardBrands,
 }) => {
     return (
         <>
@@ -19,10 +18,10 @@ const CustomerCreditCardEditFrom = ({
                 />
                 <select
                     className="cc-inline-input cc-brand-select"
-                    value={editFormData.brand || "Visa"}
+                    value={editFormData.brand || ""}
                     onChange={(e) => onFieldChange("brand", e.target.value)}
                 >
-                    {CARD_BRANDS.map((brand) => (
+                    {cardBrands.map((brand) => (
                         <option key={brand} value={brand}>{brand}</option>
                     ))}
                 </select>
