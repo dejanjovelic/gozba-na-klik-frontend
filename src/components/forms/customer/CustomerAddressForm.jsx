@@ -139,13 +139,8 @@ const CustomerAddressForm = ({ addressId, defaultValues = {}, onSave, open, setO
                             </button>
                         </div>
                     </div>
-
                 </div>
-            )
-                :
-                (
-                    <></>
-                )}
+            ) : null}
         </div>
     );
 };
