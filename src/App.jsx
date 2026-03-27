@@ -29,7 +29,6 @@ import { OrderProvider } from "./components/OrderContext";
 import CustomerOrders from "./components/pages/Customer/CustomerOrders";
 import ForgotPasswordPage from "./components/forms/ResetPassword/ForgotPasswordPage";
 import ResetPassword from "./components/forms/ResetPassword/ResetPassword";
-import CustomerHomePage2 from "./components/pages/Customer/CustomerHomePage2";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -94,7 +93,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<CustomerHomePage2 />} />
+              <Route index element={<CustomerHomePage />} />
               <Route path="allergens" element={<CustomerAllergens />} />
               <Route path="addresses" element={<CustomerAddresses />} />
               <Route path="meals" element={<CustomerMeals />} />
