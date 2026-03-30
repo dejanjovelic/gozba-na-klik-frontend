@@ -1,22 +1,64 @@
+@use "sass:color";
 $color-background: #fffaf1;
-.page {
+
+.content{
+  background-color:  $color-background;
+}
+
+.user-profile-section {
   background: $color-background;
-  padding: 40px;
   box-sizing: border-box;
   font-family: sans-serif;
   display: flex;
+  flex-direction: column;
 }
-.background {
+
+.user-profile-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: $color-background;
+  flex: 1;
 }
-.container {
+
+.user-profile-wrapper {
+  margin-top: 40px;
+  min-width: 665px;
+}
+
+.user-profile-container {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 40px auto;
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 32px;
 }
+
+.user-profile-links-section {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid #e6dccf;
+  background-color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  min-width: 630px;
+  margin-top: 40px;
+
+  .user-profile-link {
+    text-decoration: none;
+    color: #444;
+    font-weight: bold;
+
+    &:hover {
+      color: color.adjust(#444, $lightness: -15%);
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+  }
+}
+
 
 .leftCard,
 .rightCard {
@@ -193,6 +235,7 @@ $color-background: #fffaf1;
   display: flex;
   align-items: center;
   justify-content: center;
+
   svg {
     color: #000000;
   }
@@ -251,8 +294,4 @@ $color-background: #fffaf1;
   color: #28a745;
   font-size: 12px;
   font-weight: bold;
-}
-#customerAllergenProfile {
-}
-#customerAddressProfile {
 }

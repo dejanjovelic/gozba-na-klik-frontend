@@ -19,6 +19,7 @@ import {
 import "../../../styles/allergensPage.scss";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import UserContext from "../../../config/UserContext";
+import SucessPopup from "../Popups/SucessPopup";
 
 const CustomerAllergens = ({ onError }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -83,11 +84,11 @@ const CustomerAllergens = ({ onError }) => {
   }, []);
 
   return (
-    <div id="Container">
+    <div id="customer-allergen-page">
       <div id="allergenContainer">
         <Card
           variant="outlined"
-          style={{ height: "400px", width: "980px" }}
+          style={{ height: "300px", width: "100%" }}
           id="AllergenFormCard"
         >
           <CardHeader
@@ -127,13 +128,12 @@ const CustomerAllergens = ({ onError }) => {
             />
 
             {successMsg && (
-              <Alert
-                icon={<CheckCircleOutlineIcon fontSize="inherit" />}
-                severity="success"
-                sx={{ mt: 2 }}
-              >
-                {successMsg}
-              </Alert>
+              <SucessPopup
+                addClassName={"allergen-page"}
+                message={"you successfuly updated allergen list"}
+                timeOut={2}
+                onClose={() => setSuccessMsg('')}
+              />
             )}
 
             <Button

@@ -1,0 +1,406 @@
+@use "sass:color";
+
+$color-cream: #f5e4cb;
+$color-brown: #5d402b;
+$color-orange: #ea9332;
+$color-red: rgb(247, 72, 72);
+
+// ─── Page layout ────────────────────────────────────────────────────────────
+
+#customer-credit-cards-page-content {
+    margin-top: 40px;
+}
+
+.credit-cards-content {
+    width: 100%;
+    display: flex;
+
+    .credit-cards-div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 600px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        background-color: white;
+
+        .credit-cards-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 0 30px 30px 20px;
+            padding-bottom: 10px;
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 1%;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background: radial-gradient(
+                    ellipse at center,
+                    color.adjust(lightgray, $lightness: -5%) 50%,
+                    transparent 65%
+                );
+            }
+
+            .credit-cards-header-text {
+                text-align: center;
+                margin: 0;
+                color: $color-orange;
+            }
+
+            #add-card-button {
+                border-radius: 5px;
+                margin: 0 50px 10px 0;
+                min-width: 95px;
+                min-height: 50px;
+                width: 15.5%;
+            }
+        }
+    }
+}
+
+.empty-credit-cards {
+    color: gray;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+// ─── Cards grid ─────────────────────────────────────────────────────────────
+
+.credit-cards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    padding: 10px 0 20px;
+    width: 100%;
+}
+
+// ─── Credit card visual ──────────────────────────────────────────────────────
+
+.credit-card-item {
+    width: 380px;
+    min-height: 220px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    padding: 24px 28px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    position: relative;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    // Decorative circles (chip / hologram effect)
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.08;
+    }
+
+    &::before {
+        width: 180px;
+        height: 180px;
+        background: white;
+        top: -50px;
+        right: -50px;
+    }
+
+    &::after {
+        width: 120px;
+        height: 120px;
+        background: white;
+        bottom: -30px;
+        left: -30px;
+    }
+
+    &.editing {
+        background: linear-gradient(135deg, #2c2c54 0%, #1f3c5e 50%, #1a5276 100%);
+    }
+}
+
+// ─── Card sections ───────────────────────────────────────────────────────────
+
+.credit-card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+
+    .credit-card-bank {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        opacity: 0.9;
+        text-transform: uppercase;
+    }
+
+    .credit-card-brand {
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: $color-orange;
+    }
+}
+
+.credit-card-number-row {
+    z-index: 1;
+    margin: 14px 0 8px;
+
+    .credit-card-number {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 20px;
+        letter-spacing: 4px;
+        opacity: 0.95;
+    }
+}
+
+.credit-card-holder-row {
+    z-index: 1;
+
+    .credit-card-holder {
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        opacity: 0.85;
+    }
+}
+
+.credit-card-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    z-index: 1;
+    margin-top: 14px;
+}
+
+.credit-card-action-button {
+    background-color: $color-orange;
+    color: white;
+    padding: 3px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: medium;
+    border: 1px solid $color-orange;
+    height: 2.2rem;
+    width: 6rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: color.adjust($color-orange, $lightness: -5%);
+    }
+
+    &.negative-action {
+        background-color: $color-red;
+        border-color: $color-red;
+
+        &:hover {
+            background-color: color.adjust($color-red, $lightness: -5%);
+        }
+    }
+
+    &.positive-action {
+        background-color: $color-orange;
+        border-color: $color-orange;
+
+        &:hover {
+            background-color: color.adjust($color-orange, $lightness: -5%);
+        }
+    }
+}
+
+// ─── Inline edit inputs ──────────────────────────────────────────────────────
+
+.cc-inline-input {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 13px;
+    width: 100%;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $color-orange;
+    }
+
+    option {
+        background-color: #1a1a2e;
+        color: #fff;
+    }
+}
+
+.cc-bank-input {
+    width: 55%;
+}
+
+.cc-brand-select {
+    width: 40%;
+}
+
+.cc-number-input {
+    width: 100%;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+.cc-holder-inputs {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+// ─── Add form modal ──────────────────────────────────────────────────────────
+
+.credit-card-form-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.credit-card-add-form {
+    background-color: $color-cream;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 30px;
+    width: 26rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .credit-card-form-close {
+        display: flex;
+        justify-content: flex-end;
+
+        .address-card-close-button-wrapper {
+            cursor: pointer;
+            color: $color-brown;
+
+            &:hover {
+                color: $color-red;
+            }
+        }
+    }
+
+    .credit-card-form-title-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 18px;
+
+        .credit-card-form-title-text {
+            color: $color-brown;
+            margin: 0;
+        }
+    }
+
+    .credit-card-form-body {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .credit-card-form-row {
+        display: flex;
+        gap: 12px;
+
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            &.full-width {
+                flex: 1 1 100%;
+            }
+
+            label {
+                white-space: nowrap;
+                font-size: 14px;
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #333;
+            }
+
+            input,
+            select {
+                padding: 8px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                background-color: #ffffff;
+                font-size: 14px;
+                width: 100%;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    .credit-card-form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 6px;
+
+        button {
+            padding: 3px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: medium;
+            height: 2.2rem;
+            width: 6rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .positive-action {
+            background-color: $color-orange;
+            color: white;
+            border: 1px solid $color-orange;
+
+            &:hover {
+                background-color: color.adjust($color-orange, $lightness: -5%);
+            }
+        }
+
+        .negative-action {
+            background-color: $color-red;
+            color: white;
+            border: 1px solid $color-red;
+
+            &:hover {
+                background-color: color.adjust($color-red, $lightness: -5%);
+            }
+        }
+    }
+}
+
+.field-error {
+    color: red;
+    font-size: 12px;
+    margin-top: 2px;
+}
