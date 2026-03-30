@@ -131,5 +131,18 @@
 
 .css-quhxjy-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
   .MuiOutlinedInput-notchedOutline {
+  
   border-color: grey;
+}
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiSelect-root.css-quhxjy-MuiInputBase-root-MuiOutlinedInput-root{
+  background-color: white;
+}
+
+.MuiSwitch-thumb.css-17jyosd-MuiSwitch-thumb {
+  background-color: white;
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-sizeSmall.MuiSelect-root.css-v100kj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.MuiMenu-paper.css-1tktgsa-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
+  background-color: white;
 }
