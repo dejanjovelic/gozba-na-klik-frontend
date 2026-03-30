@@ -12,6 +12,7 @@ body,
 #root {
   height: 100%;
   background: linear-gradient(to bottom, #f8fafc, #eef2f7);
+  overflow-x: hidden;
 }
 
 //SPINNER
@@ -154,47 +155,39 @@ nav {
       cursor: pointer;
     }
 
-    #DropDownMenuContent {
+    .DropDownMenuContent {
       position: absolute;
-      top: 50px;
-      right: -5px;
+      top: 120%;
       background-color: $color-cream;
-      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition:
-        opacity 0.6s ease,
-        transform 0.6s ease;
-      pointer-events: none;
-
-      &.open {
-        opacity: 1 !important;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
+      display: flex;
+      flex-direction: column;
+      padding: 5px 0;
+      z-index: 1500; // above nav
 
       .DropDownMenuItem {
         padding: 10px 20px;
 
         a,
         button {
+          padding: 10px;
           display: flex;
           align-items: center;
           gap: 10px;
           text-decoration: none;
-          color: #000;
-          background: none;
-          border: none;
-          cursor: pointer;
-          width: 100%;
-          text-align: left;
-          font-size: 20px;
-        }
+          color: #333;
 
-        a:hover,
-        button:hover {
-          color: $color-brown;
+          cursor: pointer;
+          margin-left: -10px;
+          font-size: 16px;
+          font-weight: 500;
+          transition: background 0.2s;
+        }
+        &:hover {
+          background-color: $color-orange;
+          color: $color-text;
+          a {
+            color: white;
+          }
         }
       }
     }
@@ -260,18 +253,6 @@ footer {
   font-size: 20px;
 }
 
-button {
-  background-color: $color-orange;
-  color: $color-text;
-  padding: 5px;
-  border-radius: 8px;
-  font-weight: bold;
-  border: 1px solid $color-orange;
-  height: 2.2rem;
-  width: 6rem;
-  cursor: pointer;
-}
-
 .user-img {
   width: 50px;
   height: 50px;
@@ -279,14 +260,6 @@ button {
   border-radius: 50%;
   vertical-align: middle;
   position: relative;
-}
-
-.user-fullname {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  margin-left: 50px;
-  font-size: 20px;
 }
 
 .user-profile-div {
@@ -326,4 +299,10 @@ button {
   visibility: hidden !important;
   opacity: 0 !important;
   transition: none !important;
+}
+.menu-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
 }
