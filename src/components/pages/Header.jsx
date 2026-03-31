@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../styles/global.scss";
+import "../../styles/header.scss";
 import { CircleUser } from "lucide-react";
 import { LogOut } from "lucide-react";
 import { Menu } from "lucide-react";
@@ -112,23 +112,20 @@ const Header = () => {
                 </div>
               </div>
             </span>
-
-            {open && (
-              <div className="DropDownMenuContent">
-                <div className="DropDownMenuItem">
-                  <Link to="/profile">
-                    <CircleUser />
-                    My profile
-                  </Link>
-                </div>
-                <div className="DropDownMenuItem">
-                  <Link onClick={handleLogout}>
-                    <LogOut />
-                    Logout
-                  </Link>
-                </div>
+            <div className={`DropDownMenuContent ${open ? "open" : ""}`}>
+              <div className="DropDownMenuItem">
+                <Link to="/profile">
+                  <CircleUser />
+                  My profile
+                </Link>
               </div>
-            )}
+              <div className="DropDownMenuItem">
+                <Link onClick={handleLogout}>
+                  <LogOut />
+                  Logout
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}

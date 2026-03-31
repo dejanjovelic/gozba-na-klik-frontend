@@ -98,3 +98,22 @@ $color-orange: #ea9332;
     height: 50px;
   }
 }
+@media (max-width: 768px) {
+  @media (max-width: 768px) {
+    .add-user-modal {
+      padding: 16px;
+      width: 90%; // use most of screen width
+      max-width: 400px; // cap it so it doesn't stretch too much
+      height: auto;
+      max-height: 90%;
+    }
+
+    .custom-input {
+      width: 100%; // inputs fill modal
+    }
+
+    .submit-btn {
+      width: 100%;
+    }
+  }
+}
