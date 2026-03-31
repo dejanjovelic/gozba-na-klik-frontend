@@ -8,10 +8,14 @@ import {
 } from "../../../services/CustomerService";
 import CustomerAddressForm from "../../forms/customer/CustomerAddressForm";
 import UserContext from "../../../config/UserContext";
+import ConfirmationPopup from "../Popups/ConfirmationPopup";
 
 const CustomerAddresses = ({ onError }) => {
   const [addresses, setAddresses] = useState([]);
+  const [address, setAddress] = useState(null);
+  const [open, setOpen] = useState(false);
   const { user } = useContext(UserContext);
+  const [showConfirmationPopUp, setShowConfirmationPopUp] = useState(false)
 
   const throwError = (error) => {
     if (!onError) return;
@@ -31,15 +35,10 @@ const CustomerAddresses = ({ onError }) => {
     console.log("CustomerAddresses error:", error);
   };
 
-  const handleEdit = (id) => {
-    setAddresses(
-      addresses.map((addr) =>
-        addr.id === id
-          ? { ...addr, isEditing: true }
-          : { ...addr, isEditing: false }
-      )
-    );
-  };
+  const handleEdit = (address) => {
+    setAddress(address);
+    setOpen(true);
+  }
 
   const handleSave = async (id, data) => {
     try {
@@ -48,36 +47,36 @@ const CustomerAddresses = ({ onError }) => {
 
         setAddresses((prev) =>
           prev.map((addr) =>
-            addr.id === id ? { ...createdAddress, isEditing: false } : addr
-          )
-        );
+            addr.id === id ? { ...prev, ...createdAddress } : addr
+          ));
       } else {
-        await updateAddress(user.id, id, data);
+        const newAddress = { ...data, id };
+        await updateAddress(user.id, id, newAddress);
 
         setAddresses((prev) =>
           prev.map((addr) =>
-            addr.id === id ? { ...addr, ...data, isEditing: false } : addr
+            addr.id === id ? { ...addr, ...data } : addr
           )
         );
       }
+      setOpen(false);
     } catch (error) {
+      setOpen(false);
       throwError(error);
     }
   };
 
   const handleAdd = () => {
-    setAddresses([
-      ...addresses,
-      {
-        id: "0",
-        street: "",
-        streetNumber: "",
-        city: "",
-        zipCode: "",
-        customerId: user.id,
-        isEditing: true,
-      },
-    ]);
+    setAddress({
+      id: "0",
+      street: "",
+      streetNumber: "",
+      city: "",
+      zipCode: "",
+      customerId: user.id,
+      isEditing: true,
+    });
+    setOpen(true);
   };
 
   const handleDelete = async (addressId) => {
@@ -92,12 +91,7 @@ const CustomerAddresses = ({ onError }) => {
   async function loadAddresses() {
     try {
       const data = await getAddresses(user.id);
-      setAddresses(
-        data.map((item) => ({
-          ...item,
-          isEditing: false,
-        }))
-      );
+      setAddresses(data);
     } catch (error) {
       throwError(error);
     }
@@ -107,19 +101,16 @@ const CustomerAddresses = ({ onError }) => {
     loadAddresses();
   }, []);
 
-  const isAnyEditing = addresses.some((address) => address.isEditing);
-
   return (
-    <div id="Content">
+    <div id="customer-addresses-page-content">
       <div className="addresses-content">
         <div className="addresses-div">
           <div className="addresses-header">
-            <h1>Your Delivery Addresses</h1>
+            <h1 className="addresses-header-text">Your Delivery Addresses</h1>
             <button
               onClick={handleAdd}
               id="add-button"
-              className="add-button"
-              disabled={isAnyEditing}
+              className="positive-action"
             >
               Add New Address
             </button>
@@ -127,17 +118,66 @@ const CustomerAddresses = ({ onError }) => {
 
           {addresses.length > 0 ? (
             <div className="cards-container">
-              {addresses.map((address) => (
-                <CustomerAddressForm
-                  key={address.id}
-                  addressId={address.id}
-                  defaultValues={address}
-                  isEditing={address.isEditing}
-                  onEdit={handleEdit}
-                  onSave={handleSave}
-                  onDelete={handleDelete}
-                />
-              ))}
+
+              <CustomerAddressForm
+                addressId={address?.id}
+                defaultValues={address}
+                onSave={handleSave}
+                open={open}
+                setOpen={setOpen}
+              />
+
+              <table className="customer-addresses-table">
+                <thead>
+                  <tr>
+                    <th>Street</th>
+                    <th>Number</th>
+                    <th>City</th>
+                    <th>Zip code</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {addresses.map((address) => (
+                    <tr key={address.id}>
+                      <td>{address.street}</td>
+                      <td>{address.streetNumber}</td>
+                      <td>{address.city}</td>
+                      <td>{address.zipCode}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="customer-address-button negative-action"
+                          onClick={() => setShowConfirmationPopUp(true)}
+                        >
+                          Delete
+                        </button>
+                        {showConfirmationPopUp && (
+                          <ConfirmationPopup
+                            message={`Are you sure you want to delete address?`}
+                            onNo={() => setShowConfirmationPopUp(false)}
+                            onYes={() => {
+                              handleDelete(address.id);
+                              setShowConfirmationPopUp(false);
+                            }}
+                          />
+                        )}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="customer-address-button positive-action"
+                          onClick={() => handleEdit(address)}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
             </div>
           ) : (
             <span className="empty-addresses">

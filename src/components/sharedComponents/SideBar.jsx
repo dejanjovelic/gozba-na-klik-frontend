@@ -83,7 +83,6 @@ const SideBar = ({ onLogout, onCloseSideMenu }) => {
   };
 
   const role = user?.role?.toLowerCase();
-  console.log(role);
   const links = [...(roleBasedLinks[role] || [])];
 
   return (
