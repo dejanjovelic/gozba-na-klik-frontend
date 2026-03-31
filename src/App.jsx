@@ -138,7 +138,7 @@ const App = () => {
               <Route path="/profile" element={<UserProfile />} />
             )}
           </Routes>
-          <Footer />
+          {/*<Footer />*/}
         </BrowserRouter>
       </UserContext.Provider>
     </div>

@@ -42,6 +42,9 @@ $color-text: white;
     height: 7px;
     width: 80%;
   }
+  .MuiSlider-root {
+    width: 80%;
+  }
 
   .MuiSlider-rail {
     background-color: $color-cream; /* unfilled track */
