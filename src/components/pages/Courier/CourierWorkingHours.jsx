@@ -11,6 +11,7 @@ import ErrorPopup from "../../pages/Popups/ErrorPopup";
 import SucessPopup from "../../pages/Popups/SucessPopup";
 import ConfirmationPopup from "../../pages/Popups/ConfirmationPopup";
 import UserContext from "../../../config/UserContext";
+import HoursWheel from "../../sharedComponents/HoursWheel";
 
 const MAX_HOURS_PER_DAY = 10;
 const MAX_HOURS_PER_WEEK = 40;
@@ -205,10 +206,10 @@ const CourierWorkingHours = () => {
 
   return (
     <div id="container">
-      <p className="hoursRemaining">
-        Remaining hours per week:{" "}
-        <span style={{ color: "orange" }}>{hoursRemaining}</span>
-      </p>
+      <div className="hours-wheel-container">
+        <HoursWheel remaining={hoursRemaining} total={MAX_HOURS_PER_WEEK} />
+        <p>Remaining hours</p>
+      </div>
 
       {Object.keys(checkedDays).map((day) => (
         <div key={day} id="switchInput">

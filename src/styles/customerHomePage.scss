@@ -1,107 +1,85 @@
-@use "./global.scss" as *;
-
-body,
-html {
-  overflow-x: hidden;
-}
-
-.restaurants-slider-container {
-  .slick-arrow.slick-next,
-  .slick-arrow.slick-prev {
-    top: 45%;
-  }
-
-  .restaurant-card.customer-page {
-    width: 300px;
-    max-width: 100%;
-  }
-}
-
-.restaurants-slider-container,
-.meals-slider-container {
+.HomepageContainer {
+  margin-top: 80px;
   display: flex;
+  gap: 40px;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
 
-  width: 120%;
-  flex-shrink: 1;
-
-  .slick-arrow.slick-next,
-  .slick-arrow.slick-prev {
-    background-color: black;
-    position: absolute;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: white transparent;
-    background-color: white;
-    color: white transparent;
-    transform: translateY(-50%);
-
-    &::before {
-      font-size: 40px;
-      background-color: grey;
-      color: white transparent;
-      border-radius: 50%;
-    }
-  }
-
-  .slick-arrow.slick-prev {
-    left: 10px;
-    z-index: 1;
-  }
-
-  .slick-arrow.slick-next {
-    margin-right: 17%;
-  }
-
-  .slick-slide {
-    margin: 0 15px;
-  }
-
-  .slick-slider.slick-initialized {
-    width: 90%;
-    height: 400px;
+  .restaurantAdvertisementContainer,
+  .mealsAdvertisementContainer {
     position: relative;
-  }
-
-  .slick-list,
-  .slick-track {
+    width: 600px;
+    height: 500px;
+    border-radius: 24px;
     overflow: hidden;
-  }
-}
-
-.meals-slider-container {
-  .slick-arrow.slick-next,
-  .slick-arrow.slick-prev {
-    top: 30%;
-  }
-
-  div.customerMeal-card.customer-page {
-    display: flex !important;
-  }
-}
-
-.customer-home-page-conatiner {
-  h1 {
-    margin-left: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     cursor: pointer;
-    opacity: 0.7;
+    transition:
+      transform 0.4s ease,
+      box-shadow 0.4s ease;
 
     &:hover {
-      opacity: 1;
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      transition: background 0.4s ease;
+      z-index: 1;
+    }
+
+    &:hover::before {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    h2,
+    a {
+      position: relative;
+      z-index: 2;
+      color: white;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: white;
+      color: black;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #e5e5e5;
+      }
     }
   }
-}
 
-.no-resturants-message-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .mealsAdvertisementContainer {
+    background-image: url("https://res.cloudinary.com/dsgans7nh/image/upload/v1774374514/A_delicious_spread_of_dinner_delights_fl1dp0.png");
+    background-size: cover;
+    background-position: center;
+  }
 
-.no-meals-message-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .restaurantAdvertisementContainer {
+    background-image: url("https://res.cloudinary.com/dsgans7nh/image/upload/v1774368662/Mar_24_2026_05_05_27_PM_novtzg.png");
+    background-size: cover;
+    background-position: center;
+  }
 }
