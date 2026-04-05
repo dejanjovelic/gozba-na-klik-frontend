@@ -1,20 +1,26 @@
 import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import UserContext from "../../config/UserContext";
+import Spinner from "./Spinner";
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
-  const {user} = useContext(UserContext);
-
+  const {user, loading} = useContext(UserContext);
+  
   function normalizedRole(word) {
+    if (!word) return "";
     return `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
   }
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (!user || !user.role) {
+    return <Navigate to="/" replace />;
   }
 
   if (!allowedRoles.includes(normalizedRole(user.role))) {
-    return <Navigate to={`/${normalizedRole(user.role)}`} replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;
