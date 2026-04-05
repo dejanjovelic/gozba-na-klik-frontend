@@ -35,7 +35,6 @@ const AdminUserList = () => {
         try {
             const data = await GetAllUsers();
             setUsers(data);
-            console.log(data)
         }
         catch (error) {
             if (error.status && error.status === 500) {

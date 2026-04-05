@@ -1,11 +1,12 @@
 @use "sass:color";
+@use "./variables" as *;
 
-$color-brown: #5d402b;
-$color-cream: #f5e4cb;
-$color-orange: #ea9332;
-$color-hamburgerIcon: white;
-$color-text: white;
-$color-background: #fffbf4;
+// $color-brown: #5d402b;
+// $color-cream: #f5e4cb;
+// $color-orange: #ea9332;
+// $color-hamburgerIcon: white;
+// $color-text: white;
+// $color-background: #fffbf4;
 
 html,
 body,
@@ -263,16 +264,42 @@ footer {
   font-size: 20px;
 }
 
-button {
-  background-color: $color-orange;
-  color: $color-text;
-  padding: 5px;
-  border-radius: 8px;
-  font-weight: bold;
-  border: 1px solid $color-orange;
-  height: 2.2rem;
-  width: 6rem;
-  cursor: pointer;
+
+.admin-restaurant-edit-button,
+.admin-restaurant-delete-button,
+.credit-card-action-button {
+    background-color: $color-orange;
+    color: white;
+    padding: 3px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: medium;
+    border: 1px solid $color-orange;
+    height: 2.2rem;
+    width: 6rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: color.adjust($color-orange, $lightness: -5%);
+    }
+
+    &.negative-action {
+        background-color: $color-red;
+        border-color: $color-red;
+
+        &:hover {
+            background-color: color.adjust($color-red, $lightness: -5%);
+        }
+    }
+
+    &.positive-action {
+        background-color: $color-orange;
+        border-color: $color-orange;
+
+        &:hover {
+            background-color: color.adjust($color-orange, $lightness: -5%);
+        }
+    }
 }
 
 .user-img {

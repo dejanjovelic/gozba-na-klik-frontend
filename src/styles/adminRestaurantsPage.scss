@@ -1,0 +1,91 @@
+.admin-restaurant-page-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.admin-restaurant-add-button.positive-action {
+    width: 8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 125px;
+    margin-bottom: 15px;
+}
+
+.admin-restaurants-table {
+    border-collapse: collapse;
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px 0;
+    }
+
+    thead tr th:nth-child(-n+5) {
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right,
+                    transparent 0%,
+                    rgba(200, 200, 200, 0.4) 5%,
+                    rgba(200, 200, 200, 1) 50%,
+                    rgba(200, 200, 200, 0.4) 95%,
+                    transparent 100%);
+        }
+    }
+
+    thead,
+    tbody {
+        tr {
+
+            td:nth-child(-n+5) {
+                width: 180px;
+            }
+
+            th:nth-child(-n+5),
+            td:nth-child(-n+5) {
+                position: relative;
+            }
+
+            th:nth-child(5)::after,
+            td:nth-child(5)::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: -400%;
+                width: 510%;
+                height: 1px;
+
+                background: linear-gradient(to right,
+                        transparent 0%,
+                        rgba(200, 200, 200, 0.4) 5%,
+                        rgba(200, 200, 200, 1) 50%,
+                        rgba(200, 200, 200, 0.4) 95%,
+                        transparent 100%);
+            }
+
+            td:nth-last-child(-n+2),
+            th:nth-last-child(-n+2) {
+                 text-align: center;
+                width: 120px;
+            }
+        }
+    }
+}
+
+    .adimn-restaurants-page-table-wrapper {
+        background-color: whitesmoke;
+        border-radius: 15px;
+        padding: 10px;
+        // border: 1px solid gray;
+        box-shadow: 0 0 10px #0000001a;
+    }

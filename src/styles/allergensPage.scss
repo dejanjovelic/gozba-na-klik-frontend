@@ -1,5 +1,6 @@
-@use "./global.scss" as *;
 @use "sass:color";
+@use "./variables" as *;
+@use "./global.scss" as *;
 
 .MuiPaper-root {
   background-color: $color-cream;

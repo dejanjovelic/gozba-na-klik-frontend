@@ -9,19 +9,29 @@ export async function fetchPaginatedFilteredAndSortedRestaurants(chosenFilters, 
         chosenFilters
     )
     return response.data;
-}
+};
 
 export async function fetchRestaurantSortType() {
     const response = await AxiosConfig.get(`${RESOURCE}/sortTypes`)
     return response.data;
-}
+};
 
 export async function getRestaurantWithMeals(id) {
     const response = await AxiosConfig.get(`${RESOURCE}/${id}/meals`);
     return response.data;
-}
+};
 
 export async function fetchTopRatedRestaurants() {
     const response = await AxiosConfig.get(`${RESOURCE}/top-rated`);
+    return response.data;
+};
+
+export async function fetchAllRestaurants() {
+    const response = await AxiosConfig.get(`${RESOURCE}`);
+    return response.data;
+};
+
+export async function deleteRestaurant(id) {
+    const response = await AxiosConfig.delete(`${RESOURCE}/${id}`);
     return response.data;
 }

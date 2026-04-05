@@ -1,4 +1,4 @@
-@use "./global.scss" as global;
+@use "./variables" as *;
 
 .restaurants-container {
     display: flex;
@@ -113,11 +113,11 @@
 }
 
 .MuiButtonBase-root.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.css-1blvszr-MuiButtonBase-root-MuiButton-root {
-    background-color: global.$color-orange;
-    color: global.$color-text;
+    background-color: $color-orange;
+    color: $color-text;
     font-weight: bold;
-    border: 0.5px solid global.$color-orange;
-    outline: 0.5px solid global.$color-orange;
+    border: 0.5px solid $color-orange;
+    outline: 0.5px solid $color-orange;
 }
 
 @media (max-width: 2000px) {
