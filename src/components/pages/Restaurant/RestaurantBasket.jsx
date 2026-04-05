@@ -241,6 +241,7 @@ const RestaurantBasket = () => {
                 <>
                     {successMessage && (
                         <SucessPopup
+                            addClassName={"restaurant-menu-page"}
                             message={successMessage}
                             timeOut={2}
                             onClose={() => handleCloseSuccess()}

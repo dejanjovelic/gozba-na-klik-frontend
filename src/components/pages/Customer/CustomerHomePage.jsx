@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import "../../../styles/customerHomePage2.scss";
+import "../../../styles/customerHomePage.scss";
 import { useNavigate } from "react-router-dom";
 const CustomerHomePage = () => {
   const navigate = useNavigate();

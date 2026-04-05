@@ -26,22 +26,26 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
   } = useForm({ mode: "onChange" });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState("");
 
   const onSubmit = async (data) => {
     try {
-      const user = role === "courier" ? await createCourier(data) : await createRestaurantOwner(data);
+      const user =
+        role === "courier"
+          ? await createCourier(data)
+          : await createRestaurantOwner(data);
       successMsg(`You have successfuly created ${user.role}.`);
     } catch (error) {
       if (error.status) {
         if (error.status === 500) {
-          errorMsg("Server is temporarily unavailable. Please refresh or try again later.")
+          errorMsg(
+            "Server is temporarily unavailable. Please refresh or try again later.",
+          );
         } else {
           errorMsg(`Error: ${error.status}`);
         }
       } else if (error.request) {
         errorMsg("The server is not responding. Please try again later.");
-
       } else {
         errorMsg("Something went wrong. Please try again.");
       }
@@ -54,10 +58,11 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
   const onClose = () => {
     handleClose();
     reset();
-  }
+  };
 
   return (
     <Modal
+      id="modal"
       open={open}
       onClose={onClose}
       aria-labelledby="add-user-title"
@@ -66,7 +71,6 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
       <Box className="add-user-modal">
         <h2 id="add-user-title">Add New User</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-
           <TextField
             label="Name"
             fullWidth
@@ -77,7 +81,6 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
             })}
           />
           {<div className="input-error-message">{errors.name?.message}</div>}
-
 
           <TextField
             label="Surname"
@@ -99,7 +102,11 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               minLength: { value: 3, message: "Minimum 3 characters." },
             })}
           />
-          {<div className="input-error-message">{errors.username?.message}</div>}
+          {
+            <div className="input-error-message">
+              {errors.username?.message}
+            </div>
+          }
 
           <TextField
             label="Email"
@@ -128,7 +135,11 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               },
             })}
           />
-          {<div className="input-error-message">{errors.phoneNumber?.message}</div>}
+          {
+            <div className="input-error-message">
+              {errors.phoneNumber?.message}
+            </div>
+          }
 
           <TextField
             label="Password"
@@ -152,7 +163,11 @@ const AdminAddUserForm = ({ open, handleClose, errorMsg, successMsg }) => {
               ),
             }}
           />
-          {<div className="input-error-message">{errors.password?.message}</div>}
+          {
+            <div className="input-error-message">
+              {errors.password?.message}
+            </div>
+          }
           <div className="role-div">
             <label className="role-label">Role</label>
             <RadioGroup

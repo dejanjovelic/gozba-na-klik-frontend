@@ -31,6 +31,8 @@ import ForgotPasswordPage from "./components/forms/ResetPassword/ForgotPasswordP
 import ResetPassword from "./components/forms/ResetPassword/ResetPassword";
 import { setOnUnauthorized } from "./config/axiosConfig";
 import Spinner from "./components/sharedComponents/Spinner";
+import UserProfilePage from "./components/pages/UserProfilePage";
+import CustomerCreditCardsPage from "./components/pages/Customer/CustomerCreditCardsPage";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -63,7 +65,7 @@ const App = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <UserContext.Provider value={{ user, setUser , loading}}>
+        <UserContext.Provider value={{ user, setUser, loading }}>
           <Header />
           <Routes>
             <Route path="/" element={<RestaurantPaginationFilterSort />} />
@@ -150,10 +152,18 @@ const App = () => {
               <Route path="workingHours" element={<EmployeeHomePage />} />
             </Route>
 
-            <Route path="/profile" element={<UserProfile />} />
+            {user?.role === "Customer" ? (
+              <Route path="/profile" element={<UserProfilePage />} >
+                <Route index element={<UserProfile />} />
+                <Route path="allergens" element={<CustomerAllergens />} />
+                <Route path="addresses" element={<CustomerAddresses />} />
+                <Route path="credit-cards" element={<CustomerCreditCardsPage />} />
+              </Route>
+            ) : (
+              <Route path="/profile" element={<UserProfile />} />
+            )}
           </Routes>
-          <Footer />
-
+          {/*<Footer />*/}
         </UserContext.Provider>
       )}
     </div>
