@@ -1,14 +1,13 @@
 import React, { useContext, useRef } from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../styles/global.scss";
+import "../../styles/header.scss";
 import { CircleUser } from "lucide-react";
 import { LogOut } from "lucide-react";
-import { Menu } from 'lucide-react';
+import { Menu } from "lucide-react";
 import SideBar from "../sharedComponents/SideBar";
 import { Drawer } from "@mui/material";
 import UserContext from "../../config/UserContext";
-
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,14 +17,11 @@ const Header = () => {
 
   const { user, setUser } = useContext(UserContext);
 
-
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setUser(null);
-    navigate('/login');
+    navigate("/login");
   };
-
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -41,8 +37,8 @@ const Header = () => {
   }, []);
 
   const toggleDrawer = (newOpen) => {
-    setOpenSideMenu(newOpen)
-  }
+    setOpenSideMenu(newOpen);
+  };
 
   useEffect(() => {
     setOpen(false);
@@ -52,49 +48,71 @@ const Header = () => {
     <nav>
       {!user ? (
         <div className="button-section">
-          <button onClick={() => { navigate("/login") }} id="logInBtn">Log In</button>
-          <button onClick={() => { navigate("/register") }} id="SignUpBtn">Sign Up</button>
+          <button
+            onClick={() => {
+              navigate("/login");
+            }}
+            id="logInBtn"
+          >
+            Log In
+          </button>
+          <button
+            onClick={() => {
+              navigate("/register");
+            }}
+            id="SignUpBtn"
+          >
+            Sign Up
+          </button>
         </div>
       ) : (
-
         <div className="nav-bar-container" ref={dropdownRef}>
           <div className="menu-div" onClick={() => toggleDrawer(!openSideMenu)}>
-            <Menu className={`menu-icon ${openSideMenu ? 'active' : ''}`} />
+            <Menu className={`menu-icon ${openSideMenu ? "active" : ""}`} />
           </div>
           <Drawer
             className="homePageLayout"
             open={openSideMenu}
             onClose={() => toggleDrawer(false)}
             ModalProps={{
-              keepMounted: false
+              keepMounted: false,
             }}
-
           >
-            <SideBar onLogout={handleLogout} onCloseSideMenu={() => toggleDrawer(false)} />
+            <SideBar
+              onLogout={handleLogout}
+              onCloseSideMenu={() => toggleDrawer(false)}
+            />
           </Drawer>
 
-          <div className="logo-div">
-            <div className="user-fullname"><b>Welcome</b>, {user.name} {user.surname}</div>
-          </div>
-
           <div className={`user-profile-div ${open ? "open" : ""}`}>
-            <div className="user-info-section">
-
-            </div>
-            <span id="profileDropDownList" onClick={() => setOpen(prev => !prev)}>
+            <div className="user-info-section"></div>
+            <span
+              id="profileDropDownList"
+              onClick={() => setOpen((prev) => !prev)}
+            >
               <div>
-                {user.profileImageUrl ?
-                  (<img className="user-img" src={user.profileImageUrl} alt="Profile picture" />)
-                  :
-                  (<CircleUser className="user-icon" size={25} />)
-                }
-                <div className="user-hover-fullname">{user.name} {user.surname}</div>
+                {user.profileImageUrl ? (
+                  <img
+                    className="user-img"
+                    src={
+                      user.profileImageUrl ||
+                      "https://res.cloudinary.com/dsgans7nh/image/upload/v1774743847/881504-200_n5yvpi.png"
+                    }
+                    alt="User profile"
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        "https://res.cloudinary.com/dsgans7nh/image/upload/v1774743847/881504-200_n5yvpi.png";
+                    }}
+                  />
+                ) : (
+                  <CircleUser className="user-icon" size={25} />
+                )}
+                <div className="user-hover-fullname">
+                  {user.name} {user.surname}
+                </div>
               </div>
-
             </span>
-
-
-            <div id="DropDownMenuContent" className={open ? "open" : ""}>
+            <div className={`DropDownMenuContent ${open ? "open" : ""}`}>
               <div className="DropDownMenuItem">
                 <Link to="/profile">
                   <CircleUser />
@@ -102,19 +120,17 @@ const Header = () => {
                 </Link>
               </div>
               <div className="DropDownMenuItem">
-                <button id="logoutButton" onClick={handleLogout}>
+                <Link onClick={handleLogout}>
                   <LogOut />
                   Logout
-                </button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       )}
-
     </nav>
   );
-
 };
 
 export default Header;

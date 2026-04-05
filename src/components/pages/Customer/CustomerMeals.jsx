@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import '../../../styles/customerMeals.scss';
 import GlobalSearchSection from "../../sharedComponents/GlobalSearchSection";
 import PagionationSection from "../../sharedComponents/PaginationSection";
@@ -15,7 +15,7 @@ const CustomerMeals = () => {
     const [meals, setMeals] = useState([]);
     const [allAllergens, setAllAllergens] = useState([]);
     const [customerAllergens, setCustomerAllergens] = useState([]);
-    const [additionalAllergensIds, setAdditionalAllergensIds] = useState([]);
+    const [selectedAllergensIds, setSelectedAllergensIds] = useState();
     const [query, setQuery] = useState('');
     const [hideMealsWithAllergens, setHideMealsWithAllergens] = useState(false);
     const [page, setPage] = useState(0);
@@ -42,7 +42,7 @@ const CustomerMeals = () => {
     }
 
     const handleAdditionalAllergens = (newAdditionalAllergensIds) => {
-        setAdditionalAllergensIds(newAdditionalAllergensIds);
+        setSelectedAllergensIds(newAdditionalAllergensIds);
     }
 
     const handlePageChange = (newPage) => {
@@ -64,14 +64,15 @@ const CustomerMeals = () => {
         navigate("/customer");
     }
 
-    const reqBody = {
-        customerId: user.id,
-        hideMealsWithAllergens: hideMealsWithAllergens,
-        AllergensIds: additionalAllergensIds,
-        query: query
-    }
 
     const getFilteredMeals = async () => {
+
+        const reqBody = {
+            customerId: user.id,
+            hideMealsWithAllergens: hideMealsWithAllergens,
+            AllergensIds: selectedAllergensIds,
+            query: query
+        }
         try {
             const filteredPaginateMeals = await fetchFilteredMeals(reqBody, page + 1, pageSize);
             setMeals(filteredPaginateMeals.meals.items);
@@ -140,10 +141,14 @@ const CustomerMeals = () => {
     }, [])
 
     useEffect(() => {
+        setSelectedAllergensIds(customerAllergens.map(a => a.id));
+    }, [customerAllergens]);
+
+
+    useEffect(() => {
         setIsFirstLoad(false);
         getFilteredMeals();
-        fetchCustomerAllegrens();
-    }, [additionalAllergensIds, hideMealsWithAllergens, page, pageSize, hasNextPage, hasPreviousPage, query]);
+    }, [selectedAllergensIds, hideMealsWithAllergens, page, pageSize, hasNextPage, hasPreviousPage, query]);
 
     if (showError) {
         return (

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./components/pages/Header";
 import Footer from "./components/pages/Footer";
 import UsersHomePage from "./components/pages/UsersHomePage";
@@ -29,18 +29,43 @@ import { OrderProvider } from "./components/OrderContext";
 import CustomerOrders from "./components/pages/Customer/CustomerOrders";
 import ForgotPasswordPage from "./components/forms/ResetPassword/ForgotPasswordPage";
 import ResetPassword from "./components/forms/ResetPassword/ResetPassword";
+import { setOnUnauthorized } from "./config/axiosConfig";
+import Spinner from "./components/sharedComponents/Spinner";
 import UserProfilePage from "./components/pages/UserProfilePage";
 import CustomerCreditCardsPage from "./components/pages/Customer/CustomerCreditCardsPage";
 
 const App = () => {
-  const token = localStorage.getItem("token");
-  const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;
-  const [user, setUser] = useState(payload);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        setUser(payload);
+      } catch (error) {
+        localStorage.removeItem("token");
+        setUser(null);
+      }
+    }
+
+    setLoading(false);
+
+    setOnUnauthorized(() => {
+      setUser(null);
+      navigate("/login");
+    });
+
+  }, [navigate]);
 
   return (
     <div className="content">
-      <UserContext.Provider value={{ user, setUser }}>
-        <BrowserRouter>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <UserContext.Provider value={{ user, setUser, loading }}>
           <Header />
           <Routes>
             <Route path="/" element={<RestaurantPaginationFilterSort />} />
@@ -138,9 +163,9 @@ const App = () => {
               <Route path="/profile" element={<UserProfile />} />
             )}
           </Routes>
-          <Footer />
-        </BrowserRouter>
-      </UserContext.Provider>
+          {/*<Footer />*/}
+        </UserContext.Provider>
+      )}
     </div>
   );
 };

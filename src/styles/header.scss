@@ -1,0 +1,171 @@
+@use "sass:color";
+
+$color-brown: #5d402b;
+$color-cream: #f5e4cb;
+$color-orange: #ea9332;
+$color-hamburgerIcon: white;
+$color-text: white;
+$color-background: #fffbf4;
+
+nav {
+  z-index: 2;
+  background-color: $color-cream;
+  padding: 10px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+
+  .button-section {
+    display: flex;
+    justify-content: flex-end;
+    gap: 7px;
+  }
+
+  #logInBtn {
+    background-color: $color-orange;
+    color: $color-text;
+    padding: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 1px solid $color-orange;
+    height: 2.2rem;
+    width: 4.5rem;
+    cursor: pointer;
+  }
+
+  #SignUpBtn {
+    background-color: $color-brown;
+    color: $color-text;
+    padding: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 1px solid $color-brown;
+    height: 2.2rem;
+    width: 4.5rem;
+    cursor: pointer;
+  }
+  .nav-bar-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: $color-cream;
+
+    .menu-div {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+    }
+    .menu-icon {
+      position: relative;
+      z-index: 1400;
+      color: black;
+      transition: color 0.3s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &.active {
+        color: $color-hamburgerIcon; // ili neka kontrastna boja
+      }
+    }
+
+    .logo-div {
+      flex: 1;
+    }
+
+    .links-div {
+      flex: 1;
+      display: flex;
+      justify-content: space-around;
+
+      .nav-link {
+        margin: auto;
+        text-decoration: none;
+        color: black;
+        font-size: 18px;
+      }
+    }
+
+    .user-profile-div {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex: 1;
+      width: 50px;
+      height: 50px;
+
+      #profileDropDownList {
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .DropDownMenuContent {
+        position: absolute;
+        top: 120%;
+        background-color: $color-cream;
+        display: flex;
+        flex-direction: column;
+        z-index: 1500;
+
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+
+        transition: all 0.3s ease;
+
+        &.open {
+          opacity: 1;
+          transform: translateY(0);
+          pointer-events: auto;
+        }
+
+        .DropDownMenuItem {
+          padding: 10px 20px;
+          position: relative;
+          overflow: hidden;
+
+          a,
+          button {
+            position: relative;
+            z-index: 2;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+            margin-left: -10px;
+            font-size: 16px;
+            font-weight: 500;
+          }
+
+          // animated background layer
+          &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: $color-orange;
+
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+
+            z-index: 1;
+          }
+
+          &:hover::before {
+            transform: scaleX(1);
+          }
+
+          &:hover {
+            a {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
