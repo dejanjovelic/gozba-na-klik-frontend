@@ -25,11 +25,11 @@ $color-background: #fffaf1;
 .user-profile-wrapper {
   margin-top: 40px;
   min-width: 665px;
+  height: 100%;
 }
 
 .user-profile-container {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto 40px auto;
   display: grid;
   grid-template-columns: 300px 1fr;
