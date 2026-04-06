@@ -35,3 +35,13 @@ export async function deleteRestaurant(id) {
     const response = await AxiosConfig.delete(`${RESOURCE}/${id}`);
     return response.data;
 }
+
+export async function fetchDaysOfTheWeek() {
+    const response = await AxiosConfig.get(`${RESOURCE}/days-of-the-week`);
+    return response.data;
+}
+
+export async function createRestaurant(restaurant) {
+    const response = await AxiosConfig.post(`${RESOURCE}`, restaurant);
+    return response.data;
+}

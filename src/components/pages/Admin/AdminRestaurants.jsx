@@ -1,32 +1,75 @@
 import React, { useEffect, useState } from "react";
-import { deleteRestaurant, fetchAllRestaurants } from "../../../services/RestaurantService";
+import { deleteRestaurant, fetchAllRestaurants, fetchDaysOfTheWeek } from "../../../services/RestaurantService";
 import "../../../styles/adminRestaurantsPage.scss";
 import ConfirmationPopup from "../Popups/ConfirmationPopup";
+import { fetchAllRestaurantOwners } from "../../../services/RestaurantOwnerService";
+import AddRestaurantForm from "../../forms/admin/AdminAddRestaurantForm";
+import { useNavigate } from "react-router-dom";
 
 const AdminRestaurants = () => {
     const [restaurants, setRestaurants] = useState([]);
-    const [openModal, setOpenModal] = useState(false);
-    const [restaurantId, setRestaurantId] = useState(null);
-
+    const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
+    const [restaurantId, setRestaurantId] = useState('');
+    const [daysOfTheWeek, setDaysOfTheWeek] = useState([]);
+    const [restaurantOwners, setRestaurantOwners] = useState([]);
+    const [editnigRestaurantId, setEditingRestaurantId] = useState('');
+    const [openRestaurantModal, setOpenRestaurantModal] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const restaurantsFromDb = await fetchAllRestaurants();
-                setRestaurants(restaurantsFromDb);
-            } catch (error) {
-                console.error("Error fetching restaurants:", error);
-            }
-        };
-        fetchData();
+        fetchRestaurantFromDb();
+        fetchDaysOfTheWeekFromDb();
+        fetchRestaurantOwnersFromDb();
     }, []);
 
-    const handleEditRestaurant = () => {
+    useEffect(()=>{
+
+    },[restaurants])
+
+    const fetchRestaurantFromDb = async () => {
+        try {
+            const restaurantsFromDb = await fetchAllRestaurants();
+            setRestaurants(restaurantsFromDb);
+            console.log(`Restorani:`, restaurantsFromDb);
+        } catch (error) {
+            console.error("Error fetching restaurants:", error);
+        }
+    }
+
+    const fetchDaysOfTheWeekFromDb = async () => {
+        try {
+            const daysOfTheWeekFromDb = await fetchDaysOfTheWeek();
+            setDaysOfTheWeek(daysOfTheWeekFromDb);
+            console.log("Dani nedelje:", daysOfTheWeekFromDb)
+        } catch (error) {
+            console.error("Error fetching days of the week:", error);
+        }
+    }
+
+    const fetchRestaurantOwnersFromDb = async () => {
+        try {
+            const restaurantOwnersFromDb = await fetchAllRestaurantOwners();
+            setRestaurantOwners(restaurantOwnersFromDb);
+            console.log(`Vlasnici restorana:`, restaurantOwnersFromDb);
+        } catch (error) {
+            console.error("Error fetching restaurant owners:", error);
+        }
+    }
+
+    const handleAddRestaurant = () => {
+        setOpenRestaurantModal(true);
+    }
+
+    const addNewRestaurant = (restaurant)=>{
+        setRestaurants((prev)=>[...prev, restaurant])
+    }
+
+    const handleEditRestaurant = (id) => {
 
     }
 
     const handleDeleteRestaurant = (id) => {
-        setOpenModal(true);
+        setOpenConfirmationModal(true);
         setRestaurantId(id);
     }
 
@@ -34,7 +77,8 @@ const AdminRestaurants = () => {
         try {
             await deleteRestaurant(restaurantId);
             setRestaurantId(null);
-            setOpenModal(false);
+            fetchRestaurantFromDb();
+            setOpenConfirmationModal(false);
         } catch (error) {
             console.error("greska:", error)
         }
@@ -45,6 +89,7 @@ const AdminRestaurants = () => {
             <h1>Restaurants</h1>
             <div
                 className="admin-restaurant-add-button positive-action"
+                onClick={handleAddRestaurant}
             >
                 Add Restaurant
             </div>
@@ -57,6 +102,7 @@ const AdminRestaurants = () => {
                             <th>City</th>
                             <th>Capacity</th>
                             <th>Average Rating</th>
+                            <th>Status</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -70,10 +116,11 @@ const AdminRestaurants = () => {
                                     <td>{restaurant.city}</td>
                                     <td>{restaurant.capacity}</td>
                                     <td>{restaurant.averageRating}</td>
+                                    <td>{restaurant.isCreated? "Published":"Pending"}</td>
                                     <td>
                                         <button
                                             className="admin-restaurant-edit-button positive-action"
-                                            onClick={handleEditRestaurant}
+                                            onClick={() => handleEditRestaurant(restaurant.id)}
                                         >
                                             Edit
                                         </button>
@@ -90,12 +137,21 @@ const AdminRestaurants = () => {
                             ))}
                     </tbody>
                 </table>
-                {openModal &&
+                {openConfirmationModal &&
                     <ConfirmationPopup
                         message={"Are you sure you want delete restaurant?"}
                         onYes={deleteRestaurantAction}
-                        onNo={() => setOpenModal(false)}
+                        onNo={() => setOpenConfirmationModal(false)}
                     />
+                }
+                {openRestaurantModal &&
+                    <AddRestaurantForm
+                        days={daysOfTheWeek}
+                        restaurantOwners={restaurantOwners}
+                        onClose={setOpenRestaurantModal}
+                        addRestaurant={addNewRestaurant}
+                    />
+
                 }
             </div>
         </div>

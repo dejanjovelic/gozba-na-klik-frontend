@@ -33,6 +33,7 @@ import { setOnUnauthorized } from "./config/axiosConfig";
 import Spinner from "./components/sharedComponents/Spinner";
 import UserProfilePage from "./components/pages/UserProfilePage";
 import CustomerCreditCardsPage from "./components/pages/Customer/CustomerCreditCardsPage";
+import AdminAddRestaurantForm from "./components/forms/admin/AdminAddRestaurantForm";
 
 const App = () => {
   const [user, setUser] = useState(null);

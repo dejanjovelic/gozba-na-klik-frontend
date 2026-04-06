@@ -24,7 +24,7 @@
         padding: 8px 0;
     }
 
-    thead tr th:nth-child(-n+5) {
+    thead tr th:nth-child(-n+6) {
         position: relative;
 
         &::after {
@@ -47,17 +47,17 @@
     tbody {
         tr {
 
-            td:nth-child(-n+5) {
+            td:nth-child(-n+6) {
                 width: 180px;
             }
 
-            th:nth-child(-n+5),
-            td:nth-child(-n+5) {
+            th:nth-child(-n+6),
+            td:nth-child(-n+6) {
                 position: relative;
             }
 
-            th:nth-child(5)::after,
-            td:nth-child(5)::after {
+            th:nth-child(6)::after,
+            td:nth-child(6)::after {
                 content: "";
                 position: absolute;
                 bottom: 0;
@@ -75,17 +75,83 @@
 
             td:nth-last-child(-n+2),
             th:nth-last-child(-n+2) {
-                 text-align: center;
+                text-align: center;
                 width: 120px;
             }
         }
     }
 }
 
-    .adimn-restaurants-page-table-wrapper {
-        background-color: whitesmoke;
-        border-radius: 15px;
-        padding: 10px;
-        // border: 1px solid gray;
-        box-shadow: 0 0 10px #0000001a;
+.adimn-restaurants-page-table-wrapper {
+    background-color: whitesmoke;
+    border-radius: 15px;
+    padding: 10px;
+    // border: 1px solid gray;
+    box-shadow: 0 0 10px #0000001a;
+}
+
+.add-restaurant-page-container {
+    display: flex;
+    position: relative;
+
+    .add-restaurant-page-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        flex: 1;
+        z-index: 1;
+
+        .add-restaurant-page-from {
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid black;
+
+            .add-restaurant-page-header {
+                text-align: center;
+                margin: 0 0 10px 0;
+            }
+
+            input[name],
+            #restaurantOwnerId,
+            #restaurantOwnerOption {
+                padding: 5px;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                font-size: 18px;
+                min-width: 300px;
+                margin: 0 0 0 0;
+                color: #333;
+            }
+
+            #restaurantOwnerOption:hover {
+                background-color: lightgray;
+            }
+
+            .add-restaurant-page-label {
+                font-size: 18px;
+                font-weight: bolder;
+                color: #333;
+            }
+
+            .add-restaurant-page-add-button-wrapper {
+                display: flex;
+                justify-content: center;
+                margin-top: 5px;
+            }
+
+            .error-message {
+                color: red;
+                font-size: 14px;
+                margin-top: 2px;
+                min-height: 14px;
+            }
+        }
     }
+}
