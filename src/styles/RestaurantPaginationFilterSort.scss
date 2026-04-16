@@ -1,22 +1,17 @@
 @use "./variables" as *;
 
 .restaurants-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-top: 20px;
 }
 
 .restaurant-card {
     border-radius: 10px;
-    width: 25%;
-    min-height: 14.0rem; // mozda na 19.5 da bi velicina kartica bila ista kao sa slikom?
     margin: 10px;
-    max-height: 18.5rem;
-    max-width: 500px;
+    max-width: 88%;
     padding: 10px;
-    min-width: 290px;
+    min-width: 310px;
     box-shadow: 0 0 10px #0000001a;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     cursor: pointer;
@@ -45,10 +40,7 @@
     height: 200px;
 }
 
-.restaurantData-capacity {
-    text-align: center;
-    vertical-align: middle;
-}
+
 
 .restaurant-name {
     margin: 10px;
@@ -64,7 +56,14 @@
 
     .restaurantData-section-rightSide {
         flex: 1;
-        min-width: 23%;
+        min-width: 25%;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .restaurantData-capacity {
+        text-align: right;
+        vertical-align: middle;
     }
 }
 
@@ -102,8 +101,8 @@
     }
 }
 
-.MuiFormControl-root.css-1nincqe-MuiFormControl-root{
-background-color: white ;
+.MuiFormControl-root.css-1nincqe-MuiFormControl-root {
+    background-color: white;
 }
 
 .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-outlined.MuiFormLabel-colorPrimary.Mui-focused.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-outlined.css-113d811-MuiFormLabel-root-MuiInputLabel-root {
@@ -131,17 +130,10 @@ background-color: white ;
 
     .restaurant-card {
         border-radius: 10px;
-        width: 20%;
         min-height: 9.0rem;
         margin: 10px;
-        max-height: 11.0rem;
-        max-width: 350px;
+        max-width: 86%;
         padding-bottom: 18px;
-    }
-
-    #restaurant-img {
-        width: 100%;
-        height: 130px;
     }
 
     .restaurants-title {
@@ -162,4 +154,43 @@ background-color: white ;
         width: 80%;
     }
 
+}
+
+@media (max-width: 1340px) {
+    .sortAndFilter-container {
+        flex-direction: column;
+
+        .sort-container {
+            margin-bottom: 20px;
+        }
+    }
+
+    .restaurants-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    .restaurants-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .restaurant-card {
+        max-width: 88%;
+        min-height: 290px;
+    }
+}
+
+@media (max-width: 764px) {
+
+    .restaurants-container {
+        grid-template-columns: 1fr;
+    }
+
+    .restaurant-card {
+        max-width: 75%;
+    }
 }

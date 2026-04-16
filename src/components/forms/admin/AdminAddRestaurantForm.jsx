@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { createRestaurant } from "../../../services/RestaurantService";
-import { stopEvent } from "pdfjs-dist";
+import RestaurantBasicFields from "./RestaurantBasicFeilds";
 
-const AddRestaurantForm = ({ restaurantOwners, onClose, addRestaurant }) => {
+const AddRestaurantForm = ({ restaurantOwners, setOpenAddRestaurantModal, addRestaurant }) => {
     const {
         register,
         handleSubmit,
@@ -16,7 +16,7 @@ const AddRestaurantForm = ({ restaurantOwners, onClose, addRestaurant }) => {
         try {
             const newRestaurantInDb = await createRestaurant(restaurant);
             console.log(`Novokreirani restoran`, restaurant);
-            onClose(false);
+            setOpenAddRestaurantModal(false);
             addRestaurant(newRestaurantInDb);
         } catch (error) {
             console.log(`Error:`, error);
@@ -27,11 +27,11 @@ const AddRestaurantForm = ({ restaurantOwners, onClose, addRestaurant }) => {
         <div className="add-restaurant-page-container">
             <div
                 className="add-restaurant-page-wrapper"
-            onClick={() => onClose(false)}
+                onClick={() => setOpenAddRestaurantModal(false)}
             >
 
                 <form
-                    className="add-restaurant-page-from"
+                    className="add-restaurant-page-form"
                     onSubmit={handleSubmit(onSubmit)}
                     onClick={(e) => e.stopPropagation()}
                 >
@@ -42,43 +42,12 @@ const AddRestaurantForm = ({ restaurantOwners, onClose, addRestaurant }) => {
                             New Restaurant
                         </h2>
                     </div>
-
-                    <label
-                        className="add-restaurant-page-label"
-                        htmlFor="name"
-                    >
-                        Restaurant name:
-                    </label>
-                    <input
-                        type="text"
-                        id="name"
-                        placeholder="restaurant name"
-                        {...register("name", { required: "Name is reqired" })}
-                    />
-                    <div className="error-message">{errors ? (errors?.name?.message) : " "}</div>
-
-                    <label
-                        className="add-restaurant-page-label"
-                        htmlFor="restaurantOwnerId"
-                    >
-                        Choose restaurant owner:
-                    </label>
-                    <select
-                        name="restaurantOwnerId"
-                        id="restaurantOwnerId"
-                        {...register("restaurantOwnerId", { required: "restaurant owner is required." })}
-                    >
-                        {restaurantOwners.map(owner => (
-                            <option
-                                key={owner.id}
-                                value={owner.id}
-                                className="restaurantOwnerOption"
-                            >
-                                {owner.name} {owner.surname}
-                            </option>
-                        ))}
-                    </select>
-                    <div className="error-message">{errors?.restaurantOwnerId?.message}</div>
+                    
+                <RestaurantBasicFields 
+                register={register} 
+                errors={errors}
+                restaurantOwners={restaurantOwners}
+                />
                     <div className="add-restaurant-page-add-button-wrapper">
                         <button
                             type="submit"

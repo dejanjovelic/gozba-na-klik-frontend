@@ -5,6 +5,7 @@ import ConfirmationPopup from "../Popups/ConfirmationPopup";
 import { fetchAllRestaurantOwners } from "../../../services/RestaurantOwnerService";
 import AddRestaurantForm from "../../forms/admin/AdminAddRestaurantForm";
 import { useNavigate } from "react-router-dom";
+import AdminEditRestaurantForm from "../../forms/admin/AdminEditResturantForm";
 
 const AdminRestaurants = () => {
     const [restaurants, setRestaurants] = useState([]);
@@ -13,7 +14,8 @@ const AdminRestaurants = () => {
     const [daysOfTheWeek, setDaysOfTheWeek] = useState([]);
     const [restaurantOwners, setRestaurantOwners] = useState([]);
     const [editnigRestaurantId, setEditingRestaurantId] = useState('');
-    const [openRestaurantModal, setOpenRestaurantModal] = useState(false);
+    const [openAddRestaurantModal, setOpenAddRestaurantModal] = useState(false);
+    const [openEditRestaurantModal, setOpenEditRestaurantModal] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,9 +24,9 @@ const AdminRestaurants = () => {
         fetchRestaurantOwnersFromDb();
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
 
-    },[restaurants])
+    }, [restaurants])
 
     const fetchRestaurantFromDb = async () => {
         try {
@@ -57,15 +59,21 @@ const AdminRestaurants = () => {
     }
 
     const handleAddRestaurant = () => {
-        setOpenRestaurantModal(true);
+        setOpenAddRestaurantModal(true);
     }
 
-    const addNewRestaurant = (restaurant)=>{
-        setRestaurants((prev)=>[...prev, restaurant])
+    const addNewRestaurant = (restaurant) => {
+        setRestaurants((prev) => [...prev, restaurant])
+    }
+    const updateExistingRestaurant = (restaurant)=>{
+        setRestaurants(
+            restaurants.map((prev)=> prev.id === restaurant.id? restaurant : prev)
+        )
     }
 
     const handleEditRestaurant = (id) => {
-
+        setEditingRestaurantId(id);
+        setOpenEditRestaurantModal(true);
     }
 
     const handleDeleteRestaurant = (id) => {
@@ -88,10 +96,14 @@ const AdminRestaurants = () => {
         <div className="admin-restaurant-page-container">
             <h1>Restaurants</h1>
             <div
+                className="admin-restaurant-add-button-wrapper"
+            >
+                <button
                 className="admin-restaurant-add-button positive-action"
                 onClick={handleAddRestaurant}
-            >
-                Add Restaurant
+                >
+                    Add Restaurant
+                    </button>
             </div>
             <div className="adimn-restaurants-page-table-wrapper">
                 <table className="admin-restaurants-table">
@@ -116,7 +128,11 @@ const AdminRestaurants = () => {
                                     <td>{restaurant.city}</td>
                                     <td>{restaurant.capacity}</td>
                                     <td>{restaurant.averageRating}</td>
-                                    <td>{restaurant.isCreated? "Published":"Pending"}</td>
+                                    <td 
+                                    className={`admin-restaurant-page-restaurant-status-${restaurant.isCreated ? "published" : "pending"}`}
+                                    >
+                                        {restaurant.isCreated ? "Published" : "Pending"}
+                                        </td>
                                     <td>
                                         <button
                                             className="admin-restaurant-edit-button positive-action"
@@ -144,15 +160,25 @@ const AdminRestaurants = () => {
                         onNo={() => setOpenConfirmationModal(false)}
                     />
                 }
-                {openRestaurantModal &&
+
+                {openAddRestaurantModal &&
                     <AddRestaurantForm
                         days={daysOfTheWeek}
                         restaurantOwners={restaurantOwners}
-                        onClose={setOpenRestaurantModal}
+                        setOpenAddRestaurantModal={setOpenAddRestaurantModal}
                         addRestaurant={addNewRestaurant}
                     />
-
                 }
+
+                {openEditRestaurantModal &&
+                    <AdminEditRestaurantForm
+                        restaurantId={editnigRestaurantId}
+                        setOpenEditRestaurantModal={setOpenEditRestaurantModal}
+                        restaurantOwners={restaurantOwners}
+                        setUpdatedRestaurant={updateExistingRestaurant}
+                    />
+                }
+
             </div>
         </div>
     );

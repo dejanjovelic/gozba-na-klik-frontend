@@ -1,5 +1,6 @@
 import React from "react";
 import AxiosConfig from "../config/axiosConfig";
+import axios from "axios";
 
 const RESOURCE = "api/restaurants"
 
@@ -43,5 +44,15 @@ export async function fetchDaysOfTheWeek() {
 
 export async function createRestaurant(restaurant) {
     const response = await AxiosConfig.post(`${RESOURCE}`, restaurant);
+    return response.data;
+}
+
+export async function fetchRestaurantBasicData(restaurantId) {
+    const response = await AxiosConfig.get(`${RESOURCE}/${restaurantId}/basic-data`);
+    return response.data;
+}
+
+export async function updateRestaurant(restaurantId, restaurantData) {
+    const response = await AxiosConfig.put(`${RESOURCE}/${restaurantId}`, restaurantData);
     return response.data;
 }
