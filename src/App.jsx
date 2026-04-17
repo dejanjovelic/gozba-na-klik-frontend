@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./components/pages/Header";
-import Footer from "./components/pages/Footer";
 import UsersHomePage from "./components/pages/UsersHomePage";
 import CustomerRegisterForm from "./components/forms/register/CustomerRegisterForm";
 import CustomerHomePage from "./components/pages/Customer/CustomerHomePage";
@@ -56,7 +55,7 @@ const App = () => {
 
     setOnUnauthorized(() => {
       setUser(null);
-      navigate("/login");
+      navigate("/");
     });
 
   }, [navigate]);

@@ -7,7 +7,6 @@ $color-text: white;
   background-image: url("https://res.cloudinary.com/dsgans7nh/image/upload/v1764622760/Background_bv3fos.jpg");
   background-position: center;
   background-size: cover;
-  overflow: hidden;
   height: 100%;
   width: 100%;
   display: flex;
@@ -150,4 +149,32 @@ $color-text: white;
   cursor: pointer;
   margin-top: -58px;
   margin-left: 16%;
+}
+@media (max-width: 950px) {
+  .Container {
+    .registration {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      padding-bottom: 30px;
+      position: relative;
+
+      #title {
+        position: static;
+        margin-bottom: 10px;
+      }
+
+      .imgContainer {
+        display: none;
+
+        img {
+          max-width: 400px;
+          max-height: 350px;
+          object-fit: contain;
+          margin: 0;
+        }
+      }
+    }
+  }
 }
