@@ -20,7 +20,6 @@ $color-text: white;
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  height: 500px;
   background: rgba(255, 255, 255, 0.377);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -151,4 +150,43 @@ $color-text: white;
   border: none;
   text-decoration: underline;
   font-size: 16px;
+}
+
+// 🎨 Colors
+$color-brown: #5d402b;
+$color-cream: #f5e4cb;
+$color-orange: #ea9332;
+$color-text: white;
+
+@media (max-width: 950px) {
+  .LoginContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    padding-bottom: 30px;
+
+    .imgContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        max-width: 400px;
+        max-height: 350px;
+        object-fit: contain;
+      }
+    }
+
+    #LoginFormContainer {
+      width: 100%;
+      padding: 0;
+
+      #LoginForm {
+        width: 100%;
+        max-width: 320px;
+      }
+    }
+  }
 }
