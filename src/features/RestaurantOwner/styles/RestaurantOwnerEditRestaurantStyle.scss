@@ -1,0 +1,324 @@
+@use "sass:color";
+@use "../../../styles//variables" as *;
+
+.restaurant-owner-edit-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .restaurant-owner-edit-restaurant-image-section-wrapper,
+    .restaurant-owner-edit-restaurant-image-section-wrapper-no-image {
+        display: flex;
+        position: relative;
+        width: 1400px;
+        height: 600px;
+        border-radius: 20px;
+        background-color: #fdfdfd;
+        box-shadow: 0 0 10px #0000001a;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+
+        .restaurant-owner-edit-restaurant-image {
+            border-radius: 20px;
+            width: 100%;
+        }
+    }
+
+    .restaurant-owner-edit-restaurant-image-section-wrapper-no-image {
+        position: relative;
+
+        .restaurant-owner-edit-restaurant-image-input {
+            display: none;
+        }
+
+        .image-upload-label {
+            position: absolute;
+            top: 90%;
+            left: 1%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+
+            .lucide.lucide-image-up {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    .restaurant-owner-edit-page-restaurant-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .restaurant-owner-edit-page-restaurant-basic-data-form {
+        display: flex;
+        flex-direction: column;
+
+        input {
+            padding: 7px;
+            font-size: 16px;
+            border-color: lightgray;
+            outline-color: color.adjust(lightgray, $lightness: -10%)
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea {
+            padding: 7px;
+            resize: none;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border-color: lightgray;
+            outline-color: color.adjust(lightgray, $lightness: -10%)
+        }
+
+    }
+
+    .restaurant-owner-edit-page-working-hours-form {
+        .input-wrapper {
+            margin-bottom: 15px;
+        }
+
+        P {
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        input {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 16px;
+            padding: 3px;
+            border-radius: 10px;
+            outline-color: $color-orange;
+
+            &::-webkit-datetime-edit {
+                font-size: 18px;
+            }
+
+            &.error-border {
+                outline-color: red;
+                border-color: red;
+            }
+
+        }
+
+
+        label {
+            margin-right: 20px;
+            font-style: italic;
+
+        }
+
+        label[for="endingTime"] {
+            margin-left: 150px;
+
+        }
+
+        .form-error-message {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #d97706;
+            font-size: 14px;
+            margin-top: 4px;
+            animation: fadeIn 0.3s ease-in;
+            min-height: 18px;
+
+            svg {
+                flex-shrink: 0;
+            }
+        }
+    }
+
+    .restaurant-owner-edit-page-data-section-wrapper {
+        width: 1050px;
+    }
+}
+
+.restaurant-owner-edit-restaurant-non-working-dates-section-wrapper,
+.resturant-owner-edit-page-restaurant-working-hours-section-wrapper,
+.restaurant-owner-edit-page-restaurant-basic-data-section-wrapper {
+    margin: 20px 0;
+
+}
+
+.restaurant-owner-edit-page-basic-data-container,
+.restaurant-owner-edit-page-working-hours-container,
+.restaurant-owner-edit-restaurant-non-working-dates-container {
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0000001a;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.restaurant-owner-edit-page-restaurant-basic-data-form,
+.restaurant-owner-edit-page-working-hours-form {
+    margin: 20px;
+}
+
+.restaurant-owner-edit-restaurant-non-working-dates-container {
+    padding: 20px;
+}
+
+.restaurant-owner-edit-restaurant-non-working-dates-title {
+    margin: 10px 0;
+}
+
+
+.restaurant-owner-edit-page-basic-data-container-title,
+.restaurant-owner-edit-page-working-hours-container-title,
+.restaurant-owner-edit-restaurant-non-working-dates-title {
+    font-weight: bold;
+    font-size: 20px;
+    color: #1e1e1e;
+}
+
+.restaurant-owner-edit-restaurant-non-working-dates-container {
+    .restaurant-owner-edit-restaurant-non-working-date-wrapper {
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        margin: 0 0 15px 0;
+        position: relative;
+
+        .restaurant-owner-edit-restaurant-non-working-dates-input-form-section,
+        .restaurant-owner-edit-restaurant-non-working-dates-section {
+
+            padding: 15px;
+            box-shadow: 0 0 10px #0000001a;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        .restaurant-owner-edit-restaurant-non-working-dates-input-form-section {
+            width: 40%;
+        }
+
+        .restaurant-owner-edit-restaurant-non-working-dates-section {
+            width: 60%;
+        }
+
+        .restaurant-owner-edit-restaurant-non-working-dates-section,
+        .restaurant-owner-edit-restaurant-non-working-dates-input-form-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            #date {
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+                font-size: 16px;
+            }
+
+            label {
+                margin-right: 20px;
+                font-style: italic;
+            }
+
+            .restaurant-owner-edit-restaurant-non-working-dates-form {
+                animation: fadeIn 0.3s ease-in;
+            }
+
+            .form-error-message {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: #d97706;
+                font-size: 14px;
+                margin-top: 4px;
+                animation: fadeIn 0.3s ease-in;
+                min-height: 18px;
+
+                svg {
+                    flex-shrink: 0;
+                }
+            }
+
+            .restaurant-owner-restaurant-page-add-restaurant-button-wrapper {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 5px;
+            }
+        }
+
+        .restaurant-owner-edit-page-restaurant-non-working-date-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .non-working-date-number-element,
+        .non-working-date-date-element {
+            margin-left: 30px;
+        }
+
+        .non-working-date-delete-button {
+            margin-left: 150px;
+        }
+
+        .non-working-date-number-element,
+        .non-working-date-date-element {
+            font-style: italic;
+        }
+
+
+        .add-new-non-working-date {
+            background-color: $color-orange;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .restaurant-owner-edit-page-non-working-date-selected-dates-container {
+            text-align: left;
+            width: 100%;
+        }
+    }
+}
+
+.restaurant-owner-edit-page-publish-buttton:disabled,
+.non-working-date-save-button:disabled,
+.restaurant-owner-edit-page-working-hours-save-button:disabled,
+.restaurant-owner-edit-page-basic-data-save-button:disabled {
+    background-color: gray;
+    border: 1px solid grey;
+
+    &:hover {
+        background-color: gray;
+        border: 1px solid grey;
+    }
+}
+
+.restaurant-owner-edit-page-publish-buttton {
+    width: 150px;
+    margin-left: 20px;
+}
+
+.restaurant-owner-edit-page-working-hours-day-of-the-week-row {
+    display: flex;
+
+    .restaurant-owner-edit-page-working-hours-day-of-the-week-row-input-section.hidden {
+        visibility: hidden;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,162 @@
+import React, { useEffect, useState } from "react";
+import { fetchRestaurantBasicData, updateRestaurant } from "../../../Restaurant/services/RestaurantService.js";
+import RestaurantBasicFields from "../sharedComponents/RestaurantBasicFeilds";
+import { useForm } from "react-hook-form";
+
+const AdminEditRestaurantForm = ({ restaurantId, restaurantOwners, setOpenEditRestaurantModal, setUpdatedRestaurant }) => {
+    const [restaurant, setRestaurant] = useState(null);
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+        reset
+    } = useForm({
+        defaultValues: {
+            address: "",
+            capacity: "",
+            city: "",
+            description: "",
+            id: "",
+            isCreated: true,
+            name: "",
+            restaurantImageUrl: "",
+            restaurantOwnerId: "",
+        }
+    })
+
+    useEffect(() => {
+        getRestaurantBasicDataFromDb();
+    }, [restaurantId])
+
+    useEffect(() => {
+        if (restaurant) {
+            reset({
+                address: restaurant?.address ? restaurant.address : "",
+                capacity: restaurant?.capacity ? restaurant.capacity : "",
+                city: restaurant?.city ? restaurant.city : "",
+                description: restaurant?.description ? restaurant.description : "",
+                id: restaurant?.id || "",
+                isCreated: restaurant?.isCreated || true,
+                name: restaurant?.name || "",
+                restaurantImageUrl: restaurant?.restaurantImageUrl ? restaurant.restaurantImageUrl : "",
+                restaurantOwnerId: restaurant?.restaurantOwnerId || ""
+            })
+        }
+    }, [reset, restaurant])
+
+    const getRestaurantBasicDataFromDb = async () => {
+        try {
+            const restaurantBasicDatafromDb = await fetchRestaurantBasicData(restaurantId);
+            setRestaurant(restaurantBasicDatafromDb);
+            console.log(`Restaurant data from edit restaurant page:`, restaurantBasicDatafromDb)
+        } catch (error) {
+            console.error(`Error: `, error)
+        }
+    }
+
+    const onSubmit = async (data) => {
+        try {
+            console.log(`podaci za slanje iz edit forme:`, data)
+            const updatedRestaurantFromDb = await updateRestaurant(restaurantId, data);
+            console.log(`Azuriran restoran: `, updatedRestaurantFromDb)
+            setUpdatedRestaurant(updatedRestaurantFromDb);
+            setOpenEditRestaurantModal(false);
+        } catch (error) {
+            console.error(`Greska pri azuriranju restorana:`, error);
+        }
+    }
+
+    const handleClose = () => {
+        setOpenEditRestaurantModal(false);
+        setRestaurant(null);
+    }
+    console.log(`Vlasnici restorana: iz edit forme`, restaurantOwners)
+    return (
+        (<div className="edit-restaurant-page-container" >
+            {restaurant ?
+                <div
+                    className="edit-restaurant-page-wrapper"
+                    onClick={handleClose}
+                >
+                    <form
+                        className="edit-restaurant-page-form"
+                        onSubmit={handleSubmit(onSubmit)}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <RestaurantBasicFields
+                            register={register}
+                            errors={errors}
+                            restaurantOwners={restaurantOwners}
+                        />
+                        <label
+                            htmlFor="address"
+                            className="edit-restaurant-page-label"
+                        >
+                            Address
+                        </label>
+                        <input
+                            id="address"
+                            type="text"
+                            {...register("address", { required: "Address is required." })}
+                        />
+                        <div className="error-message">{errors ? errors.address?.message : ""}</div>
+
+                        <label
+                            htmlFor="capacity"
+                            className="edit-restaurant-page-label"
+                        >
+                            Capacity
+                        </label>
+                        <input
+                            id="capacity"
+                            type="number"
+                            {...register("capacity", { required: "Capacity is required." })}
+                        />
+                        <div className="error-message">{errors ? errors.capacity?.message : ""}</div>
+
+                        <label
+                            htmlFor="city"
+                            className="edit-restaurant-page-label"
+                        >
+                            City
+                        </label>
+                        <input
+                            id="city"
+                            type="text"
+                            {...register("city", { required: "City is required." })}
+                        />
+                        <div className="error-message">{errors ? errors.city?.message : ""}</div>
+
+                        <label
+                            htmlFor="decription"
+                            className="edit-restaurant-page-label"
+                        >
+                            Description
+                        </label>
+                        <textarea
+                            id="description"
+                            type="text"
+                            rows={4}
+                            cols={40}
+                            {...register("description", { required: "Description is required." })}
+                        />
+                        <div className="error-message">{errors ? errors.description?.message : ""}</div>
+
+                        <div className="edit-restaurant-page-button-wrapper">
+                            <button
+                                type="submit"
+                                className="edit-restaurant-save-button positive-action"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                :
+                (<></>)
+            }
+        </div >)
+    );
+
+};
+export default AdminEditRestaurantForm;

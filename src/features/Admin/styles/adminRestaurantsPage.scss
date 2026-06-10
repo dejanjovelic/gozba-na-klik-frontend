@@ -1,0 +1,236 @@
+@use "../../../styles/variables" as *;
+@use"sass:color";
+
+.admin-restaurant-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .admin-restaurant-add-button {
+        width: 8%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 180px;
+        min-height: 50px;
+        margin-bottom: 15px;
+        padding: 15px;
+    }
+}
+
+
+.admin-restaurants-table {
+    border-collapse: collapse;
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px 0;
+    }
+
+    thead tr th:nth-child(-n+6) {
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right,
+                    transparent 0%,
+                    rgba(200, 200, 200, 0.4) 5%,
+                    rgba(200, 200, 200, 1) 50%,
+                    rgba(200, 200, 200, 0.4) 95%,
+                    transparent 100%);
+        }
+    }
+
+    thead,
+    tbody {
+        tr {
+
+            th:nth-child(-n+6),
+            td:nth-child(-n+6) {
+                position: relative;
+                width: 180px;
+            }
+
+            th:nth-child(6)::after,
+            td:nth-child(6)::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: -505%;
+                width: 548%;
+                height: 1px;
+
+                background: linear-gradient(to right,
+                        transparent 0%,
+                        rgba(200, 200, 200, 0.4) 5%,
+                        rgba(200, 200, 200, 1) 50%,
+                        rgba(200, 200, 200, 0.4) 95%,
+                        transparent 100%);
+            }
+
+            td:nth-last-child(-n+2),
+            th:nth-last-child(-n+2) {
+                text-align: center;
+                width: 120px;
+            }
+
+            .admin-restaurant-page-restaurant-status-pending {
+                color: $color-red;
+                font-weight: bold;
+            }
+
+            .admin-restaurant-page-restaurant-status-published {
+                color: color.adjust(green, $lightness: 8%);
+                font-weight: bold;
+            }
+
+        }
+    }
+}
+
+
+
+.adimn-restaurants-page-table-wrapper {
+    background-color: whitesmoke;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 0 10px #0000001a;
+}
+
+
+@mixin button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+@mixin error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 2px;
+    min-height: 14px;
+}
+
+@mixin restaurant-modal-form-input-fields-style {
+    padding: 5px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 18px;
+    min-width: 300px;
+    color: #333;
+}
+
+@mixin restaurant-modal-form-label-style {
+    font-size: 18px;
+    font-weight: bolder;
+    color: #333;
+}
+
+@mixin add-edit-restaurant-page-form-style {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+@mixin admin-add-edit-restaurant-page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+
+// ADD NEW RESTAURANT MODAL STYLE
+.add-restaurant-page-container {
+    position: relative;
+
+    .add-restaurant-page-wrapper {
+        @include admin-add-edit-restaurant-page-wrapper();
+    }
+
+    .add-restaurant-page-form {
+        @include add-edit-restaurant-page-form-style();
+
+        .add-restaurant-page-header {
+            text-align: center;
+            margin: 0 0 10px 0;
+        }
+
+        input[name],
+        #restaurantOwnerId,
+        #restaurantOwnerOption {
+            @include restaurant-modal-form-input-fields-style();
+        }
+
+        #restaurantOwnerOption:hover {
+            background-color: lightgray;
+        }
+
+        .add-restaurant-page-label {
+            @include restaurant-modal-form-label-style();
+        }
+
+        .add-restaurant-page-add-button-wrapper {
+            @include button-wrapper();
+        }
+
+        .error-message {
+            @include error-message();
+        }
+    }
+
+}
+
+// EDIT RESTAURANT MODAL STYLE
+.edit-restaurant-page-container {
+    position: relative;
+
+    .edit-restaurant-page-wrapper {
+        @include admin-add-edit-restaurant-page-wrapper();
+    }
+
+    .edit-restaurant-page-form {
+        @include add-edit-restaurant-page-form-style();
+
+        input[address],
+        input[name],
+        #description,
+        #restaurantOwnerId,
+        #restaurantOwnerOption #restaurantOwnerId,
+        #restaurantOwnerOption {
+            @include restaurant-modal-form-input-fields-style();
+            min-width: 400px;
+        }
+
+        .edit-restaurant-page-label,
+        .add-edit-restaurant-page-label {
+            @include restaurant-modal-form-label-style();
+        }
+
+        .edit-restaurant-page-button-wrapper {
+            @include button-wrapper();
+        }
+
+        .error-message {
+            @include error-message();
+        }
+
+        #description {
+            resize: none;
+        }
+
+    }
+}

@@ -1,0 +1,196 @@
+@use "../../../styles/variables" as *;
+
+.restaurants-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 20px;
+}
+
+.restaurant-card {
+    border-radius: 10px;
+    margin: 10px;
+    max-width: 88%;
+    padding: 10px;
+    min-width: 310px;
+    box-shadow: 0 0 10px #0000001a;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .img-section {
+        height: 70%;
+
+        img {
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+    }
+}
+
+.restaurants-title {
+    margin: 15px;
+}
+
+#restaurant-img {
+    width: 100%;
+    height: 200px;
+}
+
+
+
+.restaurant-name {
+    margin: 10px;
+}
+
+.restaurantData-section {
+    display: flex;
+
+    .restaurantData-section-leftSide {
+        flex: 1 1;
+        min-width: 67%;
+    }
+
+    .restaurantData-section-rightSide {
+        flex: 1;
+        min-width: 25%;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .restaurantData-capacity {
+        text-align: right;
+        vertical-align: middle;
+    }
+}
+
+//CONTAINER FILTERA
+.MuiBox-root.css-0 {
+    width: 50%;
+    margin-right: 30px;
+}
+
+.sortAndFilter-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.RestaurantPaginationFilterSort-pageContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 15px;
+}
+
+.RestaurantPaginationFilterSort-main {
+    flex: 1;
+}
+
+.MuiBox-root.css-inv2e3 {
+    margin-top: 10px;
+}
+
+.MuiBox-root.css-0 {
+    width: 600px;
+
+    .MuiGrid-root.MuiGrid-container.MuiGrid-direction-xs-row.MuiGrid-spacing-xs-2.css-zjhuaj-MuiGrid-root {
+        width: 600px;
+    }
+}
+
+.MuiFormControl-root.css-1nincqe-MuiFormControl-root {
+    background-color: white;
+}
+
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-outlined.MuiFormLabel-colorPrimary.Mui-focused.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-outlined.css-113d811-MuiFormLabel-root-MuiInputLabel-root {
+    color: gray;
+    z-index: 1;
+    background-color: white;
+}
+
+.css-sc8y68-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: grey;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.css-1blvszr-MuiButtonBase-root-MuiButton-root {
+    background-color: $color-orange;
+    color: $color-text;
+    font-weight: bold;
+    border: 0.5px solid $color-orange;
+    outline: 0.5px solid $color-orange;
+}
+
+@media (max-width: 2000px) {
+    .RestaurantPaginationFilterSort-pageContainer {
+        padding: 7px;
+    }
+
+    .restaurant-card {
+        border-radius: 10px;
+        min-height: 9.0rem;
+        margin: 10px;
+        max-width: 86%;
+        padding-bottom: 18px;
+    }
+
+    .restaurants-title {
+        margin: 8px;
+        font-size: 25px;
+    }
+
+    .restaurant-name {
+        margin: 8px;
+        font-size: 19px;
+    }
+
+    p {
+        margin: 10px 0;
+    }
+
+    .MuiBox-root.css-nt4rx7 {
+        width: 80%;
+    }
+
+}
+
+@media (max-width: 1340px) {
+    .sortAndFilter-container {
+        flex-direction: column;
+
+        .sort-container {
+            margin-bottom: 20px;
+        }
+    }
+
+    .restaurants-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    .restaurants-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .restaurant-card {
+        max-width: 88%;
+        min-height: 290px;
+    }
+}
+
+@media (max-width: 764px) {
+
+    .restaurants-container {
+        grid-template-columns: 1fr;
+    }
+
+    .restaurant-card {
+        max-width: 75%;
+    }
+}
