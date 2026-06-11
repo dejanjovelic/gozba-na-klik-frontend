@@ -42,7 +42,7 @@ const Header = () => {
 
   useEffect(() => {
     setOpen(false);
-  }, [user]); //Kada se promenmi isLoggedIn se zatvara dropdown, ovo radimo ako se izlogujemo i ulogujemo opet
+  }, [user]); //Kada se promeni isLoggedIn se zatvara dropdown, ovo radimo ako se izlogujemo i ulogujemo opet
 
   return (
     <nav>

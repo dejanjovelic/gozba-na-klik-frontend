@@ -57,7 +57,6 @@ const App = () => {
       setUser(null);
       navigate("/");
     });
-
   }, [navigate]);
 
   return (
@@ -152,16 +151,16 @@ const App = () => {
               <Route path="workingHours" element={<EmployeeHomePage />} />
             </Route>
 
-            {user?.role === "Customer" ? (
-              <Route path="/profile" element={<UserProfilePage />} >
-                <Route index element={<UserProfile />} />
-                <Route path="allergens" element={<CustomerAllergens />} />
-                <Route path="addresses" element={<CustomerAddresses />} />
-                <Route path="credit-cards" element={<CustomerCreditCardsPage />} />
-              </Route>
-            ) : (
-              <Route path="/profile" element={<UserProfile />} />
-            )}
+            <Route path="/profile" element={<UserProfilePage />}>
+              <Route index element={<UserProfile />} />
+              <Route path="allergens" element={<CustomerAllergens />} />
+              <Route path="addresses" element={<CustomerAddresses />} />
+              <Route
+                path="credit-cards"
+                element={<CustomerCreditCardsPage />}
+              />
+            </Route>
+            
           </Routes>
           {/*<Footer />*/}
         </UserContext.Provider>
