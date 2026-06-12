@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import SucessPopup from "../../../../shared/components/Popups/SucessPopup.jsx";
+import ErrorPopup from "../../../../shared/components/Popups/ErrorPopup.jsx";
 import {
   deleteRestaurant,
   fetchAllRestaurants,
@@ -21,6 +23,7 @@ const AdminRestaurants = () => {
   const [editnigRestaurantId, setEditingRestaurantId] = useState("");
   const [openAddRestaurantModal, setOpenAddRestaurantModal] = useState(false);
   const [openEditRestaurantModal, setOpenEditRestaurantModal] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
@@ -107,6 +110,9 @@ const AdminRestaurants = () => {
       setRestaurantId(null);
       fetchRestaurantsFromDb();
       setOpenConfirmationModal(false);
+       setSuccessMsg(
+        `Restaurant with Id: ${restaurantId} deleted successfully!`,
+      );
     } catch (error) {
       HandleError({
         error: error,

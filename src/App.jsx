@@ -45,7 +45,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   const router = useMemo(
-    () => 
+    () =>
       createBrowserRouter(
         createRoutesFromElements(
           <Route element={<Layout />}>
@@ -106,7 +106,8 @@ const App = () => {
             >
               <Route index element={<CustomerHomePage />} />
               <Route path="allergens" element={<CustomerAllergens />} />
-              <Route path="addresses" element={<CustomerAddresses />} /> // mozda treba obrisati
+              <Route path="addresses" element={<CustomerAddresses />} /> //
+              mozda treba obrisati
               <Route path="meals" element={<CustomerMeals />} />
               <Route path="orders" element={<CustomerOrders />} />
             </Route>
@@ -136,23 +137,20 @@ const App = () => {
               <Route path="workingHours" element={<EmployeeHomePage />} />
             </Route>
 
-            {user?.role.toLowerCase().trim() === "customer" ? (
-              <Route path="/profile" element={<UserProfilePage />}>
-                <Route index element={<UserProfile />} />
-                <Route path="allergens" element={<CustomerAllergens />} />
-                <Route path="addresses" element={<CustomerAddresses />} />
-                <Route
-                  path="credit-cards"
-                  element={<CustomerCreditCardsPage />}
-                />
-              </Route>
-            ) : (
-              <Route path="/profile" element={<UserProfile />} />
-            )}
+            <Route path="/profile" element={<UserProfilePage />}>
+              <Route index element={<UserProfile />} />
+              <Route path="allergens" element={<CustomerAllergens />} />
+              <Route path="addresses" element={<CustomerAddresses />} />
+              <Route
+                path="credit-cards"
+                element={<CustomerCreditCardsPage />}
+              />
+            </Route>
           </Route>,
         ),
-      ) , [user]
-    );
+      ),
+    [user],
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
