@@ -3,6 +3,7 @@ import { GetAllUsers } from "../../../services/userServices";
 import "../../../styles/adminUserList.scss";
 import AdminAddUserForm from "../../forms/admin/AdminAddUserForm";
 import { Button } from "@mui/material";
+import SucessPopup from "../Popups/SucessPopup";
 
 const AdminUserList = () => {
     const [users, setUsers] = useState([]);
@@ -35,7 +36,6 @@ const AdminUserList = () => {
         try {
             const data = await GetAllUsers();
             setUsers(data);
-            console.log(data)
         }
         catch (error) {
             if (error.status && error.status === 500) {
@@ -58,10 +58,14 @@ const AdminUserList = () => {
             <div className="errorMsg">{errorMsg}</div>
         )
     }
-
     return (
         <>
-            <div className="successMsg">{successMsg}</div>
+           {successMsg &&
+           <SucessPopup
+           message={successMsg}
+           timeOut={4}
+           />
+           }
             <div className="users-list-header">
                 <h1>Users List</h1>
                 <Button variant="contained" onClick={handleOpenModal}>
@@ -82,11 +86,12 @@ const AdminUserList = () => {
                     </thead>
                     <tbody>
                         {users.map(user => (
-                            <tr key={user.id}>
+                            <tr key={user.email}>
                                 <td data-label="Full Name">{`${user.name} ${user.surname}`}</td>
                                 <td data-label="Username">{user.userName}</td>
                                 <td data-label="Email">{user.email}</td>
                                 <td data-label="Role">{user.role}</td>
+                               
                             </tr>
                         ))}
                     </tbody>

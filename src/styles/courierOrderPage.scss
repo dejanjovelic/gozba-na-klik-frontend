@@ -1,5 +1,7 @@
+@use 'sass:color';
+@use "./variables" as *;
 @use "./global.scss" as*;
-@use'sass:color';
+
 
 
 .order-container {

@@ -130,7 +130,10 @@ const RestaurantPaginationFilterSort = () => {
                     {restaurants ? restaurants.length > 0 ? (restaurants.map(restaurant =>
                         <div key={restaurant.id} className="restaurant-card" onClick={() => handleCardClick(restaurant.id)}>
                             <div className="img-section">
-                                <img id="restaurant-img" src={restaurant.restaurantImageUrl} alt="Restaurant picture" />
+                                <img id="restaurant-img"
+                                    src={restaurant.restaurantImageUrl ? restaurant.restaurantImageUrl : null}
+                                    alt="Restaurant picture"
+                                />
                             </div>
                             <div className="restaurantData-section">
                                 <div className="restaurantData-section-leftSide">

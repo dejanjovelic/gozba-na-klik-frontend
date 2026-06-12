@@ -32,6 +32,7 @@ import { setOnUnauthorized } from "./config/axiosConfig";
 import Spinner from "./components/sharedComponents/Spinner";
 import UserProfilePage from "./components/pages/UserProfilePage";
 import CustomerCreditCardsPage from "./components/pages/Customer/CustomerCreditCardsPage";
+import AdminAddRestaurantForm from "./components/forms/admin/AdminAddRestaurantForm";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -56,7 +57,6 @@ const App = () => {
       setUser(null);
       navigate("/");
     });
-
   }, [navigate]);
 
   return (
@@ -151,16 +151,16 @@ const App = () => {
               <Route path="workingHours" element={<EmployeeHomePage />} />
             </Route>
 
-            {user?.role === "Customer" ? (
-              <Route path="/profile" element={<UserProfilePage />} >
-                <Route index element={<UserProfile />} />
-                <Route path="allergens" element={<CustomerAllergens />} />
-                <Route path="addresses" element={<CustomerAddresses />} />
-                <Route path="credit-cards" element={<CustomerCreditCardsPage />} />
-              </Route>
-            ) : (
-              <Route path="/profile" element={<UserProfile />} />
-            )}
+            <Route path="/profile" element={<UserProfilePage />}>
+              <Route index element={<UserProfile />} />
+              <Route path="allergens" element={<CustomerAllergens />} />
+              <Route path="addresses" element={<CustomerAddresses />} />
+              <Route
+                path="credit-cards"
+                element={<CustomerCreditCardsPage />}
+              />
+            </Route>
+            
           </Routes>
           {/*<Footer />*/}
         </UserContext.Provider>

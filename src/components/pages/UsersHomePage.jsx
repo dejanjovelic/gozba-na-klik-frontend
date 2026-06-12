@@ -9,11 +9,10 @@ const UsersHomePage = () => {
   if (!user) return <Navigate to="/login" />;
 
   return (
-    <div className="homePageLayout">
+    
       <main>
         <Outlet />
       </main>
-    </div>
   );
 };
 
