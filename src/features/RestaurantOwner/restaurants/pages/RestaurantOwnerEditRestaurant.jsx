@@ -357,6 +357,7 @@ const RestaurantOwnerEditRestaurant = () => {
   };
 
   useUnsavedChangesWarning(isAnythigDirty);
+  console.log("Restoran sa edit forme",restaurant)
 
   return (
     <div className="restaurant-owner-edit-page-container">

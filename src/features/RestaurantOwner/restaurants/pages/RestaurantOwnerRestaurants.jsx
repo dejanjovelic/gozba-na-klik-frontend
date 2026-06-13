@@ -26,7 +26,7 @@ const RestaurantOwnerRestaurants = () => {
       HandleError({
         error: error,
         setErrorMessage: setErrorMessage,
-        entity: "restaurants"
+        entity: "restaurants",
       });
     }
   };
@@ -64,7 +64,8 @@ const RestaurantOwnerRestaurants = () => {
                         alt="Restaurant image"
                       />
                     </div>
-                    <div className="restaurant-owner-restaurants-page-restaurant-card-right-side">
+
+                    <div className="restaurant-owner-restaurants-page-restaurant-card-middle-side">
                       <h2>{restaurant.name}</h2>
                       <p>
                         Address: {restaurant.address ? restaurant.address : ""}
@@ -91,6 +92,15 @@ const RestaurantOwnerRestaurants = () => {
                         >
                           Edit
                         </button>
+                      </div>
+                    </div>
+
+                    <div className="restaurant-owner-restaurants-page-restaurant-card-right-side">
+                      <div className="card-right-side-content-wrapper">
+                        <p className="card-right-side-label">Description:</p>
+                        <div className="card-right-side-content">
+                          {restaurant.description}
+                        </div>
                       </div>
                     </div>
                   </div>

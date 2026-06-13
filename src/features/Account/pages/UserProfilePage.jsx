@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import UserContext from "../../../shared/context/UserContext";
 import "../../Account/styles/userProfilePage.scss";

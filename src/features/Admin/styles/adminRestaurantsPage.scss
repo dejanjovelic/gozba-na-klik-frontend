@@ -96,7 +96,7 @@
 
 
 
-.adimn-restaurants-page-table-wrapper {
+.admin-restaurants-page-table-wrapper {
     background-color: whitesmoke;
     border-radius: 15px;
     padding: 10px;
@@ -233,4 +233,11 @@
         }
 
     }
+}
+
+.no-restaurants-message-wrapper{
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    color: #333;
 }

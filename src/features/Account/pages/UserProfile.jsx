@@ -258,7 +258,7 @@ export default function UserProfile() {
         </div>
       </div>
 
-      {errorMessage || showError (
+      {errorMessage || showError && (
         <ErrorPopup
           message={errorMessage}
           onClose={() => setShowError(false)}
