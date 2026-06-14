@@ -1,0 +1,79 @@
+@use "sass:color";
+@use "../../../styles/variables" as *;
+@use "../../../styles/global.scss" as *;
+
+.MuiPaper-root {
+  background-color: $color-cream;
+
+  .MuiCardContent-root {
+    .MuiFormControl-root {
+      background-color: white;
+    }
+  }
+}
+
+.MuiBackdrop-root {
+  background-color: transparent;
+}
+
+.MuiPopper-root .MuiPaper-root.MuiAutocomplete-paper {
+  background-color: white !important;
+  border: 1px solid #ccc !important;
+}
+
+.MuiAlert-root.MuiAlert-standardSuccess {
+  background-color: #edf7ed;
+  height: 100px;
+}
+
+.MuiButtonBase-root.MuiButton-root {
+  &.saveBtn {
+    background-color: $color-orange;
+    border: 2px solid $color-orange;
+    display: flex;
+
+    &:hover {
+      background-color: color.adjust($color-orange, $lightness: 5%);
+    }
+  }
+
+  &.cancelBtn {
+    background-color: $color-cream;
+    color: $color-orange;
+    border: 2px solid $color-orange;
+
+    &:hover {
+      background-color: color.adjust($color-cream, $lightness: 5%);
+    }
+  }
+}
+
+#AllergenFormCard {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+#customer-allergen-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0 0 0;
+  
+}
+
+#allergenContainer {
+  display: flex;
+  width: 100%;
+  border-radius: 10px;
+}
+
+
+#SucessPopupContainer.allergen-page {
+  position: fixed;
+  z-index: 999;
+  top: 10%;
+  right: 3%;
+}

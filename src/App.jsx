@@ -1,73 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import Header from "./components/pages/Header";
-import UsersHomePage from "./components/pages/UsersHomePage";
-import CustomerRegisterForm from "./components/forms/register/CustomerRegisterForm";
-import CustomerHomePage from "./components/pages/Customer/CustomerHomePage";
-import LoginForm from "./components/forms/login/LoginForm";
-import AdminUserList from "./components/pages/Admin/AdminUserList";
-import AdminHomePage from "./components/pages/Admin/AdminHomePage";
-import AdminRestaurants from "./components/pages/Admin/AdminRestaurants";
-import UserProfile from "./components/pages/UserProfile";
-import RestaurantOwnerRestaurants from "./components/pages/RestaurantOwner/RestaurantOwnerRestaurants";
-import ProtectedRoute from "./components/sharedComponents/ProtectedRoute";
-import RestaurantOwnerHomePage from "./components/pages/RestaurantOwner/RestaurantOwnerHomePage";
-import CourierHomePage from "./components/pages/Courier/CourierHomePage";
-import EmployeeHomePage from "./components/pages/Employee/EmployeeHomePage";
-import CourierWorkingHours from "./components/pages/Courier/CourierWorkingHours";
-import "./styles/usersHomePage.scss";
-import CustomerAddresses from "./components/pages/Customer/CustomerAddresses";
-import RestaurantPaginationFilterSort from "./components/pages/Restaurant/RestaurantPaginationFilterSort";
-import CustomerAllergens from "./components/pages/Customer/CustomerAllergens";
-import CustomerMeals from "./components/pages/Customer/CustomerMeals";
-import RestaurantMenu from "./components/pages/Restaurant/RestaurantMenu";
-import UserContext from "./config/UserContext";
-import CourierActiveOrderPage from "./components/pages/Courier/CourierActiveOrderPage";
-import RestaurantOwnerOrderView from "./components/pages/RestaurantOwner/RestaurantOwnerOrderView";
-import { OrderProvider } from "./components/OrderContext";
-import CustomerOrders from "./components/pages/Customer/CustomerOrders";
-import ForgotPasswordPage from "./components/forms/ResetPassword/ForgotPasswordPage";
-import ResetPassword from "./components/forms/ResetPassword/ResetPassword";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
+import UsersHomePage from "./features/Account/pages/UsersHomePage.jsx";
+import CustomerRegisterForm from "./features/Account/pages/CustomerRegisterForm.jsx";
+import CustomerHomePage from "./features/Customer/home/pages/CustomerHomePage.jsx";
+import LoginForm from "./features/Account/pages/LoginForm.jsx";
+import AdminUserList from "./features/Admin/users/pages/AdminUserList.jsx";
+import AdminHomePage from "./features/Admin/home/AdminHomePage";
+import AdminRestaurants from "./features/Admin/restaurants/pages/AdminRestaurants";
+import UserProfile from "./features/Account/pages/UserProfile.jsx";
+import RestaurantOwnerRestaurants from "./features/RestaurantOwner/restaurants/pages/RestaurantOwnerRestaurants";
+import ProtectedRoute from "./shared/components/ProtectedRoute";
+import RestaurantOwnerHomePage from "./features/RestaurantOwner/home/pages/RestaurantOwnerHomePage";
+import CourierHomePage from "./features/Courier/home/pages/CourierHomePage";
+import EmployeeHomePage from "./features/Employee/Pages/EmployeeHomePage.jsx";
+import CourierWorkingHours from "./features/Courier/workingHours/pages/CourierWorkingHours";
+import "./features/Account/styles/usersHomePage.scss";
+import CustomerAddresses from "./features/Customer/addresses/pages/CustomerAddresses.jsx";
+import RestaurantsPage from "./features/Restaurant/pages/RestaurantsPage.jsx";
+import CustomerAllergens from "./features/Customer/allergens/pages/CustomerAllergens.jsx";
+import CustomerMeals from "./features/Customer/meals/pages/CustomerMeals.jsx";
+import RestaurantMenu from "./features/Restaurant/pages/RestaurantMenu.jsx";
+import UserContext from "./shared/context/UserContext.jsx";
+import CourierActiveOrderPage from "./features/Courier/order/pages/CourierActiveOrderPage.jsx";
+import RestaurantOwnerOrderView from "./features/RestaurantOwner/orders/pages/RestaurantOwnerOrderView";
+import { OrderProvider } from "./shared/context//OrderContext";
+import CustomerOrders from "./features/Customer/orders/pages/CustomerOrders.jsx";
+import ForgotPasswordPage from "./features/Account/pages/ForgotPasswordPage.jsx";
+import ResetPassword from "./features/Account/pages/ResetPassword.jsx";
 import { setOnUnauthorized } from "./config/axiosConfig";
-import Spinner from "./components/sharedComponents/Spinner";
-import UserProfilePage from "./components/pages/UserProfilePage";
-import CustomerCreditCardsPage from "./components/pages/Customer/CustomerCreditCardsPage";
-import AdminAddRestaurantForm from "./components/forms/admin/AdminAddRestaurantForm";
+import Spinner from "./shared/components/Spinner";
+import UserProfilePage from "./features/Account/pages/UserProfilePage.jsx";
+import CustomerCreditCardsPage from "./features/Customer/creditCards/pages/CustomerCreditCardsPage.jsx";
+import RestaurantOwnerEditRestaurant from "./features/RestaurantOwner/restaurants/pages/RestaurantOwnerEditRestaurant";
+import Layout from "./shared/layouts/Layout.jsx";
+import { useMemo } from "react";
 
 const App = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        setUser(payload);
-      } catch (error) {
-        localStorage.removeItem("token");
-        setUser(null);
-      }
-    }
-
-    setLoading(false);
-
-    setOnUnauthorized(() => {
-      setUser(null);
-      navigate("/");
-    });
-  }, [navigate]);
-
-  return (
-    <div className="content">
-      {loading ? (
-        <Spinner />
-      ) : (
-        <UserContext.Provider value={{ user, setUser, loading }}>
-          <Header />
-          <Routes>
-            <Route path="/" element={<RestaurantPaginationFilterSort />} />
+  const router = useMemo(
+    () =>
+      createBrowserRouter(
+        createRoutesFromElements(
+          <Route element={<Layout />}>
+            <Route path="/" element={<RestaurantsPage />} />
             <Route
               path="/restaurant-menu/:id"
               element={
@@ -107,7 +89,10 @@ const App = () => {
                 path="restaurants"
                 element={<RestaurantOwnerRestaurants />}
               />
-              <Route index element={<RestaurantOwnerHomePage />} />
+              <Route
+                path="restaurants/:id/edit"
+                element={<RestaurantOwnerEditRestaurant />}
+              />
               <Route path="orderView" element={<RestaurantOwnerOrderView />} />
             </Route>
 
@@ -121,7 +106,8 @@ const App = () => {
             >
               <Route index element={<CustomerHomePage />} />
               <Route path="allergens" element={<CustomerAllergens />} />
-              <Route path="addresses" element={<CustomerAddresses />} />
+              <Route path="addresses" element={<CustomerAddresses />} /> //
+              mozda treba obrisati
               <Route path="meals" element={<CustomerMeals />} />
               <Route path="orders" element={<CustomerOrders />} />
             </Route>
@@ -160,9 +146,39 @@ const App = () => {
                 element={<CustomerCreditCardsPage />}
               />
             </Route>
-            
-          </Routes>
-          {/*<Footer />*/}
+          </Route>,
+        ),
+      ),
+    [user],
+  );
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        setUser(payload);
+      } catch (error) {
+        localStorage.removeItem("token");
+        setUser(null);
+      }
+    }
+
+    setLoading(false);
+
+    setOnUnauthorized(() => {
+      setUser(null);
+      router.navigate("/");
+    });
+  }, []);
+
+  return (
+    <div className="content">
+      {loading ? (
+        <Spinner />
+      ) : (
+        <UserContext.Provider value={{ user, setUser, loading }}>
+          <RouterProvider router={router} />
         </UserContext.Provider>
       )}
     </div>
